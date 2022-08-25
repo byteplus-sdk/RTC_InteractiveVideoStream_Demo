@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">BytePlus RTC</string>
+
+    <string name="audio_input_wrong_content_waring">仅支持中文、字母、数字、1~18位</string>
+
+    <string name="tab_home">主页</string>
+    <string name="tab_my">我的</string>
+    <string name="input_user_name_hint">用户名</string>
+    <string name="voice_chat_room_title">语音聊天室</string>
+    <string name="login">登录</string>
+    <string name="network_error">网络链接已断开，请检查设置</string>
+    <string name="login_input_user_id_hint">请输入用户昵称</string>
+    <string name="login_input_meeting_id_waring">输入长度不能超过18位</string>
+    <string name="create_voice_chat_room_title">创建房间</string>
+    <string name="create_voice_chat_btn_txt">开启聊天室</string>
+    <string name="voice_chat_room_name">%s的语音聊天室</string>
+    <string name="voice_chat_room_name_title">名称</string>
+    <string name="voice_chat_room_back">背景</string>
+    <string name="say_something">说点什么</string>
+    <string name="mic_position_text">%d号麦位</string>
+    <string name="invite_user_speak">邀请上麦</string>
+    <string name="co_host_text">上麦</string>
+    <string name="remove_co_host_text">下麦</string>
+    <string name="block_text">封锁麦位</string>
+    <string name="un_block_text">解锁麦位</string>
+    <string name="be_co_host_text">观众连线申请</string>
+    <string name="no_application_text">暂无申请消息</string>
+    <string name="no_audience_text">暂无在线观众</string>
+    <string name="application_text">申请消息</string>
+    <string name="audience_text">在线观众</string>
+    <string name="confirm_remove_co_host_msg">确定封锁麦位？封锁麦位后，观众无法在此麦位上麦；\n且此麦位上嘉宾将被下麦</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_ok">确定</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_confirm">确定</string>
+    <string name="already_send_application_msg">已向主播发送申请</string>
+    <string name="already_co_host_msg">你已在麦位上</string>
+    <string name="remove_co_host_txt">下麦嘉宾</string>
+    <string name="mute_txt">静音麦位</string>
+    <string name="unmute_txt">取消静音</string>
+    <string name="all_seats_filled_up_txt">当前麦位已满</string>
+    <string name="change_user_name_txt">设置名称</string>
+    <string name="privacy_policy_txt">隐私协议</string>
+    <string name="terms_service_txt">服务协议</string>
+    <string name="dis_claimer_txt">免责声明</string>
+    <string name="app_version_txt">Demo版本</string>
+    <string name="sdk_version_txt">Sdk版本</string>
+    <string name="logout_txt">退出登录</string>
+    <string name="connect_fail_txt">连接失败</string>
+    <string name="room_name_not_empty_txt">房间名不能为空</string>
+    <string name="back_music_txt">背景音乐</string>
+    <string name="music_volume_txt">音乐音量</string>
+    <string name="voice_volume_txt">人声音量</string>
+    <string name="room_close_txt">房间已经解散</string>
+    <string name="joined_room_txt"> 加入了房间</string>
+    <string name="leaved_room_txt"> 离开房间</string>
+    <string name="live_ended_txt">直播间已结束</string>
+    <string name="live_out_of_service_txt">本次体验时间已超过10mins</string>
+    <string name="user_co_host_txt"> 已上麦</string>
+    <string name="user_has_audience_txt"> 已下麦</string>
+    <string name="you_has_audience_txt">你已下麦</string>
+    <string name="you_has_co_host_txt">你已上麦</string>
+    <string name="you_has_be_audience_txt">你已被主播移出麦位</string>
+    <string name="invitation_to_be_co_host">主播邀请你上麦，是否接受？</string>
+    <string name="you_unmuted_txt">主播已解除对你的静音</string>
+    <string name="you_be_muted_txt">你已被主播静音</string>
+    <string name="you_force_log_out">相同ID用户已登录，您已被强制下线！</string>
+    <string name="latency_txt">延迟</string>
+    <string name="in_packed_loss">上行丢包率</string>
+    <string name="out_packed_loss">下行丢包率</string>
+    <string name="user_decline_you_invite">观众%s拒绝了你的邀请</string>
+    <string name="voice_room_live_ing">直播中</string>
+    <string name="confirm_end_live_msg">确认结束语音聊天室？</string>
+    <string name="inviting">已向观众发出邀请，等待对方应答</string>
+    <string name="accept">接受</string>
+    <string name="inviting_btn">已邀请</string>
+    <string name="network_good">网络良好</string>
+    <string name="confirm_server_privace">
+        <![CDATA[
+        已阅读并同意<a href=\'https://docs.byteplus.com/legal/docs/terms-of-service\'>《服务协议》</a>和<a href=\'https://docs.byteplus.com/legal/docs/privacy-policy\'>《隐私权政策》</a>
+        ]]>
+    </string>
+</resources>
