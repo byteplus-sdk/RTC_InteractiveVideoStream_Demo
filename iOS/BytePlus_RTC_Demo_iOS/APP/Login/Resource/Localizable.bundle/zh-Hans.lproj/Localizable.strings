@@ -1,0 +1,8 @@
+"Username"                = "请输入用户昵称";
+"Log in"                  = "登录";
+"Privacy Policy"          = "《隐私权政策》";
+"Terms of Service"        = "《服务协议》";
+"Agree to our %@ and acknowledge that you have read our %@" = "已阅读并同意%@和%@";
+"App Version"             = "App版本";
+"SDK Version"             = "SDK版本";
+"No more than %ld characters with a mix of Chinese, letters & numbers" = "仅支持中文、字母、数字、1~%ld位";

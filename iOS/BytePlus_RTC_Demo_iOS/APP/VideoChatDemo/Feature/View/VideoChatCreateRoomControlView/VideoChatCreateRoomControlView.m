@@ -1,0 +1,139 @@
+/*
+ * Copyright 2022 BytePlus Pte. Ltd.
+ * SPDX-License-Identifier: MIT
+ */
+
+#import <Core/Localizator.h>
+#import "VideoChatCreateRoomControlView.h"
+
+@interface VideoChatCreateRoomControlView ()
+@property (nonatomic, strong) UIButton *switchCameraButton;
+@property (nonatomic, strong) UIButton *beautyButton;
+@property (nonatomic, strong) UIButton *settingButton;
+
+@property (nonatomic, strong) UILabel *switchCameraLabel;
+@property (nonatomic, strong) UILabel *beautyLabel;
+@property (nonatomic, strong) UILabel *settingLabel;
+@end
+
+@implementation VideoChatCreateRoomControlView
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        self.layer.cornerRadius = 15;
+        self.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.2];
+        
+        [self addSubview:self.beautyButton];
+        [self.beautyButton mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.top.mas_equalTo(20);
+          make.centerX.equalTo(self);
+        }];
+        [self addSubview:self.beautyLabel];
+        [self.beautyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.top.equalTo(self.beautyButton.mas_bottom).offset(8);
+          make.centerX.equalTo(self.beautyButton);
+        }];
+
+        [self addSubview:self.switchCameraButton];
+        [self.switchCameraButton mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.right.equalTo(self.beautyButton.mas_left).offset(-47);
+          make.centerY.equalTo(self.beautyButton);
+        }];
+        [self addSubview:self.switchCameraLabel];
+        [self.switchCameraLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.centerY.equalTo(self.beautyLabel);
+          make.centerX.equalTo(self.switchCameraButton);
+        }];
+
+        [self addSubview:self.settingButton];
+        [self.settingButton mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.left.equalTo(self.beautyButton.mas_right).offset(47);
+          make.centerY.equalTo(self.beautyButton);
+        }];
+        [self addSubview:self.settingLabel];
+        [self.settingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.centerY.equalTo(self.beautyLabel);
+          make.centerX.equalTo(self.settingButton);
+        }];
+    }
+    return self;
+}
+
+#pragma mark - Private Action
+
+- (void)switchCameraButtonClicked:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(videoChatCreateRoomControlView:didClickedSwitchCameraButton:)]) {
+        [self.delegate videoChatCreateRoomControlView:self didClickedSwitchCameraButton:sender];
+    }
+}
+
+- (void)beautyButtonClicked:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(videoChatCreateRoomControlView:didClickedBeautyButton:)]) {
+        [self.delegate videoChatCreateRoomControlView:self didClickedBeautyButton:sender];
+    }
+}
+
+- (void)settingButtonClicked:(UIButton *)sender {
+    if ([self.delegate respondsToSelector:@selector(videoChatCreateRoomControlView:didClickedSettingButton:)]) {
+        [self.delegate videoChatCreateRoomControlView:self didClickedSettingButton:sender];
+    }
+}
+
+#pragma mark - getter
+
+- (UIButton *)switchCameraButton {
+    if (!_switchCameraButton) {
+        _switchCameraButton = [[UIButton alloc] init];
+        [_switchCameraButton setImage:[UIImage imageNamed:@"videoChat_switch_camera" bundleName:HomeBundleName] forState:UIControlStateNormal];
+        [_switchCameraButton addTarget:self action:@selector(switchCameraButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _switchCameraButton;
+}
+
+- (UIButton *)beautyButton {
+    if (!_beautyButton) {
+        _beautyButton = [[UIButton alloc] init];
+        [_beautyButton setImage:[UIImage imageNamed:@"videoChat_beauty" bundleName:HomeBundleName] forState:UIControlStateNormal];
+        [_beautyButton addTarget:self action:@selector(beautyButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _beautyButton;
+}
+
+- (UIButton *)settingButton {
+    if (!_settingButton) {
+        _settingButton = [[UIButton alloc] init];
+        [_settingButton setImage:[UIImage imageNamed:@"videoChat_setting" bundleName:HomeBundleName] forState:UIControlStateNormal];
+        [_settingButton addTarget:self action:@selector(settingButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _settingButton;
+}
+
+- (UILabel *)switchCameraLabel {
+    if (!_switchCameraLabel) {
+        _switchCameraLabel = [[UILabel alloc] init];
+        _switchCameraLabel.font = [UIFont systemFontOfSize:12];
+        _switchCameraLabel.textColor = [UIColor whiteColor];
+        _switchCameraLabel.text = LocalizedString(@"Flip\0");
+    }
+    return _switchCameraLabel;
+}
+
+- (UILabel *)beautyLabel {
+    if (!_beautyLabel) {
+        _beautyLabel = [[UILabel alloc] init];
+        _beautyLabel.font = [UIFont systemFontOfSize:12];
+        _beautyLabel.textColor = [UIColor whiteColor];
+        _beautyLabel.text = LocalizedString(@"Beautify");
+    }
+    return _beautyLabel;
+}
+
+- (UILabel *)settingLabel {
+    if (!_settingLabel) {
+        _settingLabel = [[UILabel alloc] init];
+        _settingLabel.font = [UIFont systemFontOfSize:12];
+        _settingLabel.textColor = [UIColor whiteColor];
+        _settingLabel.text = LocalizedString(@"Settings");
+    }
+    return _settingLabel;
+}
+@end

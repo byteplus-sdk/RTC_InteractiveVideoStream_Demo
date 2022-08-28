@@ -1,0 +1,3 @@
+NSCameraUsageDescription = "\"BytePlus RTC\" Would Like to Access the Camera. You'll be able to make video calls.";
+NSLocalNetworkUsageDescription = "\"BytePlus RTC\" Would like to Access the Network Status. You'll be able to show your network status in LIVE.";
+NSMicrophoneUsageDescription = "\"BytePlus RTC\" Would like to Access the Microphone. You'll be able to make audio calls.";
