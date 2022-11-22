@@ -15,9 +15,9 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        NSObject<BytedPlayerDelegate> *playerComponents = [[NSClassFromString(@"BytePlayerComponents") alloc] init];
-        if (playerComponents) {
-            self.bytePlayerDeleagte = playerComponents;
+        NSObject<BytedPlayerDelegate> *playerComponent = [[NSClassFromString(@"BytePlayerComponent") alloc] init];
+        if (playerComponent) {
+            self.bytePlayerDeleagte = playerComponent;
         }
     }
 

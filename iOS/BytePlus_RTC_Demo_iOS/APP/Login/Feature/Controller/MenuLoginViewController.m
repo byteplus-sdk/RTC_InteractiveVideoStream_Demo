@@ -6,7 +6,7 @@
 #import "MenuLoginViewController.h"
 #import "MenuCreateTextFieldView.h"
 #import "PhonePrivacyView.h"
-#import "LoginControlCompoments.h"
+#import "LoginControlComponent.h"
 #import "BuildConfig.h"
 #import <Core/Localizator.h>
 
@@ -69,20 +69,16 @@
 }
 
 - (void)loginButtonAction:(UIButton *)sender {
-    if (IsEmptyStr(LoginUrl)) {
-        NSString *errorMessage = @"请在 BuildConfig.h 配置 url 信息";
-        [[ToastComponents shareToastComponents] showWithMessage:errorMessage];
-        return;
-    }
+    NSAssert(NOEmptyStr(LoginUrl), @"Missing Login Url! Please configure information at BuildConfig.h");
     __weak __typeof(self) wself = self;
-    [LoginControlCompoments passwordFreeLogin:self.userNameTextFieldView.text
+    [LoginControlComponent passwordFreeLogin:self.userNameTextFieldView.text
                                         block:^(BOOL result, NSString * _Nullable errorStr) {
         if (result) {
             [wself dismissViewControllerAnimated:YES completion:^{
                 
             }];
         } else {
-            [[ToastComponents shareToastComponents] showWithMessage:errorStr];
+            [[ToastComponent shareToastComponent] showWithMessage:errorStr];
         }
     }];
 }

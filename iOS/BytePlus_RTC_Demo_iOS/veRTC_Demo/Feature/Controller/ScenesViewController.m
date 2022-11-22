@@ -121,7 +121,16 @@
 - (NSMutableArray *)dataArray {
     if (_dataArray == nil) {
         _dataArray = [NSMutableArray array];
-                        
+                
+        NSObject *videoChatDemo = [[NSClassFromString(@"VideoChatDemo") alloc] init];
+        if (videoChatDemo) {
+            SceneButtonModel *model = [[SceneButtonModel alloc] init];
+            model.title = LocalizedString(@"Interactive Video streaming");
+            model.iconName = @"menu_videochat";
+            model.scenes = videoChatDemo;
+            [_dataArray addObject:model];
+        }
+        
         NSObject *voiceChatDemo = [[NSClassFromString(@"VoiceChatDemo") alloc] init];
         if (voiceChatDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];

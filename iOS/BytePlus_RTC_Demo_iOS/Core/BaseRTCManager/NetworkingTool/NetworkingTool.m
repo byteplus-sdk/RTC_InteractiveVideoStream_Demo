@@ -5,7 +5,6 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 #import "NetworkingTool.h"
-#import <Core/Localizator.h>
 #import "Localizator.h"
 
 @implementation NetworkingTool
@@ -38,6 +37,11 @@
         case RTMStatusCodeBuildTokenFaild:
             message = CLocalizedString(@"Generating token failed. Please try again");
             break;
+        case RTMStatusCodeAPPInfoFaild:
+        case RTMStatusCodeAPPInfoExistFaild:
+            message = CLocalizedString(@"Failed to get RTM configuration parameters");
+            break;
+            
         default:
             break;
     }
@@ -53,8 +57,7 @@
 + (NSString *)getDeviceId {
     NSString *deviceId = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceId_key"];
     if (!deviceId || ![deviceId isKindOfClass:[NSString class]] || deviceId.length <= 0) {
-        NSString *wisd = [self getWisd];
-        deviceId = [self MD5ForLower16Bate:wisd];
+        deviceId = [self getWisd];
         [[NSUserDefaults standardUserDefaults] setValue:deviceId forKey:@"deviceId_key"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }

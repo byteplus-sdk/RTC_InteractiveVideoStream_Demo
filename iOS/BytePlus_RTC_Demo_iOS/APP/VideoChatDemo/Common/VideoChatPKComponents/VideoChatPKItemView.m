@@ -4,14 +4,14 @@
  */
 
 #import "VideoChatPKItemView.h"
-#import "VideoChatAvatarCompoments.h"
+#import "VideoChatAvatarComponent.h"
 #import "VideoChatSeatNetworkQualityView.h"
 #import "VideoChatSeatItemNameView.h"
 
 @interface VideoChatPKItemView ()
 
 @property (nonatomic, strong) UIView *renderView;
-@property (nonatomic, strong) VideoChatAvatarCompoments *avatarCompoments;
+@property (nonatomic, strong) VideoChatAvatarComponent *avatarComponent;
 @property (nonatomic, strong) UIButton *muteButton;
 @property (nonatomic, strong) VideoChatSeatNetworkQualityView *networkQualityView;
 @property (nonatomic, strong) VideoChatSeatItemNameView *userNameView;
@@ -32,7 +32,7 @@
 
 - (void)setupViews {
     [self addSubview:self.renderView];
-    [self addSubview:self.avatarCompoments];
+    [self addSubview:self.avatarComponent];
     [self addSubview:self.contentView];
     [self.contentView addSubview:self.networkQualityView];
     [self.contentView addSubview:self.userNameView];
@@ -40,7 +40,7 @@
     [self.renderView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
-    [self.avatarCompoments mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.avatarComponent mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(48);
         make.center.equalTo(self);
     }];
@@ -73,7 +73,7 @@
 
 - (void)setUserModel:(VideoChatUserModel *)userModel {
     _userModel = userModel;
-    self.avatarCompoments.text = userModel.name;
+    self.avatarComponent.text = userModel.name;
     self.userNameView.userModel = userModel;
     self.muteButton.selected = userModel.otherAnchorMicType == VideoChatOtherAnchorMicTypeMute;
     
@@ -86,16 +86,16 @@
             [streamView mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.edges.equalTo(self.renderView);
             }];
-            self.avatarCompoments.hidden = YES;
+            self.avatarComponent.hidden = YES;
             self.renderView.hidden = NO;
         }
     } else {
-        self.avatarCompoments.hidden = NO;
+        self.avatarComponent.hidden = NO;
         self.renderView.hidden = YES;
     }
     
     // TODO
-    if (self.isOtherAnchor && [userModel.uid isEqualToString:[LocalUserComponents userModel].uid]) {
+    if (self.isOtherAnchor && [userModel.uid isEqualToString:[LocalUserComponent userModel].uid]) {
         NSLog(@"error");
     }
 }
@@ -122,15 +122,15 @@
     return _renderView;
 }
 
-- (VideoChatAvatarCompoments *)avatarCompoments {
-    if (!_avatarCompoments) {
-        _avatarCompoments = [[VideoChatAvatarCompoments alloc] init];
-        _avatarCompoments.layer.cornerRadius = 24;
-        _avatarCompoments.layer.masksToBounds = YES;
-        _avatarCompoments.fontSize = 24;
-        _avatarCompoments.hidden = YES;
+- (VideoChatAvatarComponent *)avatarComponent {
+    if (!_avatarComponent) {
+        _avatarComponent = [[VideoChatAvatarComponent alloc] init];
+        _avatarComponent.layer.cornerRadius = 24;
+        _avatarComponent.layer.masksToBounds = YES;
+        _avatarComponent.fontSize = 24;
+        _avatarComponent.hidden = YES;
     }
-    return _avatarCompoments;
+    return _avatarComponent;
 }
 
 - (VideoChatSeatNetworkQualityView *)networkQualityView {

@@ -116,7 +116,7 @@
 }
 
 - (void)muteOtherAnchor:(BOOL)isMute {
-    if (![self.hostModel.uid isEqualToString:[LocalUserComponents userModel].uid]) {
+    if (![self.hostModel.uid isEqualToString:[LocalUserComponent userModel].uid]) {
         return;
     }
     VideoChatOtherAnchorMicType type = isMute? VideoChatOtherAnchorMicTypeMute:VideoChatOtherAnchorMicTypeUnmute;
@@ -125,7 +125,7 @@
                                                         type:type
                                                     complete:^(RTMACKModel * _Nonnull model) {
         if (!model.result) {
-            [[ToastComponents shareToastComponents] showWithMessage:model.message];
+            [[ToastComponent shareToastComponent] showWithMessage:model.message];
         }
     }];
 }
@@ -164,7 +164,7 @@
     [VideoChatRTMManager requestStopPKWithRoomID:self.roomModel.roomID userID:self.roomModel.hostUid complete:^(RTMACKModel * _Nonnull model) {
         if (!model.result) {
             weakSelf.activeEndPK = NO;
-            [[ToastComponents shareToastComponents] showWithMessage:model.message];
+            [[ToastComponent shareToastComponent] showWithMessage:model.message];
         }
     }];
 }

@@ -26,7 +26,7 @@
 
 - (void)showAnchorList {
     if (self.isPKWaitingReply) {
-        [[ToastComponents shareToastComponents] showWithMessage:LocalizedString(@"You have sent an invitation.")];
+        [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"You have sent an invitation.")];
         return;
     }
     
@@ -78,14 +78,14 @@
                                                          complete:^(RTMACKModel * _Nonnull model) {
         if (model.result) {
             NSString *message = [NSString stringWithFormat:LocalizedString(@"An invitation has been sent to %@. Waiting for response"), userModel.name];
-            [[ToastComponents shareToastComponents] showWithMessage:message];
+            [[ToastComponent shareToastComponent] showWithMessage:message];
             weakSelf.isPKWaitingReply = YES;
             [weakSelf performSelector:@selector(resetPkWaitingReplyStstus) withObject:nil afterDelay:5];
         } else {
             if (model.code == 550 || model.code == 551) {
-                [[ToastComponents shareToastComponents] showWithMessage:LocalizedString(@"The Invited is busy")];
+                [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"The Invited is busy")];
             } else {
-                [[ToastComponents shareToastComponents] showWithMessage:model.message];
+                [[ToastComponent shareToastComponent] showWithMessage:model.message];
             }
         }
     }];
@@ -136,7 +136,7 @@
             }
         }
         else {
-            [[ToastComponents shareToastComponents] showWithMessage:model.message];
+            [[ToastComponent shareToastComponent] showWithMessage:model.message];
         }
     }];
 }

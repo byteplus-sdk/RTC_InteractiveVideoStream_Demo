@@ -5,12 +5,12 @@
 
 #import <Core/Localizator.h>
 #import "VideoChatRoomTableView.h"
-#import "VideoChatEmptyCompoments.h"
+#import "VideoChatEmptyComponent.h"
 
 @interface VideoChatRoomTableView () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *roomTableView;
-@property (nonatomic, strong) VideoChatEmptyCompoments *emptyCompoments;
+@property (nonatomic, strong) VideoChatEmptyComponent *emptyComponent;
 
 @end
 
@@ -36,9 +36,9 @@
     
     [self.roomTableView reloadData];
     if (dataLists.count <= 0) {
-        [self.emptyCompoments show];
+        [self.emptyComponent show];
     } else {
-        [self.emptyCompoments dismiss];
+        [self.emptyComponent dismiss];
     }
 }
 
@@ -82,12 +82,12 @@
     return _roomTableView;
 }
 
-- (VideoChatEmptyCompoments *)emptyCompoments {
-    if (!_emptyCompoments) {
-        _emptyCompoments = [[VideoChatEmptyCompoments alloc] initWithView:self
+- (VideoChatEmptyComponent *)emptyComponent {
+    if (!_emptyComponent) {
+        _emptyComponent = [[VideoChatEmptyComponent alloc] initWithView:self
                                                                   message:LocalizedString(@"No one has created a voice chat room. Create one.")];
     }
-    return _emptyCompoments;
+    return _emptyComponent;
 }
 
 @end

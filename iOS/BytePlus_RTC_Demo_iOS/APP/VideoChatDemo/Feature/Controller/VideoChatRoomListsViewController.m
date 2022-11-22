@@ -69,7 +69,7 @@
                 wself.roomTableView.dataLists = roomList;
             } else {
                 wself.roomTableView.dataLists = @[];
-                [[ToastComponents shareToastComponents] showWithMessage:model.message];
+                [[ToastComponent shareToastComponent] showWithMessage:model.message];
             }
         }];
     }];
@@ -78,7 +78,7 @@
 #pragma mark - VideoChatRoomTableViewDelegate
 
 - (void)VideoChatRoomTableView:(VideoChatRoomTableView *)VideoChatRoomTableView didSelectRowAtIndexPath:(VideoChatRoomModel *)model {
-    [PublicParameterCompoments share].roomId = model.roomID;
+    [PublicParameterComponent share].roomId = model.roomID;
     VideoChatRoomViewController *next = [[VideoChatRoomViewController alloc]
                                          initWithRoomModel:model];
     [self.navigationController pushViewController:next animated:YES];
@@ -88,24 +88,24 @@
 
 - (void)createButtonAction {
     __weak __typeof(self) wself = self;
-    NSString *roomName = [NSString stringWithFormat:LocalizedString(@"%@'s room"), [LocalUserComponents userModel].name];
-    [[ToastComponents shareToastComponents] showLoading];
+    NSString *roomName = [NSString stringWithFormat:LocalizedString(@"%@'s room"), [LocalUserComponent userModel].name];
+    [[ToastComponent shareToastComponent] showLoading];
     [VideoChatRTMManager createRoom:roomName
-                                  userName:[LocalUserComponents userModel].name
+                                  userName:[LocalUserComponent userModel].name
                                bgImageName:@""
                                      block:^(NSString * _Nonnull RTCToken,
                                              VideoChatRoomModel * _Nonnull roomModel,
                                              VideoChatUserModel * _Nonnull hostUserModel,
                                              RTMACKModel * _Nonnull model) {
         if (model.result) {
-            [[ToastComponents shareToastComponents] dismiss];
+            [[ToastComponent shareToastComponent] dismiss];
             VideoChatCreateRoomViewController *next = [[VideoChatCreateRoomViewController alloc]
                                                        initWithRoomModel:roomModel
                                                        userModel:hostUserModel
                                                        rtcToekn:RTCToken];
             [wself.navigationController pushViewController:next animated:YES];
         } else {
-            [[ToastComponents shareToastComponents] showWithMessage:model.message];
+            [[ToastComponent shareToastComponent] showWithMessage:model.message];
         }
     }];
 }
@@ -141,7 +141,7 @@
 
 - (void)dealloc {
     [[VideoChatRTCManager shareRtc] disconnect];
-    [PublicParameterCompoments clear];
+    [PublicParameterComponent clear];
 }
 
 

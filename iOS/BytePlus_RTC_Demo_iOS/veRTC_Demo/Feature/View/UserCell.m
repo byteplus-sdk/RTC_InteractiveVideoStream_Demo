@@ -34,7 +34,7 @@
     _model = model;
     self.titleLabel.text = model.title;
     if ([model.title isEqualToString:LocalizedString(@"Username")]) {
-        self.desTitleLabel.text = [LocalUserComponents userModel].name;
+        self.desTitleLabel.text = [LocalUserComponent userModel].name;
     } else {
         self.desTitleLabel.text = model.desTitle;
     }

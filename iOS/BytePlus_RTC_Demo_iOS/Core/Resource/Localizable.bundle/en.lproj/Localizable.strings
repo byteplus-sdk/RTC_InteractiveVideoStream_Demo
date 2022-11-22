@@ -7,3 +7,4 @@
 "Generating token failed. Please try again" = "Generating token failed. Please try again";
 "No internet connection. Connect to the internet and ty again." = "No internet connection. Connect to the internet and ty again.";
 "Request failed. Please retry." = "Request failed. Please retry.";
+"Failed to get RTM configuration parameters" = "Failed to get RTM configuration parameters";

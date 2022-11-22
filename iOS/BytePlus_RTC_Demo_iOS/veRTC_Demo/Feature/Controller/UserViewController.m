@@ -46,7 +46,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.headView.nameString = [LocalUserComponents userModel].name;
+    self.headView.nameString = [LocalUserComponent userModel].name;
     [self.roomTableView reloadData];
 }
 

@@ -5,13 +5,13 @@
 
 #import <Core/Localizator.h>
 #import "VideoChatRoomCell.h"
-#import "VideoChatAvatarCompoments.h"
+#import "VideoChatAvatarComponent.h"
 
 @interface VideoChatRoomCell ()
 
 @property (nonatomic, strong) UIView *bgView;
 @property (nonatomic, strong) UILabel *hostroomIDLabel;
-@property (nonatomic, strong) VideoChatAvatarCompoments *avatarView;
+@property (nonatomic, strong) VideoChatAvatarComponent *avatarView;
 @property (nonatomic, strong) UILabel *roomIDLabel;
 @property (nonatomic, strong) UILabel *liveLable;
 @property (nonatomic, strong) UIImageView *peopleNumImageView;
@@ -152,9 +152,9 @@
     return _hostroomIDLabel;
 }
 
-- (VideoChatAvatarCompoments *)avatarView {
+- (VideoChatAvatarComponent *)avatarView {
     if (!_avatarView) {
-        _avatarView = [[VideoChatAvatarCompoments alloc] init];
+        _avatarView = [[VideoChatAvatarComponent alloc] init];
         _avatarView.layer.cornerRadius = 20;
         _avatarView.layer.masksToBounds = YES;
         _avatarView.fontSize = 20;

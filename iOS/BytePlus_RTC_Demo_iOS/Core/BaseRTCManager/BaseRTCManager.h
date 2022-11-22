@@ -3,15 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 
-#import <Foundation/Foundation.h>
-#import <BytePlusRTC/objc/rtc/ByteRTCEngineKit.h>
-#import <BytePlusRTC/objc/rtc/ByteRTCRoom.h>
-#import <YYModel/YYModel.h>
-#import "RTMRequestModel.h"
+#import "LocalUserComponent.h"
+#import "NetworkingTool.h"
+#import "PublicParameterComponent.h"
 #import "RTMACKModel.h"
 #import "RTMNoticeModel.h"
-#import "LocalUserComponents.h"
-#import "PublicParameterCompoments.h"
+#import "RTMRequestModel.h"
+#import <BytePlusRTC/objc/ByteRTCRoom.h>
+#import <BytePlusRTC/objc/rtc/ByteRTCEngineKit.h>
+#import <Foundation/Foundation.h>
+#import <YYModel/YYModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,20 +30,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^RTCRoomMessageBlock)(RTMNoticeModel *noticeModel);
 
-@interface BaseRTCManager : NSObject <ByteRTCEngineDelegate, RTCRoomDelegate>
+@interface BaseRTCManager
+    : NSObject <ByteRTCEngineDelegate, ByteRTCRoomDelegate>
 
 @property (nonatomic, strong, nullable) ByteRTCEngineKit *rtcEngineKit;
 
 @property (nonatomic, copy, nullable) void (^rtcJoinRoomBlock)(NSString *roomId, NSInteger errorCode, NSInteger joinType);
 
+/// 相同用户进房，被踢下线
+@property(nonatomic, copy, nullable) void (^rtcSameUserJoinRoomBlock)
+    (NSString *roomId, NSInteger errorCode);
+
 @property (nonatomic, weak, nullable) id<RTCNetworkProtocol> networkDelegate;
 
+/// 业务标识参数
+@property(nonatomic, copy, readonly) NSString *businessId;
+
 /// 开启连接
-/// @param scenes 场景标记
-/// @param loginToken 用户登录token
-/// @param block Callback
-- (void)connect:(NSString *)scenes
-     loginToken:(NSString *)loginToken
+- (void)connect:(NSString *)appID
+       RTSToken:(NSString *)RTMToken
+      serverUrl:(NSString *)serverUrl
+      serverSig:(NSString *)serverSig
+            bid:(NSString *)bid
           block:(void (^)(BOOL result))block;
 
 /// 关闭连接

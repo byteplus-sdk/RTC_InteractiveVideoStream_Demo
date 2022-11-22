@@ -84,7 +84,7 @@
     if (VideoChatUserStatusActive == self.loginUserModel.status) {
         self.loginUserModel.status = VideoChatUserStatusDefault;
         [self updateBottomLists:self.loginUserModel isPKing:NO];
-        [[ToastComponents shareToastComponents] showWithMessage:LocalizedString(@"Host has disconnected with you")];
+        [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"Host has disconnected with you")];
         
         [[VideoChatRTCManager shareRtc] enableLocalAudio:NO];
         [[VideoChatRTCManager shareRtc] enableLocalVideo:NO];

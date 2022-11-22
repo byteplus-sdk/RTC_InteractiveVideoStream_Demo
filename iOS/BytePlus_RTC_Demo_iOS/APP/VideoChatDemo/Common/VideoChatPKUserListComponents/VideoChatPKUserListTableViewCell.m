@@ -5,13 +5,13 @@
 
 #import <Core/Localizator.h>
 #import "VideoChatPKUserListTableViewCell.h"
-#import "VideoChatAvatarCompoments.h"
+#import "VideoChatAvatarComponent.h"
 
 @interface VideoChatPKUserListTableViewCell ()
 
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) BaseButton *rightButton;
-@property (nonatomic, strong) VideoChatAvatarCompoments *avatarView;
+@property (nonatomic, strong) VideoChatAvatarComponent *avatarView;
 
 @end
 
@@ -97,9 +97,9 @@
     return _rightButton;
 }
 
-- (VideoChatAvatarCompoments *)avatarView {
+- (VideoChatAvatarComponent *)avatarView {
     if (!_avatarView) {
-        _avatarView = [[VideoChatAvatarCompoments alloc] init];
+        _avatarView = [[VideoChatAvatarComponent alloc] init];
         _avatarView.layer.cornerRadius = 20;
         _avatarView.layer.masksToBounds = YES;
         _avatarView.fontSize = 20;

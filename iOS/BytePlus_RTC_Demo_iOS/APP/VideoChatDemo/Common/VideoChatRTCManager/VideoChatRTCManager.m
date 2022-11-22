@@ -196,7 +196,7 @@
         return nil;
     }
     NSString *typeStr = @"";
-    if ([uid isEqualToString:[LocalUserComponents userModel].uid]) {
+    if ([uid isEqualToString:[LocalUserComponent userModel].uid]) {
         typeStr = @"self";
     } else {
         typeStr = @"remote";
@@ -209,7 +209,7 @@
 
 - (void)bingCanvasViewToUid:(NSString *)uid {
     dispatch_queue_async_safe(dispatch_get_main_queue(), (^{
-        if ([uid isEqualToString:[LocalUserComponents userModel].uid]) {
+        if ([uid isEqualToString:[LocalUserComponent userModel].uid]) {
             UIView *view = [self getStreamViewWithUid:uid];
             if (!view) {
                 UIView *streamView = [[UIView alloc] init];
@@ -364,7 +364,7 @@
         liveStatus = VideoChatNetworkQualityStatusBad;
     }
     if (self.networkQualityBlock) {
-        self.networkQualityBlock(liveStatus, [LocalUserComponents userModel].uid);
+        self.networkQualityBlock(liveStatus, [LocalUserComponent userModel].uid);
     }
 }
 

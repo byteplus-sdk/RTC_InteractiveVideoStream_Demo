@@ -7,7 +7,7 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import "Localizator.h"
 #import "NetworkReachabilityManager.h"
-#import "ToastComponents.h"
+#import "ToastComponent.h"
 #import "DeviceInforTool.h"
 
 @interface NetworkReachabilityManager ()
@@ -79,11 +79,11 @@
 - (void)showSocketIsDisconnect:(BOOL)isDisconnect {
     if (isDisconnect) {
         UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-        [[ToastComponents shareToastComponents] showWithMessage:CLocalizedString(@"No internet connection. Connect to the internet and ty again.") view:keyWindow keep:YES block:^(BOOL result) {
+        [[ToastComponent shareToastComponent] showWithMessage:CLocalizedString(@"No internet connection. Connect to the internet and ty again.") view:keyWindow keep:YES block:^(BOOL result) {
             
         }];
     } else {
-        [[ToastComponents shareToastComponents] dismiss];
+        [[ToastComponent shareToastComponent] dismiss];
     }
 }
 

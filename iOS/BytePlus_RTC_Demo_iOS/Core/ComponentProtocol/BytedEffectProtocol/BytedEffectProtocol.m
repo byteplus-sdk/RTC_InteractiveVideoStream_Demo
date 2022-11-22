@@ -14,9 +14,9 @@
 @implementation BytedEffectProtocol
 
 - (instancetype)initWithRTCEngineKit:(ByteRTCEngineKit *)rtcEngineKit {
-    NSObject<BytedEffectDelegate> *effectBeautyCompoments = [[NSClassFromString(@"EffectBeautyCompoments") alloc] init];
-    if (effectBeautyCompoments) {
-        self.bytedEffectDelegate = effectBeautyCompoments;
+    NSObject<BytedEffectDelegate> *effectBeautyComponent = [[NSClassFromString(@"EffectBeautyComponent") alloc] init];
+    if (effectBeautyComponent) {
+        self.bytedEffectDelegate = effectBeautyComponent;
     }
     
     if ([self.bytedEffectDelegate respondsToSelector:@selector(protocol:initWithRTCEngineKit:)]) {

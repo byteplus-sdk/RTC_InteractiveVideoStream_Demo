@@ -30,22 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
             loginToken:(NSString *)loginToken
                  block:(void (^ __nullable)(NetworkingResponse *response))block;
 
-#pragma mark - RTM
-
-/*
- * Join RTM
- * @param scenes Scenes name
- * @param loginToken Login token
- * @param block Callback
- */
-+ (void)joinRTM:(NSString *)scenes
-     loginToken:(NSString *)loginToken
-          block:(void (^ __nullable)(NSString * _Nullable appID,
-                                     NSString * _Nullable RTMToken,
-                                     NSString * _Nullable serverUrl,
-                                     NSString * _Nullable serverSig,
-                                     NetworkingResponse *response))block;
-
 @end
 
 NS_ASSUME_NONNULL_END

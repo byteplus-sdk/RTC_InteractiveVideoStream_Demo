@@ -60,7 +60,7 @@
     }];
     
     [self scenesButtonAction];
-    if (IsEmptyStr([LocalUserComponents userModel].loginToken)) {
+    if (IsEmptyStr([LocalUserComponent userModel].loginToken)) {
         [self showLoginVC:NO];
     }
     [[NetworkReachabilityManager sharedManager] startMonitoring];
@@ -84,12 +84,12 @@
         [[AlertActionManager shareAlertActionManager] dismiss:^{
             [self showLoginVC:YES];
         }];
-        [[ToastComponents shareToastComponents] showWithMessage:LocalizedString(@"A user with the same ID has logged in. You will be forced to log out.") delay:2];
+        [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"A user with the same ID has logged in. You will be forced to log out.") delay:2];
     } else {
         [self showLoginVC:YES];
     }
-    [LocalUserComponents userModel].loginToken = @"";
-    [LocalUserComponents updateLocalUserModel:nil];
+    [LocalUserComponent userModel].loginToken = @"";
+    [LocalUserComponent updateLocalUserModel:nil];
 }
 
 #pragma mark - Private Action

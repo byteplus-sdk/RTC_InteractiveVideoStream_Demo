@@ -19,7 +19,7 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 @property (nonatomic, copy) void (^rtcSetParamsBlock)(BOOL result);
 @property (nonatomic, strong) NSMutableDictionary *listenerDic;
 @property (nonatomic, strong) NSMutableDictionary *senderDic;
-@property (nonatomic, strong) RTCRoom *multiRoom;
+@property (nonatomic, strong) ByteRTCRoom *multiRoom;
 
 @end
 
@@ -35,33 +35,52 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
     return self;
 }
 
-- (void)connect:(NSString *)scenes
-     loginToken:(NSString *)loginToken
+- (void)connect:(NSString *)appID
+       RTSToken:(NSString *)RTMToken
+      serverUrl:(NSString *)serverUrl
+      serverSig:(NSString *)serverSig
+            bid:(NSString *)bid
           block:(void (^)(BOOL result))block {
-    if (IsEmptyStr(scenes) || IsEmptyStr(loginToken)) {
+    NSString *uid = [LocalUserComponent userModel].uid;
+    if (IsEmptyStr(uid)) {
         if (block) {
             block(NO);
         }
         return;
     }
+    if (self.rtcEngineKit) {
+        [self.rtcEngineKit destroyEngine];
+        self.rtcEngineKit = nil;
+    }
+    self.rtcEngineKit = [[ByteRTCEngineKit alloc] initWithAppId:appID
+                                                       delegate:self
+                                                     parameters:@{}];
+    _businessId = bid;
+    [self.rtcEngineKit setBusinessId:bid];
+    [self configeRTCEngine];
+    [self.rtcEngineKit login:RTMToken uid:uid];
     __weak __typeof(self) wself = self;
-    [NetworkingManager joinRTM:scenes
-                    loginToken:loginToken
-                         block:^(NSString * _Nullable appID,
-                                 NSString * _Nullable RTMToken,
-                                 NSString * _Nullable serverUrl,
-                                 NSString * _Nullable serverSig,
-                                 NetworkingResponse * _Nonnull response) {
-        [PublicParameterCompoments share].appId = appID;
-        if (!response.result) {
+    self.rtcLoginBlock = ^(BOOL result) {
+        wself.rtcLoginBlock = nil;
+        if (result) {
+            [wself.rtcEngineKit setServerParams:serverSig url:serverUrl];
+        } else {
+            wself.rtcSetParamsBlock = nil;
             if (block) {
-                block(NO);
+                dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
+                    block(result);
+                });
             }
-            return;
         }
-        [wself rtcConnect:appID RTMToken:RTMToken serverUrl:serverUrl
-                serverSig:serverSig block:block];
-    }];
+    };
+    self.rtcSetParamsBlock = ^(BOOL result) {
+        wself.rtcSetParamsBlock = nil;
+        if (block) {
+            dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
+                block(result);
+            });
+        }
+    };
 }
 
 - (void)disconnect {
@@ -79,23 +98,14 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 - (void)emitWithAck:(NSString *)event
                with:(NSDictionary *)item
               block:(RTCSendServerMessageBlock)block {
-    if (IsEmptyStr(event)) {
-        [self throwErrorAck:RTMStatusCodeInvalidArgument
-                    message:@"缺少EventName"
-                      block:block];
-        return;
-    }
+    NSAssert(NOEmptyStr(event), @"Missing EventName!");
+    
     NSString *appId = @"";
     NSString *roomId = @"";
     if ([item isKindOfClass:[NSDictionary class]]) {
         appId = item[@"app_id"];
         roomId = item[@"room_id"];
-        if (IsEmptyStr(appId)) {
-            [self throwErrorAck:RTMStatusCodeInvalidArgument
-                        message:@"缺少AppID"
-                          block:block];
-            return;
-        }
+        NSAssert(NOEmptyStr(appId), @"Missing AppID!");
     }
     NSString *wisd = [NetworkingTool getWisd];
     
@@ -103,7 +113,7 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
     requestModel.eventName = event;
     requestModel.app_id = appId;
     requestModel.roomID = roomId;
-    requestModel.userID = [LocalUserComponents userModel].uid;
+    requestModel.userID = [LocalUserComponent userModel].uid;
     requestModel.requestID = [NetworkingTool MD5ForLower16Bate:wisd];
     requestModel.content = [item yy_modelToJSONString];
     requestModel.deviceID = [NetworkingTool getDeviceId];
@@ -188,7 +198,7 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 }
 
 - (void)rtcEngineOnLogout:(ByteRTCEngineKit * _Nonnull)engine {
-    
+    NSLog(@"OnLogout");
 }
 
 // 收到业务服务器参数设置结果
@@ -208,17 +218,24 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
         NSString *joinTypeStr = [NSString stringWithFormat:@"%@", dic[@"join_type"]];
         joinType = joinTypeStr.integerValue;
     }
-    if (self.rtcJoinRoomBlock) {
-        void (^rtcJoinRoomBlock)(NSString *, NSInteger, NSInteger) = self.rtcJoinRoomBlock;
+    
+    dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
+        if (self.rtcJoinRoomBlock) {
+            self.rtcJoinRoomBlock(roomId, errorCode, joinType);
+        }
+    });
+    
+    if (state == ByteRTCErrorCodeDuplicateLogin) {
         dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
-            rtcJoinRoomBlock(roomId, errorCode, joinType);
+            if (self.rtcSameUserJoinRoomBlock) {
+                self.rtcSameUserJoinRoomBlock(roomId, state);
+            }
         });
     }
 }
 
 // 收到消息发送结果
-- (void)rtcEngine:(ByteRTCEngineKit *)engine onServerMessageSendResult:(int64_t)msgid
-            error:(ByteRTCUserMessageSendResult)error message:(NSData * _Nonnull)message {
+- (void)rtcEngine:(ByteRTCEngineKit * _Nonnull)engine onServerMessageSendResult:(int64_t)msgid error:(ByteRTCUserMessageSendResult)error message:(NSData * _Nonnull)message {
     if (error == ByteRTCUserMessageSendResultSuccess) {
         // 发送成功，等待业务回调信息
         return;
@@ -238,6 +255,12 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
     }
     if (NOEmptyStr(key)) {
         [self.senderDic removeObjectForKey:key];
+    }
+    
+    if (error == ByteRTCUserMessageSendResultNotLogin) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:NotificationLoginExpired object:@"logout"];
+        });
     }
 }
 
@@ -262,16 +285,16 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
     [self addLog:@"收到业务服务器、房间内、广播消息" message:message];
 }
 
-#pragma mark - RTCRoomDelegate
-- (void)rtcRoom:(RTCRoom *)rtcRoom onRoomWarning:(ByteRTCWarningCode)warningCode {
+#pragma mark - ByteRTCRoomDelegate
+- (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomWarning:(ByteRTCWarningCode)warningCode {
     NSLog(@"[%@]-OnRoomWarning %ld", [self class], (long)warningCode);
 }
 
-- (void)rtcRoom:(RTCRoom *)rtcRoom onRoomError:(ByteRTCErrorCode)errorCode {
+- (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomError:(ByteRTCErrorCode)errorCode {
     NSLog(@"[%@]-OnRoomError %ld", [self class], (long)errorCode);
 }
 
-- (void)rtcRoom:(RTCRoom *)rtcRoom onRoomStateChanged:(NSString *)roomId withUid:(NSString *)uid state:(NSInteger)state extraInfo:(NSString *)extraInfo {
+- (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomStateChanged:(NSString *)roomId withUid:(NSString *)uid state:(NSInteger)state extraInfo:(NSString *)extraInfo {
     NSDictionary *dic = [self dictionaryWithJsonString:extraInfo];
     NSInteger errorCode = state;
     NSInteger joinType = -1;
@@ -287,62 +310,17 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
     }
 }
 
-- (void)rtcRoom:(RTCRoom *)rtcRoom onRoomMessageReceived:(NSString *)uid message:(NSString *)message {
+- (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomMessageReceived:(NSString *)uid message:(NSString *)message {
     [self dispatchMessageFrom:uid message:message];
     [self addLog:@"收到房间消息" message:message];
 }
 
-- (void)rtcRoom:(RTCRoom *)rtcRoom onUserMessageReceived:(NSString *)uid message:(NSString *)message {
+- (void)rtcRoom:(ByteRTCRoom *)rtcRoom onUserMessageReceived:(NSString *)uid message:(NSString *)message {
     [self dispatchMessageFrom:uid message:message];
     [self addLog:@"收到单点消息" message:message];
 }
 
 #pragma mark - Private Action
-
-- (void)rtcConnect:(NSString *)appID
-          RTMToken:(NSString *)RTMToken
-         serverUrl:(NSString *)serverUrl
-         serverSig:(NSString *)serverSig
-             block:(void (^)(BOOL result))block {
-    NSString *uid = [LocalUserComponents userModel].uid;
-    if (IsEmptyStr(uid)) {
-        if (block) {
-            block(NO);
-        }
-        return;
-    }
-    if (self.rtcEngineKit) {
-        [self.rtcEngineKit destroyEngine];
-        self.rtcEngineKit = nil;
-    }
-    self.rtcEngineKit = [[ByteRTCEngineKit alloc] initWithAppId:appID
-                                                       delegate:self
-                                                     parameters:@{}];
-    [self configeRTCEngine];
-    [self.rtcEngineKit login:RTMToken uid:uid];
-    __weak __typeof(self) wself = self;
-    self.rtcLoginBlock = ^(BOOL result) {
-        wself.rtcLoginBlock = nil;
-        if (result) {
-            [wself.rtcEngineKit setServerParams:serverSig url:serverUrl];
-        } else {
-            wself.rtcSetParamsBlock = nil;
-            if (block) {
-                dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
-                    block(result);
-                });
-            }
-        }
-    };
-    self.rtcSetParamsBlock = ^(BOOL result) {
-        wself.rtcSetParamsBlock = nil;
-        if (block) {
-            dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
-                block(result);
-            });
-        }
-    };
-}
 
 - (void)dispatchMessageFrom:(NSString *)uid message:(NSString *)message {
     NSDictionary *dic = [NetworkingTool decodeJsonMessage:message];
@@ -350,12 +328,14 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
         return;
     }
     NSString *messageType = dic[@"message_type"];
-    if ([messageType isEqualToString:RTMMessageTypeResponse]) {
+    if ([messageType isKindOfClass:[NSString class]] &&
+        [messageType isEqualToString:RTMMessageTypeResponse]) {
         [self receivedResponseFrom:uid object:dic];
         return;
     }
     
-    if ([messageType isEqualToString:RTMMessageTypeNotice]) {
+    if ([messageType isKindOfClass:[NSString class]] &&
+        [messageType isEqualToString:RTMMessageTypeNotice]) {
         [self receivedNoticeFrom:uid object:dic];
         return;
     }

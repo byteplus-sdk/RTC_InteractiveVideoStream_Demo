@@ -7,3 +7,4 @@
 "Generating token failed. Please try again" = "服务端Token生成失败，请重试";
 "No internet connection. Connect to the internet and ty again." = "网络链接已断开，请检查设置";
 "Request failed. Please retry." = "系统繁忙，请稍后重试";
+"Failed to get RTM configuration parameters" = "获取RTM配置参数出错";

@@ -1,6 +1,0 @@
-framework module BytePlusRTC {
-  umbrella header "BytePlusRTC.h"
-
-  export *
-  module * { export * }
-}

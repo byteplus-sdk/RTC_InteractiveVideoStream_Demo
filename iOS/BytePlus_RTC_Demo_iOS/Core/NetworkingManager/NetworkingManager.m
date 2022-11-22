@@ -49,41 +49,12 @@
     [self postWithEventName:@"changeUserName" content:content block:block];
 }
 
-#pragma mark - RTM
-
-+ (void)joinRTM:(NSString *)scenes
-     loginToken:(NSString *)loginToken
-          block:(void (^)(NSString * _Nullable,
-                          NSString * _Nullable,
-                          NSString * _Nullable,
-                          NSString * _Nullable,
-                          NetworkingResponse * _Nonnull))block {
-    NSDictionary *content = @{@"scenes_name" : scenes ?: @"",
-                              @"login_token" : loginToken ?: @""};
-    [self postWithEventName:@"joinRTM" content:content
-                      block:^(NetworkingResponse *response) {
-        NSString *appID = nil;
-        NSString *RTMToken = nil;
-        NSString *serverUrl = nil;
-        NSString *serverSig = nil;
-        if (response.result) {
-            appID = response.response[@"app_id"];
-            RTMToken = response.response[@"rtm_token"];
-            serverUrl = response.response[@"server_url"];
-            serverSig = response.response[@"server_signature"];
-        }
-        if (block) {
-            block(appID, RTMToken, serverUrl, serverSig, response);
-        }
-    }];
-}
-
 #pragma mark -
 
 + (void)postWithEventName:(NSString *)eventName
                   content:(NSDictionary *)content
                     block:(void (^ __nullable)(NetworkingResponse *response))block {
-    NSString *appid = [PublicParameterCompoments share].appId;
+    NSString *appid = [PublicParameterComponent share].appId;
     NSDictionary *parameters = @{@"event_name" : eventName ?: @"",
                                  @"content" : [content yy_modelToJSONString] ?: @{},
                                  @"device_id" : [NetworkingTool getDeviceId] ?: @"",

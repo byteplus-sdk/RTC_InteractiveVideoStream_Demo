@@ -6,7 +6,7 @@
 #import <Core/Localizator.h>
 #import "VideoChatPKUserListView.h"
 #import "VideoChatPKUserListTableViewCell.h"
-#import "VideoChatEmptyCompoments.h"
+#import "VideoChatEmptyComponent.h"
 
 @interface VideoChatPKUserListView ()
 <
@@ -18,7 +18,7 @@ VideoChatPKUserListTableViewCellDelegate
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIView *lineView;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) VideoChatEmptyCompoments *emptyCompoments;
+@property (nonatomic, strong) VideoChatEmptyComponent *emptyComponent;
 
 @end
 
@@ -55,9 +55,9 @@ VideoChatPKUserListTableViewCellDelegate
     _dataArray = dataArray;
     [self.tableView reloadData];
     if (dataArray.count <= 0) {
-        [self.emptyCompoments show];
+        [self.emptyComponent show];
     } else {
-        [self.emptyCompoments dismiss];
+        [self.emptyComponent dismiss];
     }
 }
 
@@ -114,12 +114,12 @@ VideoChatPKUserListTableViewCellDelegate
     return _tableView;
 }
 
-- (VideoChatEmptyCompoments *)emptyCompoments {
-    if (!_emptyCompoments) {
-        _emptyCompoments = [[VideoChatEmptyCompoments alloc] initWithView:self.tableView
+- (VideoChatEmptyComponent *)emptyComponent {
+    if (!_emptyComponent) {
+        _emptyComponent = [[VideoChatEmptyComponent alloc] initWithView:self.tableView
                                                                   message:LocalizedString(@"No hosts are broadcasting LIVE")];
     }
-    return _emptyCompoments;
+    return _emptyComponent;
 }
 
 

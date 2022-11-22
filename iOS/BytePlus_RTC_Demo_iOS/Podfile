@@ -1,32 +1,25 @@
 source 'https://cdn.cocoapods.org/'
-source 'https://github.com/volcengine/volcengine-specs.git'
-
+source 'https://github.com/byteplus-sdk/byteplus-specs.git'
 # RTC SDK
-pod 'BytePlusRTC', :path => './BytePlusRTC'
+pod 'BytePlusRTC', '3.46.111'
 
 target 'veRTC_Demo' do
-  platform :ios, '12.0'
-  # 依赖 SDK
   # Depends on SDK
   pod 'Masonry'
   pod 'YYModel'
   pod 'AFNetworking', '~> 4.0'
   
-  # 基础组件
   # Basic components
   pod 'Core', :path => 'Core'
-
-  # 场景化源码
+  
   # Scene source code
-  # 登录
   # Login
   pod 'Login', :path => 'APP/Login'
 
-  # 视频互动
+  # RTS login information
+  pod 'JoinRTSParams', :path => 'APP/JoinRTSParams'
+  
   # Interactive Video streaming
   pod 'VideoChatDemo', :path => 'APP/VideoChatDemo'
-
+  
 end
-
-
-
