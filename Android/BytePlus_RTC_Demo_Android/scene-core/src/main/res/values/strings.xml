@@ -38,6 +38,8 @@
 
 
     <string name="error_msg_sensitive_word_input">输入内容包含敏感词，请重新输入</string>
-    <string name="rtm_login_fail">RTM 登陆失败:%d</string>
+    <string name="rtm_login_fail">RTM Login Failed:%d</string>
     <string name="rtm_set_server_fail">RTM设置业务服务器参数失败:%d</string>
+    <string name="input_send">Send</string>
+    <string name="input_hint">Add comment</string>
 </resources>

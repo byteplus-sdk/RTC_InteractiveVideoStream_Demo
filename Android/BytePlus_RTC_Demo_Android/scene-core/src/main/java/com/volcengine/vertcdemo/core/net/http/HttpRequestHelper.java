@@ -33,7 +33,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class HttpRequestHelper {
-    private static final String URL = "";
+    private static final String URL = BuildConfig.LOGIN_URL;
 
     private static final String TAG = "HttpRequestHelper";
 

@@ -13,11 +13,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        if (project.IS_TEST_ENV) {
-            buildConfigField('String', 'SOCKET_SERVER_HOST', '"https://rtc-newton.bytedance.com:443"')
-        } else {
-            buildConfigField('String', 'SOCKET_SERVER_HOST', '"https://rtcio.bytedance.com:443"')
-        }
+        ensureProperty('LOGIN_URL')
+        buildConfigField('String', 'LOGIN_URL', "\"${project.LOGIN_URL}\"")
     }
 
     buildTypes {
@@ -29,6 +26,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    viewBinding {
+        enabled = true
     }
 }
 repositories {
@@ -55,5 +56,11 @@ dependencies {
 
     implementation('io.socket:socket.io-client:1.0.1') {
         exclude group: 'org.json', module: 'json'
+    }
+}
+
+private def ensureProperty(String propertyName) {
+    if (!project.hasProperty(propertyName) || project[propertyName].isEmpty()) {
+        throw new GradleException("NO ${propertyName} defined in gradle.properties!")
     }
 }

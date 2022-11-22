@@ -7,6 +7,7 @@ package com.volcengine.vertcdemo;
 
 import static com.volcengine.vertcdemo.core.net.rtm.RtmInfo.KEY_RTM;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,6 +29,7 @@ import androidx.fragment.app.Fragment;
 
 import com.ss.video.rtc.demo.basic_module.utils.SafeToast;
 import com.ss.video.rtc.demo.basic_module.utils.Utilities;
+import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.core.SolutionDataManager;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
 import com.volcengine.vertcdemo.core.net.ServerResponse;
@@ -36,6 +38,8 @@ import com.volcengine.vertcdemo.core.net.rtm.RtmInfo;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
 
@@ -99,38 +103,22 @@ public class SceneEntryFragment extends Fragment {
                 SafeToast.show("Token not found.");
                 return;
             }
-            startScene(sceneNameAbbr, token, scene.activityInfo.name);
+            v.setEnabled(false);
+            IAction<Object> action = (o) -> v.setEnabled(true);
+            startScene(scene.activityInfo.name, action);
         };
     }
 
     /***
      * 开启业务场景
-     * @param sceneNameAbbr 场景名缩写
-     * @param token 登陆token
      * @param targetActivity 开启目标业务场景的入口Activity类名
+     * @param doneAction 开启目标业务场景的执行后执行的代码块
      */
-    private void startScene(String sceneNameAbbr, String token, String targetActivity) {
-        joinRTM(sceneNameAbbr, token, new IRequestCallback<ServerResponse<RtmInfo>>() {
-            @Override
-            public void onSuccess(ServerResponse<RtmInfo> response) {
-                if (!isVisible()) return;
-                RtmInfo data = response == null ? null : response.getData();
-                if (data == null || !data.isValid()) {
-                    onError(-1, "");
-                    return;
-                }
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Actions.CATEGORY_SCENE);
-                intent.setClassName(Utilities.getApplicationContext().getPackageName(), targetActivity);
-                intent.putExtra(KEY_RTM, data);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onError(int errorCode, String message) {
-                Log.e(TAG, "request rtm info fail");
-            }
-        });
+    private void startScene(String targetActivity, IAction<Object> doneAction) {
+        boolean res = invokePrepareSolutionParams(targetActivity, doneAction);
+        if (!res) {
+            SafeToast.show("enter solution failed");
+        }
     }
 
     @Nullable
@@ -140,86 +128,34 @@ public class SceneEntryFragment extends Fragment {
     }
 
     /**
-     * 请求场景初始化RTM所需的业务服务器等相关参数
+     * 反射执行要启动 activity 的 prepareSolutionParams(activity) 方法
      *
-     * @param scenesNameAbbr 场景名缩写
-     * @param loginToken     登陆Token
-     * @param callBack       请求回调
+     * @param targetActivity 要启动类的类名
      */
-    private static void setAppInfoAndJoinRTM(String scenesNameAbbr,
-                                             String loginToken,
-                                             IRequestCallback<ServerResponse<RtmInfo>> callBack) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private boolean invokePrepareSolutionParams(String targetActivity, IAction doneAction) {
         try {
-            JSONObject content = new JSONObject();
-            content.put("app_id", VolcConstants.APP_ID);
-            content.put("app_key", VolcConstants.APP_KEY);
-            content.put("volc_ak", VolcConstants.VOLC_AK);
-            content.put("volc_sk", VolcConstants.VOLC_SK);
-
-            JSONObject params = new JSONObject();
-            params.put("event_name", "setAppInfo");
-            params.put("content", content.toString());
-            params.put("device_id", SolutionDataManager.ins().getDeviceId());
-
-            HttpRequestHelper.sendPost(params, Void.class, new IRequestCallback<ServerResponse<Void>>() {
-                @Override
-                public void onSuccess(ServerResponse<Void> data) {
-                    try {
-                        JSONObject content = new JSONObject();
-                        content.put("scenes_name", scenesNameAbbr);
-                        content.put("login_token", loginToken);
-
-                        JSONObject params = new JSONObject();
-                        params.put("event_name", "joinRTM");
-                        params.put("content", content.toString());
-                        params.put("app_id", VolcConstants.APP_ID);
-                        params.put("device_id", SolutionDataManager.ins().getDeviceId());
-
-                        HttpRequestHelper.sendPost(params, RtmInfo.class, callBack);
-                    } catch (Exception e) {
-                        Log.d(TAG, "joinRTM failed", e);
-                        onError(-1, e.getMessage());
-                    }
-                }
-
-                @Override
-                public void onError(int errorCode, String message) {
-                    callBack.onError(errorCode, message);
-                }
-            });
-        } catch (Exception e) {
-            Log.d(TAG, "setAppInfo failed", e);
-            callBack.onError(-1, e.getMessage());
+            Class clz = Class.forName(targetActivity);
+            if (clz == null) {
+                return false;
+            }
+            Method method = clz.getMethod("prepareSolutionParams", Activity.class, IAction.class);
+            if (method == null) {
+                return false;
+            }
+            method.invoke(null, getActivity(), doneAction);
+            return true;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            Log.e(TAG, "can not find class");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            Log.e(TAG, "can not find method");
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+            Log.e(TAG, "method invoke error");
         }
-    }
-
-    /**
-     * 请求场景初始化RTM所需的业务服务器等相关参数
-     *
-     * @param scenesNameAbbr 场景名缩写
-     * @param loginToken     登陆Token
-     * @param callBack       请求回调
-     */
-    private static void joinRTM(String scenesNameAbbr,
-                                             String loginToken,
-                                             IRequestCallback<ServerResponse<RtmInfo>> callBack) {
-        try {
-
-            JSONObject content = new JSONObject();
-            content.put("scenes_name", scenesNameAbbr);
-            content.put("login_token", loginToken);
-
-            JSONObject params = new JSONObject();
-            params.put("event_name", "joinRTM");
-            params.put("content", content.toString());
-            params.put("app_id", VolcConstants.APP_ID);
-            params.put("device_id", SolutionDataManager.ins().getDeviceId());
-
-            HttpRequestHelper.sendPost(params, RtmInfo.class, callBack);
-        } catch (Exception e) {
-            Log.d(TAG, "setAppInfo failed", e);
-            callBack.onError(-1, e.getMessage());
-        }
+        return false;
     }
 
     /**
