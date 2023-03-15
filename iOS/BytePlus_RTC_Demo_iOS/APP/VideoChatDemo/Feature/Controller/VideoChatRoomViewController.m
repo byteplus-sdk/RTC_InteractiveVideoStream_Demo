@@ -125,7 +125,7 @@ VideoChatSeatDelegate
                                               RTMACKModel * _Nonnull model) {
         
         if (model.result) {
-            [self updateRoomViewWithData:RTCToken
+            [self joinRTCRoomWithData:RTCToken
                                roomModel:roomModel
                                userModel:userModel
                            hostUserModel:hostUserModel
@@ -391,6 +391,9 @@ VideoChatSeatDelegate
     }
     // sdk api
     [[VideoChatRTCManager shareRtc] leaveChannel];
+    
+    [[VideoChatRTCManager shareRtc] pauseBackgroundMusic];
+    
     // ui
     [self navigationControllerPop];
 }
@@ -454,7 +457,7 @@ VideoChatSeatDelegate
                                             NSArray<VideoChatUserModel *> * _Nonnull anchorList,
                                             RTMACKModel * _Nonnull model) {
         if (NOEmptyStr(roomModel.roomID)) {
-            [wself updateRoomViewWithData:RTCToken
+            [wself joinRTCRoomWithData:RTCToken
                                 roomModel:roomModel
                                 userModel:userModel
                             hostUserModel:hostUserModel
@@ -619,7 +622,7 @@ VideoChatSeatDelegate
         [self loadDataWithJoinRoom];
         self.staticView.roomModel = self.roomModel;
     } else {
-        [self updateRoomViewWithData:self.rtcToken
+        [self joinRTCRoomWithData:self.rtcToken
                            roomModel:self.roomModel
                            userModel:self.hostUserModel
                        hostUserModel:self.hostUserModel
@@ -628,7 +631,7 @@ VideoChatSeatDelegate
     }
 }
 
-- (void)updateRoomViewWithData:(NSString *)rtcToken
+- (void)joinRTCRoomWithData:(NSString *)rtcToken
                      roomModel:(VideoChatRoomModel *)roomModel
                      userModel:(VideoChatUserModel *)userModel
                  hostUserModel:(VideoChatUserModel *)hostUserModel
@@ -637,12 +640,17 @@ VideoChatSeatDelegate
     _hostUserModel = hostUserModel;
     _roomModel = roomModel;
     _rtcToken = rtcToken;
+    BOOL isHost = (userModel.userRole == VideoChatUserRoleHost) ? YES : NO;
+
     //Activate SDK
     [[VideoChatRTCManager shareRtc] setUserVisibility:userModel.userRole == VideoChatUserRoleHost];
     [VideoChatRTCManager shareRtc].delegate = self;
-    [[VideoChatRTCManager shareRtc] joinChannelWithToken:rtcToken
+    
+    [[VideoChatRTCManager shareRtc] joinRTCRoomWithToken:rtcToken
                                                   roomID:self.roomModel.roomID
-                                                     uid:[LocalUserComponent userModel].uid];
+                                                     uid:[LocalUserComponent userModel].uid
+                                                userRole:isHost];
+    
     if (userModel.userRole == VideoChatUserRoleHost) {
         
         self.settingComponent.mic = userModel.mic == VideoChatUserMicOn;
@@ -855,7 +863,7 @@ VideoChatSeatDelegate
 
 - (BytedEffectProtocol *)beautyComponent {
     if (!_beautyComponent) {
-        _beautyComponent = [[BytedEffectProtocol alloc] initWithRTCEngineKit:[VideoChatRTCManager shareRtc].rtcEngineKit];
+        _beautyComponent = [[BytedEffectProtocol alloc] initWithRTCEngineKit:[VideoChatRTCManager shareRtc].rtcVideo];
     }
     return _beautyComponent;
 }

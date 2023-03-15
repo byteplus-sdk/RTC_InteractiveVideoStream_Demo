@@ -3,7 +3,7 @@
     <string name="privacy_policy_txt">隐私协议</string>
     <string name="terms_service_txt">服务协议</string>
     <string name="dis_claimer_txt">免责声明</string>
-    <string name="app_version_txt">Demo版本</string>
+    <string name="app_version_txt">App版本</string>
     <string name="sdk_version_txt">Sdk版本</string>
     <string name="logout_txt">退出登录</string>
     <string name="tab_home">主页</string>

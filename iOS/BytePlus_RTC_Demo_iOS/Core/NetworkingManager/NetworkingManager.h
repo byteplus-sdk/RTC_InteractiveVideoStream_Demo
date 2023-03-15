@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Base
 
 + (void)postWithEventName:(NSString *)eventName
+                    space:(NSString *)space
                   content:(NSDictionary *)content
                     block:(void (^ __nullable)(NetworkingResponse *response))block;
 

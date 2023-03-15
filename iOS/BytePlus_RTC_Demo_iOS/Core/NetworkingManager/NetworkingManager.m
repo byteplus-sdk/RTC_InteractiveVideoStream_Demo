@@ -46,12 +46,13 @@
                  block:(void (^)(NetworkingResponse * _Nonnull))block {
     NSDictionary *content = @{@"user_name" : userName ?: @"",
                               @"login_token" : loginToken ?: @""};
-    [self postWithEventName:@"changeUserName" content:content block:block];
+    [self postWithEventName:@"changeUserName" space:@"login" content:content block:block];
 }
 
 #pragma mark -
 
 + (void)postWithEventName:(NSString *)eventName
+                    space:(NSString *)space
                   content:(NSDictionary *)content
                     block:(void (^ __nullable)(NetworkingResponse *response))block {
     NSString *appid = [PublicParameterComponent share].appId;
@@ -59,7 +60,8 @@
                                  @"content" : [content yy_modelToJSONString] ?: @{},
                                  @"device_id" : [NetworkingTool getDeviceId] ?: @"",
                                  @"app_id" : appid ? appid : @""};
-    [[self shareManager].sessionManager POST:LoginUrl
+    NSString *URLString = [NSString stringWithFormat:@"%@/%@",LoginUrl, space];
+    [[self shareManager].sessionManager POST:URLString
                                   parameters:parameters
                                      headers:nil
                                     progress:nil

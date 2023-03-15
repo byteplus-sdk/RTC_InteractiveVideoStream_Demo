@@ -7,6 +7,7 @@ ext {
     targetSdkVersion = 29
 
     // region Third part libraries
+    BYTE_PLUS = '3.45.612'
     GlideVersion = '4.12.0'
     GsonVersion = '2.8.5'
     EventBusVersion = '3.2.0'
@@ -20,6 +21,8 @@ ext {
     MaterialVersion = '1.4.0'
     // end region
 
+    JOIN_RTS_MODULE = 'joinrtsparams'
+    LOGIN_MODULE = 'login'
 }
 
 buildscript {
@@ -41,7 +44,7 @@ allprojects {
         }
         mavenCentral()
         maven { url 'https://artifact.bytedance.com/repository/Volcengine/' }
-        maven { url 'https://maven.byted.org/repository/android_public/' }
+        maven { url "https://artifact.byteplus.com/repository/public/" }
         google()
     }
 }

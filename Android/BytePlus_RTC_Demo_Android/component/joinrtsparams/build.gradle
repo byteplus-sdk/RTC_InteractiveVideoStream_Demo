@@ -19,11 +19,11 @@ android {
         ensureProperty('APP_KEY')
         buildConfigField('String', 'APP_KEY', "\"${project.APP_KEY}\"")
 
-        ensureProperty('ACCESS_KEY')
-        buildConfigField('String', 'ACCESS_KEY', "\"${project.ACCESS_KEY}\"")
+        ensureProperty('VOLC_AK')
+        buildConfigField('String', 'VOLC_AK', "\"${project.VOLC_AK}\"")
 
-        ensureProperty('SECRET_ACCESS_KEY')
-        buildConfigField('String', 'SECRET_ACCESS_KEY', "\"${project.SECRET_ACCESS_KEY}\"")
+        ensureProperty('VOLC_SK')
+        buildConfigField('String', 'VOLC_SK', "\"${project.VOLC_SK}\"")
     }
 
     buildTypes {

@@ -11,12 +11,12 @@ import android.os.Parcelable;
 import androidx.annotation.IntDef;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizInform;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizInform;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public class VCUserInfo implements Parcelable, RTMBizInform {
+public class VCUserInfo implements Parcelable, RTSBizInform {
 
     public static final int USER_ROLE_HOST = 1;
     public static final int USER_ROLE_AUDIENCE = 2;

@@ -1,4 +1,5 @@
 package com.vertcdemo.joinrtsparams.common;
+
 import com.vertcdemo.joinrtsparams.BuildConfig;
 
 public class Constants {
@@ -20,11 +21,11 @@ public class Constants {
      * 使用 RTS 时需要，用于服务端调用 RTS openapi 时鉴权使用。
      * 用来确认服务端有这个APPID的所有权 https://console.volcengine.com/iam/keymanage/
      */
-    public static final String ACCESS_KEY = BuildConfig.ACCESS_KEY;
+    public static final String VOLC_AK = BuildConfig.VOLC_AK;
 
     /**
      * 使用 RTS 时需要，用于服务端调用 RTS openapi 时鉴权使用。
      * 用来确认服务端有这个APPID的所有权 https://console.volcengine.com/iam/keymanage/
      */
-    public static final String SECRET_ACCESS_KEY = BuildConfig.SECRET_ACCESS_KEY;
+    public static final String VOLC_SK = BuildConfig.VOLC_SK;
 }

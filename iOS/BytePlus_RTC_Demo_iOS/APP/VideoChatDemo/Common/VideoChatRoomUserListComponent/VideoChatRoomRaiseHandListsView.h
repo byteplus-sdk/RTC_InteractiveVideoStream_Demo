@@ -13,7 +13,9 @@ static NSString *const KClearRedNotification = @"KClearRedNotification";
 
 @protocol VideoChatRoomRaiseHandListsViewDelegate <NSObject>
 
-- (void)VideoChatRoomRaiseHandListsView:(VideoChatRoomRaiseHandListsView *)VideoChatRoomRaiseHandListsView clickButton:(VideoChatUserModel *)model;
+- (void)VideoChatRoomRaiseHandListsView:(VideoChatRoomRaiseHandListsView *)VideoChatRoomRaiseHandListsView
+                            clickButton:(UIButton *)button
+                                  model:(VideoChatUserModel *)model;
 
 @end
 

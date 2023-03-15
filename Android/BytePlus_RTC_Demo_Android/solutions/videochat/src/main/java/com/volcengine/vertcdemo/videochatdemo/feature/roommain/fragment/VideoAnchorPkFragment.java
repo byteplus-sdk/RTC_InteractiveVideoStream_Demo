@@ -5,6 +5,8 @@
 
 package com.volcengine.vertcdemo.videochatdemo.feature.roommain.fragment;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,13 +25,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.ss.bytertc.engine.data.ForwardStreamInfo;
-import com.ss.bytertc.engine.handler.IRTCEngineEventHandler;
 import com.ss.bytertc.engine.type.NetworkQuality;
 import com.ss.video.rtc.demo.basic_module.utils.SafeToast;
 import com.ss.video.rtc.demo.basic_module.utils.Utilities;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochatdemo.bean.ManageOtherAnchorBroadcast;
 import com.volcengine.vertcdemo.videochatdemo.bean.MediaChangedBroadcast;
@@ -169,9 +170,9 @@ public class VideoAnchorPkFragment extends Fragment {
                 VideoChatRTCManager.ins().getRTMClient().manageOtherAnchor(
                         VideoChatDataManager.ins().selfUserInfo.userId,
                         VideoChatDataManager.ins().selfUserInfo.roomId,
-                        mPeerUid, targetType, new IRequestCallback<RTMBizResponse>() {
+                        mPeerUid, targetType, new IRequestCallback<RTSBizResponse>() {
                     @Override
-                    public void onSuccess(RTMBizResponse data) {
+                    public void onSuccess(RTSBizResponse data) {
                         mMutingPeerAnchor = false;
                         VideoChatRTCManager.ins().muteRemoteAudio(mPeerUid, !mPeerAnchorMuted);
                         mPeerAnchorMuted = !mPeerAnchorMuted;
@@ -183,8 +184,18 @@ public class VideoAnchorPkFragment extends Fragment {
                     @Override
                     public void onError(int errorCode, String message) {
                         mMutingPeerAnchor = false;
-                        String msg = mPeerAnchorMuted ? "解除远端主播静音失败:" : "静音远端主播失败:";
-                        SafeToast.show(msg + errorCode + "," + message);
+                        Context context = getContext();
+                        if (context == null) {
+                            return;
+                        }
+                        Resources resources = getContext().getResources();
+                        if (resources == null) {
+                            return;
+                        }
+                        String msg = mPeerAnchorMuted
+                                ? resources.getString(R.string.video_chat_failed_unmute_co_host)
+                                : resources.getString(R.string.video_chat_failed_mute_co_host);
+                        SafeToast.show(msg);
                     }
                 });
 
@@ -215,11 +226,12 @@ public class VideoAnchorPkFragment extends Fragment {
     }
 
     private void addSelfAnchorVideo() {
-        if (getHostUserInfo() == null || TextUtils.isEmpty(getHostUserInfo().userId)) {
+        final VCUserInfo userInfo = getHostUserInfo();
+        if (userInfo == null || TextUtils.isEmpty(userInfo.userId)) {
             return;
         }
         TextureView remoteVideoView = new TextureView(getContext());
-        VideoChatRTCManager.ins().setRemoteVideoView(getHostUserInfo().userId, remoteVideoView);
+        VideoChatRTCManager.ins().setRemoteVideoView(userInfo.roomId, userInfo.userId, remoteVideoView);
         mLocalVideoContainer.removeAllViews();
         mLocalVideoContainer.addView(remoteVideoView, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -230,7 +242,7 @@ public class VideoAnchorPkFragment extends Fragment {
             return;
         }
         TextureView remoteVideoView = new TextureView(getContext());
-        VideoChatRTCManager.ins().setRemoteVideoView(mPeerUid, remoteVideoView);
+        VideoChatRTCManager.ins().setRemoteVideoView(getHostUserInfo().roomId, mPeerUid, remoteVideoView);
         mRemoteVideoContainer.removeAllViews();
         mRemoteVideoContainer.addView(remoteVideoView, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));

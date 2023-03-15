@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -21,7 +22,6 @@ import com.volcengine.vertcdemo.core.annotation.MicStatus;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochatdemo.bean.InteractChangedBroadcast;
-import com.volcengine.vertcdemo.videochatdemo.core.VideoChatDataManager;
 import com.volcengine.vertcdemo.videochatdemo.core.VideoChatRTCManager;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -30,15 +30,18 @@ import org.greenrobot.eventbus.ThreadMode;
 public class VideoChatSettingDialog extends BaseDialog implements View.OnClickListener {
 
     private ImageView mBgmBtn;
+    private TextView mBgmTv;
     private ImageView mMicBtn;
     private ImageView mCameraBtn;
     private ImageView mCameraSwitchBtn;
     private String mRoomId;
+    private boolean mIsHost;
     IAction mBgmBtnAction;
 
-    public VideoChatSettingDialog(@NonNull Context context, String roomId, IAction bgmBtnAction) {
+    public VideoChatSettingDialog(@NonNull Context context, boolean isHost, String roomId, IAction bgmBtnAction) {
         super(context);
         this.mRoomId = roomId;
+        this.mIsHost = isHost;
         this.mBgmBtnAction = bgmBtnAction;
     }
 
@@ -51,7 +54,10 @@ public class VideoChatSettingDialog extends BaseDialog implements View.OnClickLi
 
     private void initUI() {
         mBgmBtn = findViewById(R.id.bgm_iv);
+        mBgmTv = findViewById(R.id.bgm_tv);
         mBgmBtn.setOnClickListener(this);
+        mBgmBtn.setVisibility(mIsHost ? View.VISIBLE : View.GONE);
+        mBgmTv.setVisibility(mIsHost ? View.VISIBLE : View.GONE);
         mMicBtn = findViewById(R.id.mic_iv);
         mMicBtn.setOnClickListener(this);
         mCameraBtn = findViewById(R.id.camera_iv);

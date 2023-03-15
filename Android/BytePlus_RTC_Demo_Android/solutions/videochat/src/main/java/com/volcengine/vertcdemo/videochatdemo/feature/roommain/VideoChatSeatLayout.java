@@ -124,7 +124,7 @@ public class VideoChatSeatLayout extends FrameLayout {
             } else {
                 mMicOffIv.setVisibility(VISIBLE);
             }
-            onUserCameraStateUpdated(mSeatInfo.userInfo.userId, mSeatInfo.userInfo.userName, mSeatInfo.userInfo.isCameraOn());
+            onUserCameraStateUpdated(mSeatInfo, mSeatInfo.userInfo.isCameraOn());
         }
     }
 
@@ -137,25 +137,26 @@ public class VideoChatSeatLayout extends FrameLayout {
         mSeatInfo.status = isLocked ? SEAT_STATUS_LOCKED : SEAT_STATUS_UNLOCKED;
     }
 
-    private void onUserCameraStateUpdated(String userID, String userName, boolean cameraOn) {
+    private void onUserCameraStateUpdated(VCSeatInfo seatInfo, boolean cameraOn) {
+        final VCUserInfo userInfo = seatInfo.userInfo;
         if (cameraOn) {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            TextureView renderView = VideoChatRTCManager.ins().getUserRenderView(userID);
+            TextureView renderView = VideoChatRTCManager.ins().getUserRenderView(userInfo.userId);
             Utilities.removeFromParent(renderView);
             mVideoContainer.addView(renderView, params);
-            if (TextUtils.equals(userID, SolutionDataManager.ins().getUserId())) {
+            if (TextUtils.equals(userInfo.userId, SolutionDataManager.ins().getUserId())) {
                 VideoChatRTCManager.ins().setLocalVideoView(renderView);
             } else {
-                VideoChatRTCManager.ins().setRemoteVideoView(userID, renderView);
+                VideoChatRTCManager.ins().setRemoteVideoView(userInfo.roomId, userInfo.userId, renderView);
             }
             mUserNamePrefixTv.setVisibility(GONE);
         } else {
             mVideoContainer.removeAllViews();
             mUserNamePrefixTv.setVisibility(VISIBLE);
-            if (TextUtils.equals(userID, SolutionDataManager.ins().getUserId())) {
+            if (TextUtils.equals(userInfo.userId, SolutionDataManager.ins().getUserId())) {
                 VideoChatRTCManager.ins().setLocalVideoView(null);
             } else {
-                VideoChatRTCManager.ins().setRemoteVideoView(userID, null);
+                VideoChatRTCManager.ins().setRemoteVideoView(mSeatInfo.userInfo.roomId, userInfo.userId, null);
             }
         }
     }
@@ -170,7 +171,7 @@ public class VideoChatSeatLayout extends FrameLayout {
             }
             if (mSeatInfo.userInfo.isCameraOn() != cameraOn) {
                 mSeatInfo.userInfo.camera = cameraOn ? VCUserInfo.CAMERA_STATUS_ON : VCUserInfo.CAMERA_STATUS_OFF;
-                onUserCameraStateUpdated(mSeatInfo.userInfo.userId, mSeatInfo.userInfo.userName, cameraOn);
+                onUserCameraStateUpdated(mSeatInfo, cameraOn);
             }
         }
     }

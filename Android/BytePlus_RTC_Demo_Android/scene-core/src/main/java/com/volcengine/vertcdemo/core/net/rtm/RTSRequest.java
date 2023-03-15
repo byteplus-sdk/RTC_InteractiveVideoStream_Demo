@@ -1,0 +1,34 @@
+/**
+ * Copyright 2022 BytePlus Pte. Ltd.
+ * SPDX-License-Identifier: MIT
+ */
+
+package com.volcengine.vertcdemo.core.net.rtm;
+
+import com.volcengine.vertcdemo.core.net.IRequestCallback;
+
+/**
+ * RTM 模拟http请求的封装
+ *
+ * @param <T>
+ */
+public class RTSRequest<T extends RTSBizResponse> {
+    /**
+     * 请求的接口名
+     */
+    public String eventName;
+    /**
+     * 请求的回调
+     */
+    public IRequestCallback<T> callback;
+    /**
+     * 业务服务器返回的数据类型
+     */
+    public Class<T> resultClass;
+
+    public RTSRequest(String eventName, IRequestCallback<T> callback, Class<T> resultClass) {
+        this.eventName = eventName;
+        this.callback = callback;
+        this.resultClass = resultClass;
+    }
+}

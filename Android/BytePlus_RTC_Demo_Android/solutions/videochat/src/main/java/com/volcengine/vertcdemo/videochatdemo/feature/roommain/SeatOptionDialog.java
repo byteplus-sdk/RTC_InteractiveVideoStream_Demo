@@ -27,7 +27,7 @@ import com.volcengine.vertcdemo.common.BaseDialog;
 import com.volcengine.vertcdemo.core.SolutionDataManager;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochatdemo.bean.AudienceChangedBroadcast;
 import com.volcengine.vertcdemo.videochatdemo.bean.InteractChangedBroadcast;
@@ -128,9 +128,9 @@ public class SeatOptionDialog extends BaseDialog {
     private void managerSeat(@VideoChatDataManager.SeatOption int option) {
         VideoChatRTCManager.ins().getRTMClient().managerSeat(
                 mRoomId, mSeatInfo.seatIndex, option,
-                new IRequestCallback<RTMBizResponse>() {
+                new IRequestCallback<RTSBizResponse>() {
                     @Override
-                    public void onSuccess(RTMBizResponse data) {
+                    public void onSuccess(RTSBizResponse data) {
 
                     }
 
@@ -162,7 +162,7 @@ public class SeatOptionDialog extends BaseDialog {
         mInteractBtn.setCompoundDrawables(null, drawable, null, null);
         if (selfRole == USER_ROLE_HOST) {
             if (userStatus != USER_STATUS_INTERACT) {
-                mInteractBtn.setText(R.string.invite_user_speak);
+                mInteractBtn.setText(R.string.invite_user_to_be_guest);
             } else {
                 mInteractBtn.setText(R.string.remove_co_host_txt);
             }
@@ -253,9 +253,9 @@ public class SeatOptionDialog extends BaseDialog {
                 managerSeat(VideoChatDataManager.SEAT_OPTION_END_INTERACT);
             } else if (!isHost && isSelf) {
                 VideoChatRTCManager.ins().getRTMClient().finishInteract(mRoomId, mSeatInfo.seatIndex,
-                        new IRequestCallback<RTMBizResponse>() {
+                        new IRequestCallback<RTSBizResponse>() {
                             @Override
-                            public void onSuccess(RTMBizResponse data) {
+                            public void onSuccess(RTSBizResponse data) {
 
                             }
 

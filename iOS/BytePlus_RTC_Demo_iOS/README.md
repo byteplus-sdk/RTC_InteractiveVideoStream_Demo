@@ -8,7 +8,7 @@ This open-source project doesn't support Effects-related function. Please downlo
 
 ## **Prerequisites**
 
-- [Xcode](https://developer.apple.com/download/all/?q=Xcode) 12.0+
+- [Xcode](https://developer.apple.com/download/all/?q=Xcode) 14.0+
 	
 
 - Real device that is running iOS 12.0 or later
@@ -37,21 +37,20 @@ Obtain the **AccessKeyID and SecretAccessKey** on the [Key Management](https://c
 
 ### **Step 4: Build project**
 
-1. Open a CLI on a terminal and go to the root directory `VideoChatDemo/iOS/veRTC_Demo_iOS`.
-    <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_e71df75e98414f78d7655bbf1041d139.png" width="500px" >
+1. Open a CLI on a terminal and go to the root directory `RTC_InteractiveVideoStream_Demo/iOS/BytePlus_RTC_Demo_iOS`
+    <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_9799a334a2ce40770671a0f6ed402f5d.png" width="500px" >
 
 2. Run the `pod install` command to build the project.<br>
-    <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_843598a4e02d37f67563067211346b8c.png" width="500px" >
+    <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_83d697baa807fb7c59d40d09c6accc30.png" width="500px" >
 
-
-3. Go to the root directory `VideoChatDemo/iOS/veRTC_Demo_iOS`. Launch Xcode and open the file `veRTC_Demo.xcworkspace<br>
-    <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_fbf6b5ed28609b0de80e4f0856bc50d6.png" width="500px" >
+3. Go to the root directory `RTC_InteractiveVideoStream_Demo/iOS/BytePlus_RTC_Demo_iOS`. Launch Xcode and open the file `veRTC_Demo.xcworkspace`<br>
+    <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_fb628014f0f80b42ba29f606fe84fc6e.png" width="500px" >
 
 4. In Xcode, open the file `Pods/Development Pods/Core/BuildConfig.h` .
 	
 
 5. Enter **LoginUrl**.<br>
- You can use **https://demo.byteplus.com/rtc/demo/rtc_demo_special/login** as the test domain name of the server. However, this domain name only provides testing running and cannot be used for official operations.
+ You can use **https://demo.byteplus.com/rtc/demo/rtc_demo_special** as the test domain name of the server. However, this domain name only provides testing running and cannot be used for official operations.
     <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_3bd21c7c517131e5bf02b9a3ca0a138b.png" width="500px" >
 
 6. **Enter AppID, AppKey, AccessKeyID, and SecretAccessKey.** <br>
@@ -75,7 +74,7 @@ Enter the **AppID, AppKey, AccessKeyID**, and **SecretAccessKey** obtained from 
 3.2 Select Personal Team from the **Team** pop-up menu.<br>
     <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_18045b7d675dd50aa3037b62012597ed.png" width="500px" >
 
-3.3 **Change Bundle** **Identifier****.**   <br>
+3.3 **Change Bundle** **Identifier**.   <br>
     The default `vertc.veRTCDemo.ios` has been registered. Change it to another Bundle ID in the format of `vertc.xxx`.
     <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_3f495e94b935f3e0ddf0f367d95d28bb.png" width="500px" >
 

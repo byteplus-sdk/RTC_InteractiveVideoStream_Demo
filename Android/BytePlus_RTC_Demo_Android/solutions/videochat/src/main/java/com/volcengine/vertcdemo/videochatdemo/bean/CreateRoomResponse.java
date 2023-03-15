@@ -6,9 +6,9 @@
 package com.volcengine.vertcdemo.videochatdemo.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 
-public class CreateRoomResponse implements RTMBizResponse {
+public class CreateRoomResponse implements RTSBizResponse {
 
     @SerializedName("room_info")
     public VCRoomInfo roomInfo;

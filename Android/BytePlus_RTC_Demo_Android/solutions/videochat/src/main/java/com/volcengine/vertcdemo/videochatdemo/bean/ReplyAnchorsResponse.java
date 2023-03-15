@@ -6,11 +6,11 @@
 package com.volcengine.vertcdemo.videochatdemo.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 
 import java.util.List;
 
-public class ReplyAnchorsResponse implements RTMBizResponse {
+public class ReplyAnchorsResponse implements RTSBizResponse {
     @SerializedName("interact_info_list")
     public List<InteractInfo> interactInfoList;
 

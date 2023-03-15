@@ -79,8 +79,8 @@
 }
 
 - (void)rightButtonAction:(BaseButton *)sender {
-    if ([self.delegate respondsToSelector:@selector(VideoChatRoomUserListtCell:clickButton:)]) {
-        [self.delegate VideoChatRoomUserListtCell:self clickButton:self.model];
+    if ([self.delegate respondsToSelector:@selector(VideoChatRoomUserListtCell:clickButton:model:)]) {
+        [self.delegate VideoChatRoomUserListtCell:self clickButton:sender model:self.model];
     }
 }
 

@@ -6,9 +6,9 @@
 package com.volcengine.vertcdemo.videochatdemo.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizInform;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizInform;
 
-public class InviteAnchorReplyBroadcast implements RTMBizInform {
+public class InviteAnchorReplyBroadcast implements RTSBizInform {
     @SerializedName("to_room_id")
     public String toRoomId;
     @SerializedName("to_user_id")

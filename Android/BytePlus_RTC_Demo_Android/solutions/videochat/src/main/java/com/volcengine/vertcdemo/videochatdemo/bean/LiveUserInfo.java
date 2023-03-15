@@ -10,9 +10,9 @@ import com.volcengine.vertcdemo.core.annotation.CameraStatus;
 import com.volcengine.vertcdemo.core.annotation.MicStatus;
 import com.volcengine.vertcdemo.core.annotation.RoleType;
 import com.volcengine.vertcdemo.core.annotation.UserStatus;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 
-public class LiveUserInfo implements RTMBizResponse {
+public class LiveUserInfo implements RTSBizResponse {
 
     @SerializedName("room_id")
     public String roomId;

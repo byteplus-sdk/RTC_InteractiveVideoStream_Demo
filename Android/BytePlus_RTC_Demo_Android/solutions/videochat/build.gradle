@@ -42,7 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     implementation project(":scene-core")
-    implementation project(":component:joinrtsparams")
+    implementation project(":component:$project.JOIN_RTS_MODULE")
 
     implementation "org.greenrobot:eventbus:$EventBusVersion"
     implementation "com.google.code.gson:gson:$GsonVersion"

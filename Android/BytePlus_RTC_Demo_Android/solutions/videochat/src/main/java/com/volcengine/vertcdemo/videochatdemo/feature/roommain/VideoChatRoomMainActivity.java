@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -47,7 +48,7 @@ import com.volcengine.vertcdemo.core.annotation.MicStatus;
 import com.volcengine.vertcdemo.core.eventbus.SocketConnectEvent;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochatdemo.CommonDialog;
 import com.volcengine.vertcdemo.videochatdemo.bean.AnchorInfo;
@@ -75,6 +76,7 @@ import com.volcengine.vertcdemo.videochatdemo.common.VideoChatSettingDialog;
 import com.volcengine.vertcdemo.videochatdemo.core.VideoChatDataManager;
 import com.volcengine.vertcdemo.videochatdemo.core.VideoChatRTCManager;
 import com.volcengine.vertcdemo.videochatdemo.core.event.AudioStatsEvent;
+import com.volcengine.vertcdemo.videochatdemo.feature.createroom.effect.VideoEffectDialog;
 import com.volcengine.vertcdemo.videochatdemo.feature.roommain.fragment.VideoAnchorPkFragment;
 import com.volcengine.vertcdemo.videochatdemo.feature.roommain.fragment.VideoChatRoomFragment;
 
@@ -139,9 +141,9 @@ public class VideoChatRoomMainActivity extends BaseActivity {
         }
     };
 
-    private final IRequestCallback<RTMBizResponse> mSendMessageCallback = new IRequestCallback<RTMBizResponse>() {
+    private final IRequestCallback<RTSBizResponse> mSendMessageCallback = new IRequestCallback<RTSBizResponse>() {
         @Override
-        public void onSuccess(RTMBizResponse data) {
+        public void onSuccess(RTSBizResponse data) {
 
         }
 
@@ -151,9 +153,9 @@ public class VideoChatRoomMainActivity extends BaseActivity {
         }
     };
 
-    private final IRequestCallback<RTMBizResponse> mFinishCallback = new IRequestCallback<RTMBizResponse>() {
+    private final IRequestCallback<RTSBizResponse> mFinishCallback = new IRequestCallback<RTSBizResponse>() {
         @Override
-        public void onSuccess(RTMBizResponse data) {
+        public void onSuccess(RTSBizResponse data) {
 
         }
 
@@ -163,9 +165,9 @@ public class VideoChatRoomMainActivity extends BaseActivity {
         }
     };
 
-    private final IRequestCallback<RTMBizResponse> mLeaveCallback = new IRequestCallback<RTMBizResponse>() {
+    private final IRequestCallback<RTSBizResponse> mLeaveCallback = new IRequestCallback<RTSBizResponse>() {
         @Override
-        public void onSuccess(RTMBizResponse data) {
+        public void onSuccess(RTSBizResponse data) {
 
         }
 
@@ -185,9 +187,9 @@ public class VideoChatRoomMainActivity extends BaseActivity {
                 VideoChatRTCManager.ins().getRTMClient().closeChatRoom(
                         VideoChatDataManager.ins().hostUserInfo.roomId,
                         VideoChatDataManager.ins().hostUserInfo.userId,
-                        new IRequestCallback<RTMBizResponse>() {
+                        new IRequestCallback<RTSBizResponse>() {
                             @Override
-                            public void onSuccess(RTMBizResponse data) {
+                            public void onSuccess(RTSBizResponse data) {
                                 mBizFl.post(VideoChatRoomMainActivity.this::closeChat);
                             }
 
@@ -245,9 +247,9 @@ public class VideoChatRoomMainActivity extends BaseActivity {
                 dialog.setPositiveListener(v -> {
                     mSelfEndPk = true;
                     VideoChatRTCManager.ins().getRTMClient().finishAnchorInteract(getRoomInfo().roomId,
-                            new IRequestCallback<RTMBizResponse>() {
+                            new IRequestCallback<RTSBizResponse>() {
                                 @Override
-                                public void onSuccess(RTMBizResponse data) {
+                                public void onSuccess(RTSBizResponse data) {
                                     Log.i(TAG, "onPkClick mVideoPkFragment:" + mVideoPkFragment);
                                     if (mVideoPkFragment != null) {
                                         SafeToast.show(getString(R.string.removed_from_co_host, mVideoPkFragment.getPeerUname()));
@@ -319,12 +321,15 @@ public class VideoChatRoomMainActivity extends BaseActivity {
 
         @Override
         public void onEffectClick() {
-            SafeToast.show(R.string.effect_toast);
+            new VideoEffectDialog(VideoChatRoomMainActivity.this).show();
         }
 
         @Override
         public void onSettingsClick() {
-            new VideoChatSettingDialog(VideoChatRoomMainActivity.this, getRoomInfo().roomId, obj -> onBGMClick()).show();
+            new VideoChatSettingDialog(VideoChatRoomMainActivity.this,
+                    getSelfUserInfo().isHost(),
+                    getRoomInfo().roomId,
+                    obj -> onBGMClick()).show();
         }
     };
 
@@ -465,16 +470,17 @@ public class VideoChatRoomMainActivity extends BaseActivity {
     }
 
     private void setLocalLive() {
-        TextureView renderView = VideoChatRTCManager.ins().getUserRenderView(getHostUserInfo().userId);
+        final VCUserInfo userInfo = getHostUserInfo();
+        TextureView renderView = VideoChatRTCManager.ins().getUserRenderView(userInfo.userId);
         Utilities.removeFromParent(renderView);
         if (getSelfUserInfo() != null && getSelfUserInfo().isHost()) {
             VideoChatRTCManager.ins().setLocalVideoView(renderView);
         } else {
-            VideoChatRTCManager.ins().setRemoteVideoView(getHostUserInfo().userId, renderView);
+            VideoChatRTCManager.ins().setRemoteVideoView(userInfo.roomId, userInfo.userId, renderView);
         }
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mLocalLiveFl.addView(renderView, params);
-        if (getHostUserInfo().camera == VCUserInfo.CAMERA_STATUS_OFF) {
+        if (userInfo.camera == VCUserInfo.CAMERA_STATUS_OFF) {
             mLocalAnchorNameFl.setVisibility(View.VISIBLE);
         }
     }
@@ -487,10 +493,19 @@ public class VideoChatRoomMainActivity extends BaseActivity {
     @Override
     public void finish() {
         super.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
         closeInput();
         VideoChatDataManager.ins().clearData();
         SolutionDemoEventManager.unregister(this);
         VideoChatRTCManager.ins().leaveRoom();
+        VideoChatRTCManager.ins().startAudioMixing(false);
+        VideoChatRTCManager.ins().startVideoCapture(false);
+        VideoChatRTCManager.ins().startAudioCapture(false);
         if (getSelfUserInfo() == null || getRoomInfo() == null) {
             return;
         }
@@ -517,6 +532,7 @@ public class VideoChatRoomMainActivity extends BaseActivity {
 
     private void attemptLeave() {
         if (getSelfUserInfo() == null || !getSelfUserInfo().isHost()) {
+            SafeToast.show(R.string.you_has_audience_txt);
             finish();
             return;
         }
@@ -946,7 +962,7 @@ public class VideoChatRoomMainActivity extends BaseActivity {
         if (mVideoPkFragment != null) {
             peerName = mVideoPkFragment.getPeerUname();
         }
-        if (!TextUtils.isEmpty(peerName)) {
+        if (!TextUtils.isEmpty(peerName) && getSelfUserInfo().isHost()) {
             if (mSelfEndPk) {
                 SafeToast.show(getString(R.string.removed_from_co_host, peerName));
             } else {

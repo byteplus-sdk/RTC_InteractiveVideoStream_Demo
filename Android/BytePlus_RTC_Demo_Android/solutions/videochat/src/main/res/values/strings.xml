@@ -50,6 +50,7 @@
     <string name="inviting_btn">Invited</string>
     <string name="accept">Accept</string>
     <string name="invite_user_speak">Make co-host</string>
+    <string name="invite_user_to_be_guest">Invite</string>
     <string name="all_seats_filled_up_txt">All host seats have been filled up</string>
     <string name="invite_user_busy">The Invited is busy</string>
     <string name="inviting">Invitation has been sent. Waiting for responding.</string>
@@ -123,5 +124,7 @@
 
     <string name="btn_confirm">Confirm</string>
     <string name="request_rtm_fail">Failed to get RTM configuration parameters</string>
-    <string name="effect_toast">This open-source project doesn\'t support Effects-related function. Please download BytePlus demo to experience it.</string>
+
+    <string name="video_chat_failed_mute_co_host">Failed to mute remote co-host</string>
+    <string name="video_chat_failed_unmute_co_host">Failed to unmute remote co-host</string>
 </resources>

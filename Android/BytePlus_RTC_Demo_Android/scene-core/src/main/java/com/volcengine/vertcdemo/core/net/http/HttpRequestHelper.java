@@ -33,7 +33,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class HttpRequestHelper {
-    private static final String URL = BuildConfig.LOGIN_URL;
 
     private static final String TAG = "HttpRequestHelper";
 
@@ -43,7 +42,7 @@ public class HttpRequestHelper {
     public static <T> void sendPost(JSONObject params,
                                     Class<T> resultClass,
                                     @NonNull IRequestCallback<ServerResponse<T>> callBack) {
-        AppExecutors.networkIO().execute(() -> sendPost(URL, params, resultClass, callBack));
+        AppExecutors.networkIO().execute(() -> sendPost(BuildConfig.LOGIN_URL, params, resultClass, callBack));
     }
 
     @WorkerThread

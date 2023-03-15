@@ -24,11 +24,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ss.bytertc.engine.handler.IRTCEngineEventHandler;
-import com.ss.bytertc.engine.type.AudioVolumeInfo;
 import com.ss.video.rtc.demo.basic_module.utils.SafeToast;
 import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.core.SolutionDataManager;
+import com.volcengine.vertcdemo.core.eventbus.AudioVolumeEvent;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochatdemo.bean.InteractChangedBroadcast;
@@ -41,7 +40,6 @@ import com.volcengine.vertcdemo.videochatdemo.bean.VCSeatInfo;
 import com.volcengine.vertcdemo.videochatdemo.bean.VCUserInfo;
 import com.volcengine.vertcdemo.videochatdemo.core.VideoChatDataManager;
 import com.volcengine.vertcdemo.videochatdemo.core.VideoChatRTCManager;
-import com.volcengine.vertcdemo.videochatdemo.core.event.AudioVolumeEvent;
 import com.volcengine.vertcdemo.videochatdemo.feature.roommain.AudienceManagerDialog;
 import com.volcengine.vertcdemo.videochatdemo.feature.roommain.SeatOptionDialog;
 import com.volcengine.vertcdemo.videochatdemo.feature.roommain.VideoChatRoomMainActivity;
@@ -191,9 +189,9 @@ public class VideoChatRoomFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAudioVolumeEvent(AudioVolumeEvent event) {
-        AudioVolumeInfo[] infos = event.speakers;
+        AudioVolumeEvent.Info[] infos = event.speakers;
         if (infos != null && infos.length != 0) {
-            for (AudioVolumeInfo info : infos) {
+            for (AudioVolumeEvent.Info info : infos) {
                 mSeatsGroupLayout.onUserSpeaker(info.uid, info.linearVolume);
             }
         }

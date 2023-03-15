@@ -9,14 +9,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JoinRoomResponse implements Parcelable, RTMBizResponse {
+public class JoinRoomResponse implements Parcelable, RTSBizResponse {
     public boolean isFromCreate = true;
     @SerializedName("room_info")
     public VCRoomInfo roomInfo;

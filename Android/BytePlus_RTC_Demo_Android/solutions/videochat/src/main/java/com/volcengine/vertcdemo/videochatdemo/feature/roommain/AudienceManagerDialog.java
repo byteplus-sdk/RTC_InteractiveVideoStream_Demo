@@ -27,7 +27,7 @@ import com.volcengine.vertcdemo.common.BaseDialog;
 import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochatdemo.bean.AudienceApplyBroadcast;
 import com.volcengine.vertcdemo.videochatdemo.bean.AudienceChangedBroadcast;
@@ -106,13 +106,13 @@ public class AudienceManagerDialog extends BaseDialog {
             return;
         }
         int status = userInfo.userStatus;
-        IRequestCallback<RTMBizResponse> callback = new IRequestCallback<RTMBizResponse>() {
+        IRequestCallback<RTSBizResponse> callback = new IRequestCallback<RTSBizResponse>() {
             @Override
-            public void onSuccess(RTMBizResponse data) {
+            public void onSuccess(RTSBizResponse data) {
                 if (userInfo.userStatus != VCUserInfo.USER_STATUS_APPLYING) {
                     SafeToast.show(R.string.inviting);
                     VideoChatDataManager.ins().selfInviteStatus = VideoChatDataManager.INTERACT_STATUS_INVITING_CHAT;
-                }else {
+                } else {
                     if (mApplyAudienceAdapter.getItemCount() <= 1){
                         setHasNewApply(false);
                     }
@@ -446,7 +446,7 @@ public class AudienceManagerDialog extends BaseDialog {
                     mUserOption.setText(R.string.accept);
                     mUserOption.setBackgroundResource(R.drawable.item_voice_listener_option_selected_bg);
                 } else {
-                    mUserOption.setText(R.string.invite_user_speak);
+                    mUserOption.setText(R.string.invite_user_to_be_guest);
                     mUserOption.setBackgroundResource(R.drawable.item_voice_listener_option_selected_bg);
                 }
             }

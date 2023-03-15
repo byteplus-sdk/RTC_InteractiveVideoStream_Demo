@@ -10,7 +10,7 @@
 #import "RTMNoticeModel.h"
 #import "RTMRequestModel.h"
 #import <BytePlusRTC/objc/ByteRTCRoom.h>
-#import <BytePlusRTC/objc/rtc/ByteRTCEngineKit.h>
+#import <BytePlusRTC/objc/ByteRTCVideo.h>
 #import <Foundation/Foundation.h>
 #import <YYModel/YYModel.h>
 
@@ -31,9 +31,12 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void (^RTCRoomMessageBlock)(RTMNoticeModel *noticeModel);
 
 @interface BaseRTCManager
-    : NSObject <ByteRTCEngineDelegate, ByteRTCRoomDelegate>
+    : NSObject <ByteRTCVideoDelegate, ByteRTCRoomDelegate>
 
-@property (nonatomic, strong, nullable) ByteRTCEngineKit *rtcEngineKit;
+@property (nonatomic, strong, nullable) ByteRTCVideo *rtcVideo;
+
+@property (nonatomic, strong) ByteRTCRoom *rtcRoom;
+
 
 @property (nonatomic, copy, nullable) void (^rtcJoinRoomBlock)(NSString *roomId, NSInteger errorCode, NSInteger joinType);
 

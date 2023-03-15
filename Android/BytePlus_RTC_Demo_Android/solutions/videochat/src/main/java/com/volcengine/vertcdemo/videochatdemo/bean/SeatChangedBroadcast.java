@@ -6,10 +6,10 @@
 package com.volcengine.vertcdemo.videochatdemo.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizInform;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizInform;
 import com.volcengine.vertcdemo.videochatdemo.core.VideoChatDataManager;
 
-public class SeatChangedBroadcast implements RTMBizInform {
+public class SeatChangedBroadcast implements RTSBizInform {
 
     @SerializedName("seat_id")
     public int seatId;

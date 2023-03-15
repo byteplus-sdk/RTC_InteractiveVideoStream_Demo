@@ -6,11 +6,11 @@
 package com.volcengine.vertcdemo.videochatdemo.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 
 import java.util.List;
 
-public class GetActiveRoomListResponse implements RTMBizResponse {
+public class GetActiveRoomListResponse implements RTSBizResponse {
 
     @SerializedName("room_list")
     public List<VCRoomInfo> roomList;

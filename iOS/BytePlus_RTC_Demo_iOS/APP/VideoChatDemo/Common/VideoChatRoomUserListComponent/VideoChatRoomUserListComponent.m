@@ -173,25 +173,27 @@
 
 #pragma mark - VideoChatRoomonlineListsViewDelegate
 
-- (void)VideoChatRoomAudienceListsView:(VideoChatRoomRaiseHandListsView *)VideoChatRoomAudienceListsView clickButton:(VideoChatUserModel *)model {
-    [self clickTableViewWithModel:model dataLists:VideoChatRoomAudienceListsView.dataLists];
+- (void)VideoChatRoomAudienceListsView:(VideoChatRoomRaiseHandListsView *)VideoChatRoomAudienceListsView clickButton:(nonnull UIButton *)button model:(nonnull VideoChatUserModel *)model {
+    [self clickTableViewWithModel:model dataLists:VideoChatRoomAudienceListsView.dataLists button:button];
 }
 
 #pragma mark - VideoChatRoomapplyListsViewDelegate
 
-- (void)VideoChatRoomRaiseHandListsView:(VideoChatRoomRaiseHandListsView *)VideoChatRoomRaiseHandListsView clickButton:(VideoChatUserModel *)model {
-    [self clickTableViewWithModel:model dataLists:VideoChatRoomRaiseHandListsView.dataLists];
+- (void)VideoChatRoomRaiseHandListsView:(VideoChatRoomRaiseHandListsView *)VideoChatRoomRaiseHandListsView clickButton:(nonnull UIButton *)button model:(nonnull VideoChatUserModel *)model {
+    [self clickTableViewWithModel:model dataLists:VideoChatRoomRaiseHandListsView.dataLists button:button];
 }
 
 #pragma mark - Private Action
 
-- (void)clickTableViewWithModel:(VideoChatUserModel *)userModel dataLists:(NSArray<VideoChatUserModel *> *)dataLists {
+- (void)clickTableViewWithModel:(VideoChatUserModel *)userModel dataLists:(NSArray<VideoChatUserModel *> *)dataLists  button:(UIButton *)button {
     if (userModel.status == VideoChatUserStatusDefault) {
         __weak typeof(self) weakSelf = self;
+        button.userInteractionEnabled = NO;
         [VideoChatRTMManager inviteInteract:userModel.roomID
                                                uid:userModel.uid
                                             seatID:_seatID
                                              block:^(RTMACKModel * _Nonnull model) {
+            button.userInteractionEnabled = YES;
             if (!model.result) {
                 [[ToastComponent shareToastComponent] showWithMessage:model.message];
             } else {
@@ -204,9 +206,11 @@
         }];
     } else if (userModel.status == VideoChatUserStatusApply) {
         __weak __typeof(self)wself = self;
+        button.userInteractionEnabled = NO;
         [VideoChatRTMManager agreeApply:userModel.roomID
                                            uid:userModel.uid
                                          block:^(RTMACKModel * _Nonnull model) {
+            button.userInteractionEnabled = YES;
             if (model.result) {
                 userModel.status = VideoChatUserStatusApply;
                 [wself updateDataLists:dataLists model:userModel];

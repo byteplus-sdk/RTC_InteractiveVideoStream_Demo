@@ -45,7 +45,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             android:id="@+id/dialog_negative_btn"
             android:layout_width="0dp"
             android:layout_height="44dp"
@@ -64,7 +64,7 @@
             android:visibility="gone"
             android:background="#101319" />
 
-        <Button
+        <TextView
             android:id="@+id/dialog_positive_btn"
             android:layout_width="0dp"
             android:layout_height="44dp"

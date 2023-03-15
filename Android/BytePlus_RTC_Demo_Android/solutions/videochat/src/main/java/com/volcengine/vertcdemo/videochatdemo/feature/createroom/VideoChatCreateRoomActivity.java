@@ -10,7 +10,6 @@ import static com.volcengine.vertcdemo.core.SolutionConstants.CLICK_RESET_INTERV
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,7 @@ import com.volcengine.vertcdemo.videochatdemo.bean.VCRoomInfo;
 import com.volcengine.vertcdemo.videochatdemo.bean.VCUserInfo;
 import com.volcengine.vertcdemo.videochatdemo.common.VideoChatCreateSettingDialog;
 import com.volcengine.vertcdemo.videochatdemo.core.VideoChatRTCManager;
+import com.volcengine.vertcdemo.videochatdemo.feature.createroom.effect.VideoEffectDialog;
 import com.volcengine.vertcdemo.videochatdemo.feature.roommain.VideoChatRoomMainActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -57,7 +57,6 @@ public class VideoChatCreateRoomActivity extends BaseActivity implements View.On
     private final IRequestCallback<CreateRoomResponse> mCreateRoomRequest = new IRequestCallback<CreateRoomResponse>() {
         @Override
         public void onSuccess(CreateRoomResponse data) {
-            Log.d("bytertc","mCreateRoomRequest success");
             mEnableStartLive = true;
             mRoomInfo = data.roomInfo;
             mSelfInfo = data.userInfo;
@@ -69,7 +68,6 @@ public class VideoChatCreateRoomActivity extends BaseActivity implements View.On
 
         @Override
         public void onError(int errorCode, String message) {
-            Log.d("bytertc","mCreateRoomRequest error");
             SafeToast.show(message);
         }
     };
@@ -138,8 +136,11 @@ public class VideoChatCreateRoomActivity extends BaseActivity implements View.On
 
     @Override
     public void finish() {
-        super.finish();
+        //https://meego.feishu.cn/bytertc/issue/detail/9579796
+        VideoChatRTCManager.ins().switchCamera(true);
+
         SolutionDemoEventManager.unregister(this);
+        super.finish();
     }
 
     private void switchCamera() {
@@ -147,7 +148,8 @@ public class VideoChatCreateRoomActivity extends BaseActivity implements View.On
     }
 
     private void openVideoEffectDialog() {
-        showToast(getString(R.string.effect_toast));
+        VideoEffectDialog effectDialog = new VideoEffectDialog(this);
+        effectDialog.show();
     }
 
     private void openVideoVideoSettingDialog() {
@@ -185,7 +187,6 @@ public class VideoChatCreateRoomActivity extends BaseActivity implements View.On
     }
 
     private void requestCreateVideoRoom() {
-        Log.d("bytertc","requestCreateVideoRoom");
         String roomName = getString(R.string.video_chat_room_name, SolutionDataManager.ins().getUserName());
         VideoChatRTCManager.ins().getRTMClient().requestCreateRoom(SolutionDataManager.ins().getUserName(),
                 roomName, "voicechat_background_1.jpg", mCreateRoomRequest);

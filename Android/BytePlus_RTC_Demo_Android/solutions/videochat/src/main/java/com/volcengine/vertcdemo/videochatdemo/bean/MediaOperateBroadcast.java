@@ -6,9 +6,9 @@
 package com.volcengine.vertcdemo.videochatdemo.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizInform;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizInform;
 
-public class MediaOperateBroadcast implements RTMBizInform {
+public class MediaOperateBroadcast implements RTSBizInform {
 
     @SerializedName("mic")
     @VCUserInfo.MicStatus

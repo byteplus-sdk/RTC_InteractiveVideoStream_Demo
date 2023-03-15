@@ -8,12 +8,12 @@ package com.volcengine.vertcdemo.videochatdemo.bean;
 import androidx.annotation.IntDef;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizInform;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizInform;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public class FinishLiveBroadcast implements RTMBizInform {
+public class FinishLiveBroadcast implements RTSBizInform {
 
     public static final int FINISH_TYPE_NORMAL = 1;
     public static final int FINISH_TYPE_TIMEOUT = 2;

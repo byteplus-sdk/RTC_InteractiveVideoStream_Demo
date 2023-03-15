@@ -12,6 +12,24 @@
 + (NSString *)messageFromResponseCode:(RTMStatusCode)code {
     NSString *message = @"";
     switch (code) {
+        case RTMStatusCodeBadServerResponse:
+            message = @"服务器数据异常";
+            break;
+        case RTMStatusCodeInvalidArgument:
+            message = @"请求数据无法正确解析";
+            break;
+        case RTMStatusCodeUserNotFound:
+            message = @"用户不存在";
+            break;
+        case RTMStatusCodeOverRoomLimit:
+            message = @"房间人数超过限制";
+            break;
+        case RTMStatusCodeNotAuthorized:
+            message = @"没有操作权限";
+            break;
+        case RTMStatusCodeDisconnectTimeout:
+            message = @"断线时间过长，无法重连";
+            break;
         case RTMStatusCodeRoomDisbanded:
             message = CLocalizedString(@"The room is closed");
             break;
@@ -34,12 +52,49 @@
         case RTMStatusCodeTransferUserOnMicExceedLimit:
             message = CLocalizedString(@"All host seats have been filled up");
             break;
+        case RTMStatusCodeTransferHostFailed:
+            message = @"移交主持人失败";
+            break;
         case RTMStatusCodeBuildTokenFaild:
             message = CLocalizedString(@"Generating token failed. Please try again");
+            break;
+        case RTMStatusCodeReachLinkmicUserCount:
+            message = @"连麦人数到达上限";
+            break;
+        case RTMStatusCodeLinkerNotExist:
+            message = @"连麦已过期";
+            break;
+        case RTMStatusCodeRoomLinkmicSceneConflict:
+            message = @"主播正在连线中";
+            break;
+        case RTMStatusCodeAudienceApplyOthersHost:
+            message = @"主播正在发起双主播连线";
+            break;
+        case RTMStatusCodeHostLinkOtherAudience:
+            message = @"与观众连线中，无法发起主播连线";
+            break;
+        case RTMStatusCodeHostLinkOtherHost:
+            message = @"主播连线中，无法发起主播连线";
+            break;
+        case RTMStatusHostInviteOtherHost:
+            message = @"正在等待被邀主播的应答";
             break;
         case RTMStatusCodeAPPInfoFaild:
         case RTMStatusCodeAPPInfoExistFaild:
             message = CLocalizedString(@"Failed to get RTM configuration parameters");
+            break;
+        case RTMStatusCodeTrafficAPPIDFaild:
+        case RTMStatusCodeTrafficFaild:
+            message = @"触发限流，请稍后再试";
+            break;
+        case RTMStatusCodeVodFaild:
+            message = @"点播配置错误，请检查配置信息";
+            break;
+        case RTMStatusCodeTWFaild:
+            message = @"一起看配置错误，请检查配置信息";
+            break;
+        case RTMStatusCodeBIDFaild:
+            message = @"BID配置错误，请检查配置信息";
             break;
             
         default:

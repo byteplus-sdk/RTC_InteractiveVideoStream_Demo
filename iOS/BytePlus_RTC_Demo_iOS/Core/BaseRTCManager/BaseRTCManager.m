@@ -19,7 +19,6 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 @property (nonatomic, copy) void (^rtcSetParamsBlock)(BOOL result);
 @property (nonatomic, strong) NSMutableDictionary *listenerDic;
 @property (nonatomic, strong) NSMutableDictionary *senderDic;
-@property (nonatomic, strong) ByteRTCRoom *multiRoom;
 
 @end
 
@@ -48,22 +47,21 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
         }
         return;
     }
-    if (self.rtcEngineKit) {
-        [self.rtcEngineKit destroyEngine];
-        self.rtcEngineKit = nil;
+    if (self.rtcVideo) {
+        [ByteRTCVideo destroyRTCVideo];
+        self.rtcVideo = nil;
     }
-    self.rtcEngineKit = [[ByteRTCEngineKit alloc] initWithAppId:appID
-                                                       delegate:self
-                                                     parameters:@{}];
+    self.rtcVideo = [ByteRTCVideo createRTCVideo:appID delegate:self parameters:@{}];
+
     _businessId = bid;
-    [self.rtcEngineKit setBusinessId:bid];
+    [self.rtcVideo setBusinessId:bid];
     [self configeRTCEngine];
-    [self.rtcEngineKit login:RTMToken uid:uid];
+    [self.rtcVideo login:RTMToken uid:uid];
     __weak __typeof(self) wself = self;
     self.rtcLoginBlock = ^(BOOL result) {
         wself.rtcLoginBlock = nil;
         if (result) {
-            [wself.rtcEngineKit setServerParams:serverSig url:serverUrl];
+            [wself.rtcVideo setServerParams:serverSig url:serverUrl];
         } else {
             wself.rtcSetParamsBlock = nil;
             if (block) {
@@ -84,9 +82,9 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 }
 
 - (void)disconnect {
-    [self.rtcEngineKit logout];
-    [self.rtcEngineKit destroyEngine];
-    self.rtcEngineKit = nil;
+    [self.rtcVideo logout];
+    [ByteRTCVideo destroyRTCVideo];
+    self.rtcVideo = nil;
     self.rtcLoginBlock = nil;
     self.rtcSetParamsBlock = nil;
     self.rtcJoinRoomBlock = nil;
@@ -120,7 +118,7 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
     requestModel.requestBlock = block;
     
     NSString *json = [requestModel yy_modelToJSONString];
-    requestModel.msgid = (NSInteger)[self.rtcEngineKit sendServerMessage:json];
+    requestModel.msgid = (NSInteger)[self.rtcVideo sendServerMessage:json];
     
     NSString *key = requestModel.requestID;
     [self.senderDic setValue:requestModel forKey:key];
@@ -142,25 +140,13 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 - (void)joinMultiRoomByToken:(NSString *)token
                       roomID:(NSString *)roomID
                       userID:(NSString *)userID {
-    //    if (self.multiRoom != nil) {
-    //        [self leaveMultiRoom];
-    //    }
-    //    self.multiRoom = [self.rtcEngineKit createRtcRoom:roomID];
-    //    [self.multiRoom setRtcRoomDelegate:self];
-    //    ByteRTCUserInfo *userInfo = [[ByteRTCUserInfo alloc] init];
-    //    userInfo.userId = userID;
-    //
-    //    ByteRTCMultiRoomConfig *config = [[ByteRTCMultiRoomConfig alloc] init];
-    //    config.profile = ByteRTCRoomProfileLiveBroadcasting;
-    //    config.isAutoSubscribeAudio = NO;
-    //    config.isAutoSubscribeVideo = NO;
-    //    [self.multiRoom joinRoomByToken:token userInfo:userInfo roomConfig:config];
+    
 }
 
 - (void)leaveMultiRoom {
-    [self.multiRoom leaveRoom];
-    [self.multiRoom destroy];
-    self.multiRoom = nil;
+    [self.rtcRoom leaveRoom];
+    [self.rtcRoom destroy];
+    self.rtcRoom = nil;
 }
 
 #pragma mark - config
@@ -170,24 +156,24 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 
 #pragma mark - ByteRTCEngineDelegate
 
-- (void)rtcEngine:(ByteRTCEngineKit *)engine onWarning:(ByteRTCWarningCode)Code {
+- (void)rtcEngine:(ByteRTCVideo *)engine onWarning:(ByteRTCWarningCode)Code {
     NSLog(@"[%@]-OnWarning %ld", [self class], (long)Code);
 }
 
-- (void)rtcEngine:(ByteRTCEngineKit *)engine onError:(ByteRTCErrorCode)errorCode {
+- (void)rtcEngine:(ByteRTCVideo *)engine onError:(ByteRTCErrorCode)errorCode {
     NSLog(@"[%@]-OnError %ld", [self class], (long)errorCode);
 }
 
-- (void)rtcEngine:(ByteRTCEngineKit *)engine connectionChangedToState:(ByteRTCConnectionState)state {
+- (void)rtcEngine:(ByteRTCVideo *)engine connectionChangedToState:(ByteRTCConnectionState)state {
     NSLog(@"[%@]-ConnectionChangedToState %ld", [self class], (long)state);
 }
 
-- (void)rtcEngine:(ByteRTCEngineKit *)engine networkTypeChangedToType:(ByteRTCNetworkType)type {
+- (void)rtcEngine:(ByteRTCVideo *)engine networkTypeChangedToType:(ByteRTCNetworkType)type {
     NSLog(@"[%@]-NetworkTypeChangedToType %ld", [self class], (long)type);
 }
 
 // 收到登录结果
-- (void)rtcEngine:(ByteRTCEngineKit *)engine
+- (void)rtcEngine:(ByteRTCVideo *)engine
     onLoginResult:(NSString *)uid
         errorCode:(ByteRTCLoginErrorCode)errorCode
           elapsed:(NSInteger)elapsed {
@@ -197,12 +183,12 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
     NSLog(@"[%@]-LoginResult code %ld", [self class], (long)errorCode);
 }
 
-- (void)rtcEngineOnLogout:(ByteRTCEngineKit * _Nonnull)engine {
+- (void)rtcEngineOnLogout:(ByteRTCVideo * _Nonnull)engine {
     NSLog(@"OnLogout");
 }
 
 // 收到业务服务器参数设置结果
-- (void)rtcEngine:(ByteRTCEngineKit *)engine onServerParamsSetResult:(NSInteger)errorCode {
+- (void)rtcEngine:(ByteRTCVideo *)engine onServerParamsSetResult:(NSInteger)errorCode {
     if (self.rtcSetParamsBlock) {
         self.rtcSetParamsBlock((errorCode == RTMStatusCodeSuccess) ? YES : NO);
     }
@@ -210,7 +196,10 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 }
 
 // 收到加入房间结果
-- (void)rtcEngine:(ByteRTCEngineKit *)engine onRoomStateChanged:(NSString *)roomId withUid:(NSString *)uid state:(NSInteger)state extraInfo:(NSString *)extraInfo {
+- (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomStateChanged:(NSString *)roomId
+        withUid:(NSString *)uid
+          state:(NSInteger)state
+      extraInfo:(NSString *)extraInfo  {
     NSDictionary *dic = [self dictionaryWithJsonString:extraInfo];
     NSInteger errorCode = state;
     NSInteger joinType = -1;
@@ -235,7 +224,7 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 }
 
 // 收到消息发送结果
-- (void)rtcEngine:(ByteRTCEngineKit * _Nonnull)engine onServerMessageSendResult:(int64_t)msgid error:(ByteRTCUserMessageSendResult)error message:(NSData * _Nonnull)message {
+- (void)rtcEngine:(ByteRTCVideo * _Nonnull)engine onServerMessageSendResult:(int64_t)msgid error:(ByteRTCUserMessageSendResult)error message:(NSData * _Nonnull)message {
     if (error == ByteRTCUserMessageSendResultSuccess) {
         // 发送成功，等待业务回调信息
         return;
@@ -264,26 +253,13 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
     }
 }
 
-// 收到业务服务器发送的房间内点对点文本消息内容
-- (void)rtcEngine:(ByteRTCEngineKit *)engine onUserMessageReceived:(NSString *)uid
-          message:(NSString *)message {
-    [self dispatchMessageFrom:uid message:message];
-    [self addLog:@"收到业务服务器、房间内、点对点消息内容" message:message];
-}
-
 // 收到业务服务器发送的房间外点对点文本消息内容
-- (void)rtcEngine:(ByteRTCEngineKit *)engine onUserMessageReceivedOutsideRoom:(NSString *)uid
+- (void)rtcEngine:(ByteRTCVideo *)engine onUserMessageReceivedOutsideRoom:(NSString *)uid
           message:(NSString *)message {
     [self dispatchMessageFrom:uid message:message];
     [self addLog:@"收到业务服务器、房间外、点对点消息" message:message];
 }
 
-// 收到业务服务器发送的房间内文本广播消息内容
-- (void)rtcEngine:(ByteRTCEngineKit *)engine onRoomMessageReceived:(NSString *)uid
-          message:(NSString *)message {
-    [self dispatchMessageFrom:uid message:message];
-    [self addLog:@"收到业务服务器、房间内、广播消息" message:message];
-}
 
 #pragma mark - ByteRTCRoomDelegate
 - (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomWarning:(ByteRTCWarningCode)warningCode {
@@ -292,22 +268,6 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 
 - (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomError:(ByteRTCErrorCode)errorCode {
     NSLog(@"[%@]-OnRoomError %ld", [self class], (long)errorCode);
-}
-
-- (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomStateChanged:(NSString *)roomId withUid:(NSString *)uid state:(NSInteger)state extraInfo:(NSString *)extraInfo {
-    NSDictionary *dic = [self dictionaryWithJsonString:extraInfo];
-    NSInteger errorCode = state;
-    NSInteger joinType = -1;
-    if ([dic isKindOfClass:[NSDictionary class]]) {
-        NSString *joinTypeStr = [NSString stringWithFormat:@"%@", dic[@"join_type"]];
-        joinType = joinTypeStr.integerValue;
-    }
-    if (self.rtcJoinRoomBlock) {
-        void (^rtcJoinRoomBlock)(NSString *, NSInteger, NSInteger) = self.rtcJoinRoomBlock;
-        dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
-            rtcJoinRoomBlock(roomId, errorCode, joinType);
-        });
-    }
 }
 
 - (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomMessageReceived:(NSString *)uid message:(NSString *)message {
@@ -387,7 +347,7 @@ static RTMMessageType const RTMMessageTypeNotice = @"inform";
 }
 
 + (NSString *_Nullable)getSdkVersion {
-    return [ByteRTCEngineKit getSdkVersion];
+    return [ByteRTCVideo getSdkVersion];
 }
 
 #pragma mark - Getter

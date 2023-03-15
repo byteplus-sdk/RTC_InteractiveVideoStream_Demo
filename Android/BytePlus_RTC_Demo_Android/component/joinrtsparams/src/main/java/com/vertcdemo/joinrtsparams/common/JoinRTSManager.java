@@ -11,7 +11,7 @@ import com.volcengine.vertcdemo.core.SolutionDataManager;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
 import com.volcengine.vertcdemo.core.net.ServerResponse;
 import com.volcengine.vertcdemo.core.net.http.HttpRequestHelper;
-import com.volcengine.vertcdemo.core.net.rtm.RtmInfo;
+import com.volcengine.vertcdemo.core.net.rtm.RTSInfo;
 
 import org.json.JSONObject;
 
@@ -20,7 +20,7 @@ public class JoinRTSManager {
     private static final String TAG = "JoinRTSManager";
 
     public static void setAppInfoAndJoinRTM(JoinRTSRequest joinRTSRequest,
-                                            IRequestCallback<ServerResponse<RtmInfo>> callBack) {
+                                            IRequestCallback<ServerResponse<RTSInfo>> callBack) {
         if (joinRTSRequest == null) {
             if (callBack != null) {
                 callBack.onError(-1, "input can not be empty");
@@ -42,15 +42,15 @@ public class JoinRTSManager {
         } else {
             content.addProperty("app_key", Constants.APP_KEY);
         }
-        if (TextUtils.isEmpty(Constants.ACCESS_KEY)) {
+        if (TextUtils.isEmpty(Constants.VOLC_AK)) {
             message = "AccessKeyID";
         } else {
-            content.addProperty("volc_ak", Constants.ACCESS_KEY);
+            content.addProperty("volc_ak", Constants.VOLC_AK);
         }
-        if (TextUtils.isEmpty(Constants.SECRET_ACCESS_KEY)) {
+        if (TextUtils.isEmpty(Constants.VOLC_SK)) {
             message = "SecretAccessKey";
         } else {
-            content.addProperty("volc_sk", Constants.SECRET_ACCESS_KEY);
+            content.addProperty("volc_sk", Constants.VOLC_SK);
         }
 
         if (!TextUtils.isEmpty(message)) {
@@ -66,7 +66,7 @@ public class JoinRTSManager {
             params.put("device_id", SolutionDataManager.ins().getDeviceId());
 
             Log.d(TAG, "setAppInfo params: " + params);
-            HttpRequestHelper.sendPost(params, RtmInfo.class, callBack);
+            HttpRequestHelper.sendPost(params, RTSInfo.class, callBack);
         } catch (Exception e) {
             Log.d(TAG, "setAppInfo failed", e);
             callBack.onError(-1, e.getMessage());

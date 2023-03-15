@@ -52,6 +52,7 @@
     <string name="all_seats_filled_up_txt">当前麦位已满</string>
     <string name="invite_user_speak">邀请上麦</string>
     <string name="invite_user_busy">主播暂时无法连麦</string>
+    <string name="invite_user_to_be_guest">邀请上麦</string>
     <string name="inviting">已向观众发出邀请，等待对方应答</string>
     <string name="cant_get_remote_host_error">获取远端主播数据出错: </string>
     <string name="invitation_has_sent_info">已向%s发出邀请，等待对方应答</string>
@@ -92,7 +93,7 @@
     <string name="video_chat_room_name">%s的直播间</string>
     <string name="you_has_audience_txt">你已下麦</string>
     <string name="you_has_co_host_txt">你已上麦</string>
-    <string name="video_you_has_be_audience_txt">主播已和你断开连线</string>
+    <string name="video_you_has_be_audience_txt">你已被主播移出麦位</string>
     <string name="you_unmuted_txt">主播已解除对你的静音</string>
     <string name="you_be_muted_txt">你已被主播静音</string>
     <string name="voice_room_live_ing">直播中</string>
@@ -120,5 +121,7 @@
     <string name="room_not_exist">房间不存在，回到房间列表页</string>
     <string name="btn_confirm">确认</string>
     <string name="request_rtm_fail">获取RTM配置参数出错</string>
-    <string name="effect_toast">开源代码暂不支持美颜相关功能，体验效果请下载Demo</string>
+
+    <string name="video_chat_failed_mute_co_host">静音远端主播失败</string>
+    <string name="video_chat_failed_unmute_co_host">解除远端主播静音失败</string>
 </resources>

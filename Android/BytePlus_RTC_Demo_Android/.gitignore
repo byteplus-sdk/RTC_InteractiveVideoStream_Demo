@@ -1,9 +1,17 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
 local.properties
-build/
-./gradle
-./gradle/*
-.idea
-gradle
-app/.gradle
-app/.idea
-/.gradle/
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml

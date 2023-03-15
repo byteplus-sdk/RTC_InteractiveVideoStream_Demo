@@ -67,6 +67,8 @@
     
     self.navTitle = @"";
     [self.leftButton setImage:[UIImage imageNamed:@"video_cancel" bundleName:HomeBundleName] forState:UIControlStateNormal];
+    [[VideoChatRTCManager shareRtc] updateCameraID:YES];
+
 }
 
 - (void)joinButtonAction:(UIButton *)sender {
@@ -197,7 +199,7 @@
 
 - (BytedEffectProtocol *)beautyComponent {
     if (!_beautyComponent) {
-        _beautyComponent = [[BytedEffectProtocol alloc] initWithRTCEngineKit:[VideoChatRTCManager shareRtc].rtcEngineKit];
+        _beautyComponent = [[BytedEffectProtocol alloc] initWithRTCEngineKit:[VideoChatRTCManager shareRtc].rtcVideo];
     }
     return _beautyComponent;
 }

@@ -6,9 +6,9 @@
 package com.volcengine.vertcdemo.videochatdemo.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizInform;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizInform;
 
-public class ManageOtherAnchorBroadcast implements RTMBizInform {
+public class ManageOtherAnchorBroadcast implements RTSBizInform {
     @SerializedName("room_id")
     public String roomId;
     @SerializedName("other_anchor_user_id")

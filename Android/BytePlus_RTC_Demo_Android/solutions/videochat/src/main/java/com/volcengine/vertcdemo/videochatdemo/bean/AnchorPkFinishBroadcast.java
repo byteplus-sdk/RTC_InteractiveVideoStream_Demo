@@ -5,7 +5,7 @@
 
 package com.volcengine.vertcdemo.videochatdemo.bean;
 
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizInform;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizInform;
 
-public class AnchorPkFinishBroadcast implements RTMBizInform {
+public class AnchorPkFinishBroadcast implements RTSBizInform {
 }

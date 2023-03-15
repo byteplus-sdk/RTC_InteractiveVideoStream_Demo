@@ -11,7 +11,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol VideoChatRoomAudienceListsViewDelegate <NSObject>
 
-- (void)VideoChatRoomAudienceListsView:(VideoChatRoomAudienceListsView *)VideoChatRoomAudienceListsView clickButton:(VideoChatUserModel *)model;
+- (void)VideoChatRoomAudienceListsView:(VideoChatRoomAudienceListsView *)VideoChatRoomAudienceListsView
+                           clickButton:(UIButton *)button
+                                 model:(VideoChatUserModel *)model;
 
 @end
 

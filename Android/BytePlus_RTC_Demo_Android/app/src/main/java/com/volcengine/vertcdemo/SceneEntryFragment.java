@@ -5,8 +5,6 @@
 
 package com.volcengine.vertcdemo;
 
-import static com.volcengine.vertcdemo.core.net.rtm.RtmInfo.KEY_RTM;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,15 +26,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.ss.video.rtc.demo.basic_module.utils.SafeToast;
-import com.ss.video.rtc.demo.basic_module.utils.Utilities;
 import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.core.SolutionDataManager;
-import com.volcengine.vertcdemo.core.net.IRequestCallback;
-import com.volcengine.vertcdemo.core.net.ServerResponse;
-import com.volcengine.vertcdemo.core.net.http.HttpRequestHelper;
-import com.volcengine.vertcdemo.core.net.rtm.RtmInfo;
-
-import org.json.JSONObject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

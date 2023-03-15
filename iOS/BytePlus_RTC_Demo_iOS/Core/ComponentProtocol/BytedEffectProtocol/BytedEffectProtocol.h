@@ -4,7 +4,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <BytePlusRTC/objc/rtc/ByteRTCEngineKit.h>
+#import <BytePlusRTC/objc/ByteRTCVideo.h>
 @class BytedEffectProtocol;
 
 typedef NS_ENUM(NSUInteger, EffectBeautyRoleType) {
@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol BytedEffectDelegate <NSObject>
 
 - (instancetype)protocol:(BytedEffectProtocol *)protocol
-    initWithRTCEngineKit:(ByteRTCEngineKit *)rtcEngineKit;
+    initWithRTCEngineKit:(ByteRTCVideo *)rtcEngineKit;
 
 - (void)protocol:(BytedEffectProtocol *)protocol
     showWithType:(EffectBeautyRoleType)type
@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Initialization
  * @param rtcEngineKit Rtc Engine
  */
-- (instancetype)initWithRTCEngineKit:(ByteRTCEngineKit *)rtcEngineKit;
+- (instancetype)initWithRTCEngineKit:(ByteRTCVideo *)rtcEngineKit;
 
 /**
  * Show effect beauty view

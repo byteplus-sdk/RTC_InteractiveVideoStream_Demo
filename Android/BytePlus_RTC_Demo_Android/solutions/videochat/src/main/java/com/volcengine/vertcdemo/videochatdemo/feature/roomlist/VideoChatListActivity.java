@@ -6,7 +6,7 @@
 package com.volcengine.vertcdemo.videochatdemo.feature.roomlist;
 
 import static com.volcengine.vertcdemo.core.SolutionConstants.CLICK_RESET_INTERVAL;
-import static com.volcengine.vertcdemo.core.net.rtm.RtmInfo.KEY_RTM;
+import static com.volcengine.vertcdemo.core.net.rtm.RTSInfo.KEY_RTM;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,9 +31,9 @@ import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.core.SolutionDataManager;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
 import com.volcengine.vertcdemo.core.net.ServerResponse;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBaseClient;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
-import com.volcengine.vertcdemo.core.net.rtm.RtmInfo;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBaseClient;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSInfo;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochatdemo.bean.GetActiveRoomListResponse;
 import com.volcengine.vertcdemo.videochatdemo.bean.VCRoomInfo;
@@ -49,7 +49,7 @@ public class VideoChatListActivity extends BaseActivity {
 
     private View mEmptyListView;
 
-    private RtmInfo mRtmInfo;
+    private RTSInfo mRtmInfo;
 
     private long mLastClickCreateTs = 0;
     private long mLastClickRequestTs = 0;
@@ -88,7 +88,7 @@ public class VideoChatListActivity extends BaseActivity {
         if (intent == null) {
             return;
         }
-        mRtmInfo = intent.getParcelableExtra(RtmInfo.KEY_RTM);
+        mRtmInfo = intent.getParcelableExtra(RTSInfo.KEY_RTM);
         if (mRtmInfo == null || !mRtmInfo.isValid()) {
             finish();
         }
@@ -128,13 +128,13 @@ public class VideoChatListActivity extends BaseActivity {
      */
     private void initRTC() {
         VideoChatRTCManager.ins().initEngine(mRtmInfo);
-        RTMBaseClient rtmClient = VideoChatRTCManager.ins().getRTMClient();
+        RTSBaseClient rtmClient = VideoChatRTCManager.ins().getRTMClient();
         if (rtmClient == null) {
             finish();
             return;
         }
         rtmClient.login(mRtmInfo.rtmToken, (resultCode, message) -> {
-            if (resultCode == RTMBaseClient.LoginCallBack.SUCCESS) {
+            if (resultCode == RTSBaseClient.LoginCallBack.SUCCESS) {
                 requestRoomList();
             } else {
                 SafeToast.show("Login Rtm Fail Error:" + resultCode + ",Message:" + message);
@@ -157,9 +157,9 @@ public class VideoChatListActivity extends BaseActivity {
         }
         mLastClickRequestTs = now;
 
-        VideoChatRTCManager.ins().getRTMClient().requestClearUser(new IRequestCallback<RTMBizResponse>() {
+        VideoChatRTCManager.ins().getRTMClient().requestClearUser(new IRequestCallback<RTSBizResponse>() {
             @Override
-            public void onSuccess(RTMBizResponse data) {
+            public void onSuccess(RTSBizResponse data) {
                 VideoChatRTCManager.ins().getRTMClient().getActiveRoomList(mRequestRoomList);
             }
 
@@ -188,10 +188,10 @@ public class VideoChatListActivity extends BaseActivity {
     @SuppressWarnings("unused")
     public static void prepareSolutionParams(Activity activity, IAction<Object> doneAction) {
         Log.d(TAG, "prepareSolutionParams() invoked");
-        IRequestCallback<ServerResponse<RtmInfo>> callback = new IRequestCallback<ServerResponse<RtmInfo>>() {
+        IRequestCallback<ServerResponse<RTSInfo>> callback = new IRequestCallback<ServerResponse<RTSInfo>>() {
             @Override
-            public void onSuccess(ServerResponse<RtmInfo> response) {
-                RtmInfo data = response == null ? null : response.getData();
+            public void onSuccess(ServerResponse<RTSInfo> response) {
+                RTSInfo data = response == null ? null : response.getData();
                 if (data == null || !data.isValid()) {
                     onError(-1, "");
                     return;

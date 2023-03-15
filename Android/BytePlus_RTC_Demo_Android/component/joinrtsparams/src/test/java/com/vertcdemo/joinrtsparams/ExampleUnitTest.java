@@ -1,4 +1,4 @@
-package com.vertcdemo.joinrtsparams;
+package com.vertcdemo.vejoinrts;
 
 import org.junit.Test;
 

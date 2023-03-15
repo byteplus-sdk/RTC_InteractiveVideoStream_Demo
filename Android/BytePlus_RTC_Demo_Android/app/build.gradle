@@ -12,20 +12,17 @@ android {
     compileSdkVersion project.compileSdkVersion
 
     defaultConfig {
-        applicationId "rtc.vertcdemo.android"
+        applicationId "rtc.byteplusdemo.android"
         minSdkVersion project.minSdkVersion
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion project.targetSdkVersion
 
         versionCode 1
         versionName project.APP_VERSION_NAME
-        buildConfigField('boolean', 'isTestEnv', project.IS_TEST_ENV)
 
         ndk { abiFilters 'arm64-v8a', 'armeabi-v7a' }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        manifestPlaceholders.put("APPLOG_SCHEME", "".toLowerCase())
 
         multiDexEnabled true
 
@@ -94,17 +91,11 @@ dependencies {
 
     implementation "org.greenrobot:eventbus:$EventBusVersion"
 
-    implementation 'commons-net:commons-net:3.6'
-    implementation 'com.bytedance.applog:RangersAppLog-Lite-cn:5.3.0'
-
     implementation "com.github.bumptech.glide:glide:$GlideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$GlideVersion"
 
+    implementation project(":component:$project.LOGIN_MODULE")
     implementation project(":scene-core")
 
     implementation project(":solutions:videochat")
-
-    implementation project(":component:joinrtsparams")
-
-    implementation project(":login")
 }

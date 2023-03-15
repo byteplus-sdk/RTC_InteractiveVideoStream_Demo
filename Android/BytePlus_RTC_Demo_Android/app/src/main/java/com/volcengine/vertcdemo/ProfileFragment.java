@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ss.bytertc.engine.RTCEngine;
+import com.ss.bytertc.engine.RTCVideo;
 import com.volcengine.vertcdemo.core.SolutionDataManager;
 import com.volcengine.vertcdemo.core.eventbus.RefreshUserNameEvent;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment {
         TextView sdkVersionLabel = sdkVersionLayout.findViewById(R.id.left_tv);
         sdkVersionLabel.setText(R.string.sdk_version_label);
         TextView sdkVersionTv = sdkVersionLayout.findViewById(R.id.right_tv);
-        sdkVersionTv.setText(RTCEngine.getSdkVersion());
+        sdkVersionTv.setText(RTCVideo.getSdkVersion());
         // endregion
 
         view.findViewById(R.id.profile_exit_login).setOnClickListener((v) -> {

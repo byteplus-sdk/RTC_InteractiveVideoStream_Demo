@@ -23,7 +23,7 @@ import com.ss.video.rtc.demo.basic_module.utils.SafeToast;
 import com.volcengine.vertcdemo.common.BaseDialog;
 import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizResponse;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizResponse;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochatdemo.bean.GetAnchorsResponse;
 import com.volcengine.vertcdemo.videochatdemo.bean.VCUserInfo;
@@ -62,9 +62,9 @@ public class RemoteAnchorsManagerDialog extends BaseDialog {
             SafeToast.show(R.string.invite_user_busy);
         }
         String uName = userInfo.userName;
-        IRequestCallback<RTMBizResponse> callback = new IRequestCallback<RTMBizResponse>() {
+        IRequestCallback<RTSBizResponse> callback = new IRequestCallback<RTSBizResponse>() {
             @Override
-            public void onSuccess(RTMBizResponse data) {
+            public void onSuccess(RTSBizResponse data) {
                 Log.e(TAG, "inviteAnchor success!");
                 if (!TextUtils.isEmpty(uName)) {
                     SafeToast.show(getContext().getString(R.string.invitation_has_sent_info, uName));

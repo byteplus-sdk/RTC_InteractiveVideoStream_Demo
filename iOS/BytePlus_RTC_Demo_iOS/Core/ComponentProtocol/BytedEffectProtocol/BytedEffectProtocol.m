@@ -13,7 +13,7 @@
 
 @implementation BytedEffectProtocol
 
-- (instancetype)initWithRTCEngineKit:(ByteRTCEngineKit *)rtcEngineKit {
+- (instancetype)initWithRTCEngineKit:(ByteRTCVideo *)rtcEngineKit {
     NSObject<BytedEffectDelegate> *effectBeautyComponent = [[NSClassFromString(@"EffectBeautyComponent") alloc] init];
     if (effectBeautyComponent) {
         self.bytedEffectDelegate = effectBeautyComponent;

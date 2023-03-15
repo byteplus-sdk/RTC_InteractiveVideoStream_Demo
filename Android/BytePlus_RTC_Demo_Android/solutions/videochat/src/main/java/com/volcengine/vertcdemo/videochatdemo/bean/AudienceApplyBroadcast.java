@@ -6,9 +6,9 @@
 package com.volcengine.vertcdemo.videochatdemo.bean;
 
 import com.google.gson.annotations.SerializedName;
-import com.volcengine.vertcdemo.core.net.rtm.RTMBizInform;
+import com.volcengine.vertcdemo.core.net.rtm.RTSBizInform;
 
-public class AudienceApplyBroadcast implements RTMBizInform {
+public class AudienceApplyBroadcast implements RTSBizInform {
 
     public boolean hasNewApply;
     @SerializedName("user_info")

@@ -25,11 +25,11 @@
 
         <meta-data
             android:name="HIFIVE_APPID"
-            android:value="8af3df32039b46c0a16590fccb49935e" />
+            android:value="" />
 
         <meta-data
             android:name="HIFIVE_SERVERCODE"
-            android:value="a470b775a9464b058c" />
+            android:value="" />
 
 
         <activity

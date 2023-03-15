@@ -48,15 +48,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     api(name: 'BasicModule', ext: 'aar')
-    api(name: 'BytePlusRTC', ext: 'aar')
     api(name: 'hfopenapi', ext: 'aar')
+
+    api "com.byteplus:BytePlusRTC:$BYTE_PLUS"
 
     implementation "org.greenrobot:eventbus:$EventBusVersion"
     implementation "com.google.code.gson:gson:$GsonVersion"
-
-    implementation('io.socket:socket.io-client:1.0.1') {
-        exclude group: 'org.json', module: 'json'
-    }
+    implementation "com.squareup.okhttp3:okhttp:$OkHttpVersion"
 }
 
 private def ensureProperty(String propertyName) {
