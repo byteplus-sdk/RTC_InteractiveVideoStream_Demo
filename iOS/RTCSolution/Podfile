@@ -1,6 +1,5 @@
 source 'https://cdn.cocoapods.org/'
 source 'https://github.com/byteplus-sdk/byteplus-specs.git'
-source 'https://github.com/volcengine/volcengine-specs.git'
 
 # RTC SDK
 pod 'BytePlusRTC', '3.50.311'
