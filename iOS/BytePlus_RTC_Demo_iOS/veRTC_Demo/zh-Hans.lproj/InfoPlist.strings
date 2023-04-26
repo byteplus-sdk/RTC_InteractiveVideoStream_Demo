@@ -1,3 +1,0 @@
-NSCameraUsageDescription = "BytePlus RTC想访问你的摄像头，如果不允许，你将无法在BytePlus RTC中进行视频通话";
-NSLocalNetworkUsageDescription = "BytePlus RTC想访问你的网络，直播中展示网络状态";
-NSMicrophoneUsageDescription = "BytePlus RTC想访问你的麦克风，如果不允许，你将无法在BytePlus RTC中进行语音通话";

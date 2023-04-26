@@ -1,0 +1,19 @@
+"home"="Home";
+"me"="Me";
+"user_name"="Username";
+"privacy_policy"="Privacy Policy";
+"terms_service"="Terms of Service";
+"agree_service_privacy"="Agree to our Terms of Service and acknowledge that you have read our Privacy Policy";
+"disclaimer"="Disclaimer";
+"log_out"="Log out";
+"change_user_name"="Change your username";
+"log_in"="Log in";
+
+"please_enter_user_nickname"="Please enter your username";
+"user_agreement"="User agreement";
+"related_party_sdk_list"="Third-party SDKs";
+"permission_application_checklist"="Permission application list";
+"cancel_account_alert_message"="After deleting your account, all data of your account cannot be found back.";
+"app_version"="App version";
+"sdk_version"="SDK version";
+"cancel_account"="Delete account";

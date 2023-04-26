@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:background="#000000">
+
+    <TextView
+        android:id="@+id/video_chat_main_option_input_btn"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginRight="12dp"
+        android:layout_weight="1"
+        android:background="@drawable/video_chat_main_option_input_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="24dp"
+        android:text="@string/video_chat_say_something"
+        android:textColor="#B3FFFFFF"
+        android:textSize="14dp" />
+
+    <ImageView
+        android:id="@+id/video_chat_main_option_pk_btn"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:src="@drawable/video_chat_main_option_pk" />
+
+    <FrameLayout
+        android:id="@+id/video_chat_main_option_interact_fl"
+        android:layout_width="46dp"
+        android:layout_height="36dp">
+
+        <ImageView
+            android:id="@+id/video_chat_main_option_interact_btn"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:src="@drawable/video_chat_main_option_interact" />
+
+        <ImageView
+            android:id="@+id/ic_interact_indicator"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="end|top"
+            android:src="@drawable/ic_red_dot"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/video_chat_main_option_effect"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:src="@drawable/video_chat_main_option_effect" />
+
+    <ImageView
+        android:id="@+id/video_chat_main_option_setting"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:src="@drawable/video_chat_main_option_setting" />
+
+</LinearLayout>

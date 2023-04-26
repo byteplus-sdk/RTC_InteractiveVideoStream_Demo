@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/video_chat_room_main_seat_bg"
+    tools:background="@drawable/video_chat_room_main_bg"
+    tools:layout_height="125dp"
+    tools:layout_width="125dp">
+
+    <FrameLayout
+        android:id="@+id/video_chat_seat_video_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/video_chat_seat_network_container"
+        android:layout_width="wrap_content"
+        android:layout_height="11dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/video_chat_seat_network_iv"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@drawable/video_chat_room_main_seat_network_good" />
+
+        <TextView
+            android:id="@+id/video_chat_seat_network_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:text="@string/net_excellent"
+            android:textColor="@color/white"
+            android:textSize="8sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/video_chat_seat_camera_off_tv"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/video_chat_room_list_icon_bg"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="23.51sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="off" />
+
+    <LinearLayout
+        android:id="@+id/video_chat_seat_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/video_chat_seat_empty_iv"
+            android:layout_width="20.49dp"
+            android:layout_height="23.9dp"
+            android:src="@drawable/video_chat_room_main_seat_empty" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/video_chat_seat"
+            android:textColor="#CCFFFFFF"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/video_chat_main_room_bottom_cover"
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:background="@drawable/video_chat_room_main_seat_bottom_bg"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/video_chat_main_room_name_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="user name" />
+
+    <ImageView
+        android:id="@+id/video_chat_main_room_host_iv"
+        android:layout_width="26dp"
+        android:layout_height="12dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="3dp"
+        android:src="@drawable/videochat_host"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageView
+        android:id="@+id/video_chat_main_room_mic_off_iv"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="3dp"
+        android:src="@drawable/video_chat_room_main_seat_mic_off"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/video_chat_main_room_name_iv" />
+</androidx.constraintlayout.widget.ConstraintLayout>

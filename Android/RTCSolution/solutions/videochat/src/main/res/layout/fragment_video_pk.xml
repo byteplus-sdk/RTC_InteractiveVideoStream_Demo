@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/video_chat_main_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/local_video_bg"
+        android:layout_width="0dp"
+        android:layout_height="270dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/remote_video_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1">
+
+        <TextView
+            android:id="@+id/local_name_tv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/video_chat_name_bg"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="23.51sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="U" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/local_video_container"
+        android:layout_width="0dp"
+        android:layout_height="270dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/remote_video_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1"/>
+
+    <TextView
+        android:id="@+id/local_network_status_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="4dp"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        app:drawableLeftCompat="@drawable/net_status_good"
+        app:layout_constraintLeft_toLeftOf="@+id/local_video_container"
+        app:layout_constraintTop_toTopOf="@+id/local_video_container"
+        tools:visibility="visible" />
+
+    <FrameLayout
+        android:id="@+id/remote_video_bg"
+        android:layout_width="0dp"
+        android:layout_height="270dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/local_video_container"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1">
+
+        <TextView
+            android:id="@+id/remote_name_tv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/video_chat_name_bg"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="23.51sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="U" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/remote_video_container"
+        android:layout_width="0dp"
+        android:layout_height="270dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/local_video_container"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1"/>
+
+    <TextView
+        android:id="@+id/remote_network_status_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:drawablePadding="4dp"
+        android:text="@string/net_stuck_stopped"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        app:drawableLeftCompat="@drawable/net_status_bad"
+        app:layout_constraintEnd_toEndOf="@+id/remote_video_container"
+        app:layout_constraintTop_toTopOf="@+id/remote_video_container"
+        tools:visibility="visible" />
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="20dp"
+        android:background="@drawable/video_chat_main_pk_title_bg"
+        android:gravity="center"
+        android:text="@string/video_host_connecting"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/remote_video_container"
+        app:layout_constraintStart_toStartOf="@+id/local_video_container"
+        app:layout_constraintTop_toTopOf="@+id/local_video_container" />
+
+
+    <TextView
+        android:id="@+id/local_user_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:drawablePadding="4dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:drawableRightCompat="@drawable/mic_off_1x"
+        app:layout_constraintBottom_toBottomOf="@+id/local_video_container"
+        app:layout_constraintEnd_toEndOf="@+id/local_video_container"
+        app:layout_constraintStart_toStartOf="@+id/local_video_container"
+        tools:text="Monic" />
+
+    <TextView
+        android:id="@+id/remote_user_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:drawablePadding="4dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:drawableRightCompat="@drawable/mic_off_1x"
+        app:layout_constraintBottom_toBottomOf="@+id/remote_video_container"
+        app:layout_constraintEnd_toEndOf="@+id/remote_video_container"
+        app:layout_constraintStart_toStartOf="@+id/remote_video_container"
+        tools:text="Monic" />
+
+    <ImageView
+        android:id="@+id/mute_remote_user_iv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/video_chat_main_pk_mute_remote"
+        app:layout_constraintBottom_toBottomOf="@+id/remote_video_container"
+        app:layout_constraintEnd_toEndOf="@+id/remote_video_container" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

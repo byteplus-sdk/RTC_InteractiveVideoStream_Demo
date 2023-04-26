@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:background="#000000">
+
+    <FrameLayout
+        android:id="@+id/preview_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/exit_create_live">
+
+        <TextView
+            android:id="@+id/experience_time_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/create_video_chat_tip_bg"
+            android:paddingLeft="32dp"
+            android:paddingTop="4dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/warn_ic"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/icon_warning"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="54dp"
+        android:layout_marginRight="54dp"
+        android:layout_marginBottom="140dp"
+        android:background="@drawable/login_bg"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <com.volcengine.vertcdemo.core.widget.PressedImageView
+            android:id="@+id/switch_camera_iv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="32dp"
+            android:padding="12dp"
+            android:src="@drawable/switch_camera"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/effect_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flip"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/switch_camera_iv"
+            app:layout_constraintRight_toRightOf="@id/switch_camera_iv"
+            app:layout_constraintTop_toBottomOf="@id/switch_camera_iv" />
+
+        <com.volcengine.vertcdemo.core.widget.PressedImageView
+            android:id="@+id/effect_iv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="40dp"
+            android:padding="12dp"
+            android:src="@drawable/video_chat_effect"
+            app:layout_constraintLeft_toRightOf="@id/switch_camera_iv"
+            app:layout_constraintRight_toLeftOf="@id/settings_iv"
+            app:layout_constraintTop_toTopOf="@id/switch_camera_iv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/effect_button_message"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/effect_iv"
+            app:layout_constraintRight_toRightOf="@id/effect_iv"
+            app:layout_constraintTop_toBottomOf="@id/effect_iv" />
+
+        <com.volcengine.vertcdemo.core.widget.PressedImageView
+            android:id="@+id/settings_iv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginLeft="32dp"
+            android:padding="12dp"
+            android:src="@drawable/settings"
+            app:layout_constraintLeft_toRightOf="@id/effect_iv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/effect_iv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/settings_iv"
+            app:layout_constraintRight_toRightOf="@id/settings_iv"
+            app:layout_constraintTop_toBottomOf="@id/settings_iv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/start_live"
+        android:layout_width="172dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/create_video_chat_bg"
+        android:gravity="center"
+        android:paddingHorizontal="20dp"
+        android:text="@string/go_live"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageView
+        android:id="@+id/exit_create_live"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="16dp"
+        android:padding="5dp"
+        android:src="@drawable/video_close_unselected"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

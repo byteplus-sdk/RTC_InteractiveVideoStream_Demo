@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_video_chat_users_bg"
+    android:paddingHorizontal="16dp"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/setting_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/settings"
+        android:textColor="@color/dialog_text_color"
+        android:textSize="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/video_setting_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/setting_dialog_title">
+
+        <com.volcengine.vertcdemo.core.widget.PressedImageView
+            android:id="@+id/bgm_iv"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="@drawable/setting_button_bg"
+            android:padding="12dp"
+            android:src="@drawable/video_chat_music"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/switch_camera_iv"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/switch_camera_iv"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/bgm_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/volume"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@id/bgm_iv"
+            app:layout_constraintRight_toRightOf="@id/bgm_iv"
+            app:layout_constraintTop_toBottomOf="@id/bgm_iv"
+            tools:visibility="visible" />
+
+
+        <com.volcengine.vertcdemo.core.widget.PressedImageView
+            android:id="@+id/switch_camera_iv"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="@drawable/setting_button_bg"
+            android:padding="12dp"
+            android:src="@drawable/video_chat_switch_camera"
+            app:layout_constraintBottom_toBottomOf="@id/mic_iv"
+            app:layout_constraintLeft_toRightOf="@+id/bgm_iv"
+            app:layout_constraintRight_toLeftOf="@id/mic_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/camera_flip"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/switch_camera_iv"
+            app:layout_constraintRight_toRightOf="@id/switch_camera_iv"
+            app:layout_constraintTop_toBottomOf="@id/switch_camera_iv" />
+
+
+        <com.volcengine.vertcdemo.core.widget.PressedImageView
+            android:id="@+id/mic_iv"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/setting_button_bg"
+            android:padding="12dp"
+            android:src="@drawable/video_chat_effect"
+            app:layout_constraintLeft_toRightOf="@id/switch_camera_iv"
+            app:layout_constraintRight_toLeftOf="@id/camera_iv"
+            app:layout_constraintTop_toTopOf="@id/switch_camera_iv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/microphone"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/mic_iv"
+            app:layout_constraintRight_toRightOf="@id/mic_iv"
+            app:layout_constraintTop_toBottomOf="@id/mic_iv" />
+
+        <com.volcengine.vertcdemo.core.widget.PressedImageView
+            android:id="@+id/camera_iv"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="@drawable/setting_button_bg"
+            android:padding="12dp"
+            android:src="@drawable/settings"
+            app:layout_constraintLeft_toRightOf="@id/mic_iv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/mic_iv" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/camera"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/camera_iv"
+            app:layout_constraintRight_toRightOf="@id/camera_iv"
+            app:layout_constraintTop_toBottomOf="@id/camera_iv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

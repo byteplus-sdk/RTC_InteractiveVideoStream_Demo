@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="408dp"
+    tools:ignore="HardcodedText,SpUsage"
+    android:background="#F20E0825">
+
+    <TextView
+        android:id="@+id/close_room_chat_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/video_host_close_room"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:paddingEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:drawableStartCompat="@drawable/icon_close_chat_room"
+        android:drawablePadding="4dp" />
+
+    <View
+        android:id="@+id/manager_middle"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/close_room_chat_tv"/>
+
+    <TextView
+        android:id="@+id/manager_online_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:text="@string/video_chat_online_audience"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/manager_middle"
+        app:layout_constraintTop_toBottomOf="@+id/manager_middle" />
+
+    <View
+        android:id="@+id/manager_online_indicator"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="#4080FF"
+        app:layout_constraintBottom_toBottomOf="@id/manager_online_tab"
+        app:layout_constraintLeft_toLeftOf="@id/manager_online_tab"
+        app:layout_constraintRight_toRightOf="@id/manager_online_tab" />
+
+    <TextView
+        android:id="@+id/manager_apply_tab"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:text="@string/video_chat_application_message"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/manager_middle"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manager_middle"/>
+
+    <View
+        android:id="@+id/manager_apply_red_dot"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/video_chat_red_dot"
+        app:layout_constraintLeft_toRightOf="@id/manager_apply_tab"
+        app:layout_constraintRight_toRightOf="@id/manager_apply_tab"
+        app:layout_constraintTop_toTopOf="@id/manager_apply_tab" />
+
+    <View
+        android:id="@+id/manager_apply_indicator"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="#4080FF"
+        app:layout_constraintBottom_toBottomOf="@id/manager_apply_tab"
+        app:layout_constraintLeft_toLeftOf="@id/manager_apply_tab"
+        app:layout_constraintRight_toRightOf="@id/manager_apply_tab" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/manager_online_list"
+        android:layout_width="match_parent"
+        android:layout_height="316dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manager_online_tab"
+        tools:listitem="@layout/item_video_chat_main_audience" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/manager_apply_list"
+        android:layout_width="match_parent"
+        android:layout_height="316dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manager_apply_tab"
+        tools:listitem="@layout/item_video_chat_main_audience" />
+
+    <LinearLayout
+        android:id="@+id/manager_online_empty_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="316dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="228dp"
+            android:layout_height="93dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/empty_list_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/video_chat_no_audience_online"
+            android:textColor="#D3C6C6"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manager_apply_empty_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="316dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="228dp"
+            android:layout_height="93dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/empty_list_icon" />
+
+        <TextView
+            android:id="@+id/manager_empty_list_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/video_chat_no_news"
+            android:textColor="#D3C6C6"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

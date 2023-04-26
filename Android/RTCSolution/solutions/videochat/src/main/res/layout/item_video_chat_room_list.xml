@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="126dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/create_chat_room_item_bg">
+
+    <TextView
+        android:id="@+id/item_voice_chat_demo_room_name_prefix"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/video_chat_room_list_icon_bg"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="C" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/item_voice_chat_demo_room_name_prefix"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/item_voice_chat_demo_room_tile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#E5E6EB"
+            android:textSize="16sp"
+            tools:text="Chrily's chat room" />
+
+        <TextView
+            android:id="@+id/item_voice_chat_demo_room_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="#86909C"
+            android:textSize="12sp"
+            tools:text="Chrily" />
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/item_room_status_iv"
+        android:layout_width="56dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/videochat_living_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_voice_chat_demo_room_audience_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="16dp"
+        android:drawablePadding="5dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_room_status_iv"
+        tools:text="2" />
+</androidx.constraintlayout.widget.ConstraintLayout>
