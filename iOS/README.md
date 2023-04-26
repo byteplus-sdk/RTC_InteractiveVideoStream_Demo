@@ -49,7 +49,7 @@ Obtain the **AccessKeyID and SecretAccessKey** on the [Key Management](https://c
 	
 
 5. Enter **HeadUrl**.<br>
- You can use **https://demo.byteplus.com/rtc/demo/rtc_demo_special/login** as the test domain name of the server. However, this domain name only provides testing running and cannot be used for official operations.
+ You can use **https://demo.byteplus.com/rtc/demo/rtc_demo_special** as the test domain name of the server. However, this domain name only provides testing running and cannot be used for official operations.
     <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/pkupenuhr/4e5ec753-892c-4bbe-9197-fe14cc914890.png" width="500px" >
 
 6. **Enter AppID, AppKey, AccessKeyID, and SecretAccessKey.** <br>

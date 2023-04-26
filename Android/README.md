@@ -38,7 +38,7 @@ Obtain the **AccessKeyID and SecretAccessKey** on the [Key Management](https://c
 
 2. Enter the **HeadUrl**.<br>
 	Open the file `component/ToolKit/gradle.properties` and enter the **HeadUrl**.<br>
-    You can use **https://demo.byteplus.com/rtc/demo/rtc_demo_special/login** as the test domain name of the server. However, this domain name only provides testing running and cannot be used for official operations.
+    You can use **https://demo.byteplus.com/rtc/demo/rtc_demo_special/** as the test domain name of the server. However, this domain name only provides testing running and cannot be used for official operations.
     <img src="https://lf3-static.bytednsdoc.com/obj/eden-cn/pkupenuhr/androidlogin.png" width="500px" >
 
 3. **Enter AppID, AppKey, AccessKeyID, and SecretAccessKey.** 
