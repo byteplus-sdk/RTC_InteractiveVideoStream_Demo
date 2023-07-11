@@ -63,7 +63,7 @@ Enter the **AppID, AppKey, AccessKeyID**, and **SecretAccessKey** obtained from 
     <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_e3283bb0262b4f267a32b88e02058206.png" width="500px" >
 
 2. Log in to your Apple ID.<br>
-2.1 Select **Xcode** **> Preferences** in the upper left corner on the Xcode page, or use the **Command** + shortcut to open Preferences.<br>
+2.1 Select **Xcode** **> Settings** in the upper left corner on the Xcode page, or use the **Command** + shortcut to open Settings.<br>
 2.2 Select **Accounts**, click the Add button (+) in the lower-left corner, and select Apple ID to log in to your account.
     <img src="https://portal.volccdn.com/obj/volcfe/cloud-universal-doc/upload_d9320d09512c297e01802b9c61764b90.png" width="500px" >
 
