@@ -206,8 +206,8 @@ public class VideoChatCreateRoomActivity extends SolutionBaseActivity {
     private void requestCreateVideoRoom() {
         showLoadingDialog();
         VideoChatRTCManager.ins().getRTSClient().requestCreateRoom(
-                getString(R.string.video_chat_xxx_live, SolutionDataManager.ins().getUserName()),
                 SolutionDataManager.ins().getUserName(),
+                getString(R.string.video_chat_xxx_live, SolutionDataManager.ins().getUserName()),
                 "", mCreateRoomRequest);
     }
 

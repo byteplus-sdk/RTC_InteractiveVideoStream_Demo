@@ -33,6 +33,7 @@
     <string name="vocal_volume">人声音量</string>
     <string name="xxx_invites_you_connect">%s邀请你进行主播连线，是否接受？</string>
     <string name="video_chat_in_application">申请中</string>
+    <string name="video_chat_agree">接受</string>
     <string name="video_chat_invited">已邀请</string>
     <string name="video_chat_invite_connect">邀请连线</string>
     <string name="video_chat_no_host_online">暂无主播在线</string>

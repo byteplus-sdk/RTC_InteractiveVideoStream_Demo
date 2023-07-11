@@ -7,26 +7,36 @@ import static com.volcengine.vertcdemo.videochat.core.VideoChatDataManager.SEAT_
 import static com.volcengine.vertcdemo.videochat.core.VideoChatDataManager.SEAT_STATUS_UNLOCKED;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
-import com.volcengine.vertcdemo.utils.Utils;
+import com.ss.bytertc.engine.type.NetworkQuality;
 import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.core.SolutionDataManager;
+import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
+import com.volcengine.vertcdemo.utils.AppUtil;
+import com.volcengine.vertcdemo.utils.Utils;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatSeatInfo;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatUserInfo;
 import com.volcengine.vertcdemo.videochat.core.VideoChatDataManager;
 import com.volcengine.vertcdemo.videochat.core.VideoChatRTCManager;
 import com.volcengine.vertcdemo.videochat.databinding.LayoutVideoChatSeatBinding;
+import com.volcengine.vertcdemo.videochat.event.SDKNetStatusEvent;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * 单个座位控件
@@ -34,7 +44,7 @@ import com.volcengine.vertcdemo.videochat.databinding.LayoutVideoChatSeatBinding
 public class VideoChatSeatLayout extends ConstraintLayout {
 
     private final VideoChatSeatInfo mSeatInfo = new VideoChatSeatInfo();
-    
+
     private LayoutVideoChatSeatBinding mViewBinding;
 
     public VideoChatSeatLayout(@NonNull Context context) {
@@ -71,7 +81,7 @@ public class VideoChatSeatLayout extends ConstraintLayout {
         mSeatInfo.userInfo = info == null ? null : info.userInfo == null ? null : info.userInfo.deepCopy();
         updateLockedStatus(mSeatInfo.isLocked());
         if (mSeatInfo.userInfo == null || mSeatInfo.isLocked()) {
-            mViewBinding.videoChatSeatNetworkContainer.setVisibility(GONE);
+            mViewBinding.videoChatSeatNetworkTv.setVisibility(GONE);
             mViewBinding.videoChatSeatVideoContainer.removeAllViews();
             mViewBinding.videoChatSeatCameraOffTv.setVisibility(GONE);
             mViewBinding.videoChatSeatEmpty.setVisibility(VISIBLE);
@@ -81,7 +91,7 @@ public class VideoChatSeatLayout extends ConstraintLayout {
             mViewBinding.videoChatMainRoomMicOffIv.setVisibility(GONE);
         } else {
             mViewBinding.videoChatSeatEmpty.setVisibility(GONE);
-            mViewBinding.videoChatSeatNetworkContainer.setVisibility(VISIBLE);
+            mViewBinding.videoChatSeatNetworkTv.setVisibility(VISIBLE);
             mViewBinding.videoChatSeatCameraOffTv.setText(mSeatInfo.userInfo.userName.substring(0, 1));
             mViewBinding.videoChatMainRoomBottomCover.setVisibility(VISIBLE);
             mViewBinding.videoChatMainRoomNameIv.setVisibility(VISIBLE);
@@ -160,5 +170,43 @@ public class VideoChatSeatLayout extends ConstraintLayout {
                 action.act(mSeatInfo);
             }
         });
+    }
+
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        SolutionDemoEventManager.register(this);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        SolutionDemoEventManager.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateNetQuality(SDKNetStatusEvent event) {
+        int visibility = mViewBinding.videoChatSeatNetworkTv.getVisibility();
+        if (visibility == View.VISIBLE && TextUtils.equals(event.uid, mSeatInfo.userInfo.userId)) {
+            updateNetStatus(mViewBinding.videoChatSeatNetworkTv, event.networkQuality);
+        }
+    }
+
+    private int mLastNetworkQuality;
+
+    private void updateNetStatus(TextView textView, int networkQuality) {
+        if (textView == null || mLastNetworkQuality == networkQuality) {
+            return;
+        }
+        mLastNetworkQuality = networkQuality;
+        boolean good = networkQuality == NetworkQuality.NETWORK_QUALITY_GOOD ||
+                networkQuality == NetworkQuality.NETWORK_QUALITY_EXCELLENT;
+        textView.setText(good ? R.string.net_excellent : R.string.net_stuck_stopped);
+        Drawable netStatusDrawable = ContextCompat.getDrawable(AppUtil.getApplicationContext(), good ? R.drawable.net_status_good : R.drawable.net_status_bad);
+        if (netStatusDrawable != null) {
+            netStatusDrawable.setBounds(0, 0, (int) Utils.dp2Px(12), (int) Utils.dp2Px(12));
+        }
+        textView.setCompoundDrawables(netStatusDrawable, null, null, null);
     }
 }

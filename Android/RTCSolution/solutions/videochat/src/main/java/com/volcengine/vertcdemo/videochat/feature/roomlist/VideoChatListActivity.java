@@ -63,6 +63,9 @@ public class VideoChatListActivity extends SolutionBaseActivity {
             new IRequestCallback<GetActiveRoomListEvent>() {
                 @Override
                 public void onSuccess(GetActiveRoomListEvent data) {
+                    if (isFinishing()){
+                        return;
+                    }
                     setRoomList(data.roomList);
                 }
 
@@ -157,9 +160,8 @@ public class VideoChatListActivity extends SolutionBaseActivity {
      * Request chat room list.
      */
     private void requestRoomList() {
-        VideoChatRTCManager.ins().getRTSClient().requestClearUser(() -> {
-            VideoChatRTCManager.ins().getRTSClient().getActiveRoomList(mRequestRoomList);
-        });
+        VideoChatRTCManager.ins().getRTSClient().requestClearUser(null);
+        VideoChatRTCManager.ins().getRTSClient().getActiveRoomList(mRequestRoomList);
     }
 
     /**

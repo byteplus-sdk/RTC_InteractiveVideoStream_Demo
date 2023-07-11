@@ -31,13 +31,15 @@ public interface IVideoPlayer {
      * configuration Player
      */
     void startWithConfiguration(Context context);
+
+
+    void setSEICallback(IAction<String> SEICallback);
     /**
      * Set playback address, parent view
      * @param url stream URL
      * @param container parent class view
-     * @param seiCallback SEI callback
      */
-    void setPlayerUrl(String url, View container, IAction<String> seiCallback);
+    void setPlayerUrl(String url, View container);
     /**
      * update playback scale mode
      * @param scalingMode playback scale mode

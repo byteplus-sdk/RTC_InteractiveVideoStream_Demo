@@ -12,6 +12,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ import com.volcengine.vertcdemo.videochat.bean.SeatChangedEvent;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatResponse;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatSeatInfo;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatUserInfo;
+import com.volcengine.vertcdemo.videochat.core.Constants;
 import com.volcengine.vertcdemo.videochat.core.VideoChatDataManager;
 import com.volcengine.vertcdemo.videochat.core.VideoChatRTCManager;
 import com.volcengine.vertcdemo.videochat.databinding.DialogVideoChatSeatOptionBinding;
@@ -46,6 +48,7 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 @SuppressWarnings("unused")
 public class SeatOptionDialog extends BaseDialog {
+    private static final String TAG = "SeatOptionDialog";
 
     static final int MIC_OPTION_ON = 1;
     static final int SEAT_STATUS_LOCKED = 0;
@@ -236,6 +239,12 @@ public class SeatOptionDialog extends BaseDialog {
 
                                 @Override
                                 public void onError(int errorCode, String message) {
+                                    if (errorCode == Constants.ErrorCode.CODE_550
+                                            || errorCode == Constants.ErrorCode.CODE_551) {
+                                        SolutionToast.show(R.string.host_busy);
+                                        return;
+                                    }
+                                    Log.e(TAG, "applyInteract error code:" + errorCode + ",message:" + message);
                                     SolutionToast.show(ErrorTool.getErrorMessageByErrorCode(errorCode, message));
                                 }
                             });

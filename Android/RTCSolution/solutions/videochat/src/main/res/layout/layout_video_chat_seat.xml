@@ -12,34 +12,22 @@
     <FrameLayout
         android:id="@+id/video_chat_seat_video_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:id="@+id/video_chat_seat_network_container"
+    <TextView
+        android:id="@+id/video_chat_seat_network_tv"
         android:layout_width="wrap_content"
-        android:layout_height="11dp"
-        android:layout_marginLeft="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:text="@string/net_excellent"
+        android:textSize="8dp"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/video_chat_seat_network_iv"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@drawable/video_chat_room_main_seat_network_good" />
-
-        <TextView
-            android:id="@+id/video_chat_seat_network_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2dp"
-            android:text="@string/net_excellent"
-            android:textColor="@color/white"
-            android:textSize="8sp" />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:drawableStart="@drawable/video_chat_room_main_seat_network_good" />
 
     <TextView
         android:id="@+id/video_chat_seat_camera_off_tv"
@@ -48,13 +36,14 @@
         android:background="@drawable/video_chat_room_list_icon_bg"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="23.51sp"
+        android:textSize="23.51dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="off" />
+        tools:text="off"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/video_chat_seat_empty"
@@ -78,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="@string/video_chat_seat"
             android:textColor="#CCFFFFFF"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
     </LinearLayout>
 
     <View
@@ -94,7 +83,7 @@
         android:layout_height="18dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="10sp"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -119,4 +108,5 @@
         android:src="@drawable/video_chat_room_main_seat_mic_off"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/video_chat_main_room_name_iv" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,8 +4,7 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 29
 
-
-    RTC_SDK = 'com.byteplus:BytePlusRTC:3.50.311'
+    RTC_SDK = 'com.byteplus:BytePlusRTC:3.52.116'
 
     GlideVersion = '4.12.0'
     GsonVersion = '2.8.5'
@@ -16,8 +15,6 @@ ext {
     ConstraintLayoutVersion = '2.0.4'
     RecyclerViewVersion = '1.2.1'
     MaterialVersion = '1.4.0'
-
-
 
     LOGIN_MODULE = 'LoginKit'
 
@@ -38,8 +35,6 @@ buildscript {
 
 allprojects {
     repositories {
-
-
         maven { url 'https://artifact.bytedance.com/repository/Volcengine/' }
         maven { url 'https://artifact.byteplus.com/repository/public/' }
 

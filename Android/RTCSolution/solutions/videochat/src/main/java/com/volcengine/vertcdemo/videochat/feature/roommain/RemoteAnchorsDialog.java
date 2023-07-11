@@ -25,6 +25,7 @@ import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochat.bean.GetAnchorsEvent;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatResponse;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatUserInfo;
+import com.volcengine.vertcdemo.videochat.core.Constants;
 import com.volcengine.vertcdemo.videochat.core.VideoChatDataManager;
 import com.volcengine.vertcdemo.videochat.core.VideoChatRTCManager;
 import com.volcengine.vertcdemo.videochat.databinding.DialogVideoChatRemoteAnchorBinding;
@@ -77,7 +78,7 @@ public class RemoteAnchorsDialog extends BaseDialog {
 
             @Override
             public void onError(int errorCode, String message) {
-                if (errorCode == 550 || errorCode == 551) {
+                if (errorCode == Constants.ErrorCode.CODE_550 || errorCode == Constants.ErrorCode.CODE_551) {
                     SolutionToast.show(R.string.host_busy);
                 }
                 Log.e(TAG, "inviteAnchor error code:" + errorCode + ",message:" + message);

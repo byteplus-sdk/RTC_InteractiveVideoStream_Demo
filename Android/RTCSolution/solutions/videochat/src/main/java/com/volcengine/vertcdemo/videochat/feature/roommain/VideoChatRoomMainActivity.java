@@ -39,11 +39,11 @@ import com.volcengine.vertcdemo.common.SolutionToast;
 import com.volcengine.vertcdemo.core.SolutionDataManager;
 import com.volcengine.vertcdemo.core.annotation.CameraStatus;
 import com.volcengine.vertcdemo.core.annotation.MicStatus;
-import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.core.eventbus.AppTokenExpiredEvent;
+import com.volcengine.vertcdemo.core.eventbus.SDKReconnectToRoomEvent;
+import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.core.net.ErrorTool;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
-import com.volcengine.vertcdemo.core.eventbus.SDKReconnectToRoomEvent;
 import com.volcengine.vertcdemo.utils.IMEUtils;
 import com.volcengine.vertcdemo.utils.Utils;
 import com.volcengine.vertcdemo.videochat.R;
@@ -69,6 +69,7 @@ import com.volcengine.vertcdemo.videochat.bean.VideoChatResponse;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatRoomInfo;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatSeatInfo;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatUserInfo;
+import com.volcengine.vertcdemo.videochat.core.Constants;
 import com.volcengine.vertcdemo.videochat.core.VideoChatDataManager;
 import com.volcengine.vertcdemo.videochat.core.VideoChatRTCManager;
 import com.volcengine.vertcdemo.videochat.core.VideoChatRTSClient;
@@ -122,7 +123,15 @@ public class VideoChatRoomMainActivity extends SolutionBaseActivity {
 
         @Override
         public void onError(int errorCode, String message) {
-            onArgsError(ErrorTool.getErrorMessageByErrorCode(errorCode, message));
+            String hint;
+            if (errorCode == Constants.ErrorCode.CODE_422) {
+                hint = getString(R.string.joining_room_failed);
+            } else {
+                hint = ErrorTool.getErrorMessageByErrorCode(errorCode, message);
+            }
+            if (!TextUtils.isEmpty(hint)) {
+                onArgsError(hint);
+            }
         }
     };
 
@@ -522,7 +531,10 @@ public class VideoChatRoomMainActivity extends SolutionBaseActivity {
      * @param fragment Input text dialog.
      * @param message Chat message.
      */
-    private void onSendMessage(InputTextDialogFragment fragment, String message) {
+    private void onSendMessage(InputTextDialogFragment fragment, String message, boolean sent) {
+        if (!sent) {
+            return;
+        }
         if (getRoomInfo() == null) {
             return;
         }
@@ -692,8 +704,8 @@ public class VideoChatRoomMainActivity extends SolutionBaseActivity {
         info.userInfo = event.userInfo;
         info.status = SEAT_STATUS_UNLOCKED;
         String message = getString(event.isStart
-                        ? R.string.video_chat_xxx_you_on_mic
-                        : R.string.video_chat_xxx_you_off_mic, event.userInfo.userName);
+                ? R.string.video_chat_xxx_you_on_mic
+                : R.string.video_chat_xxx_you_off_mic, event.userInfo.userName);
         onReceivedMessage(message);
         boolean isSelf = TextUtils.equals(SolutionDataManager.ins().getUserId(), event.userInfo.userId);
         if (isSelf) {
@@ -748,6 +760,9 @@ public class VideoChatRoomMainActivity extends SolutionBaseActivity {
                     new IRequestCallback<InteractReplyEvent>() {
                         @Override
                         public void onSuccess(InteractReplyEvent data) {
+                            if (isFinishing()) return;
+                            String message = getString( R.string.video_chat_xxx_you_on_mic, event.userInfo.userName);
+                            onReceivedMessage(message);
                             mAgreeHostInvite = false;
                             getRoomInfo().status = ROOM_STATUS_CHATTING;
                             VideoChatDataManager.ins().selfInviteStatus = INTERACT_STATUS_NORMAL;

@@ -33,6 +33,7 @@
     <string name="vocal_volume">Voice</string>
     <string name="xxx_invites_you_connect">%s invites you to co-host.</string>
     <string name="video_chat_in_application">Requesting</string>
+    <string name="video_chat_agree">Agree</string>
     <string name="video_chat_invited">Invited</string>
     <string name="video_chat_invite_connect">Invite</string>
     <string name="video_chat_no_host_online">No hosts are broadcasting LIVE</string>

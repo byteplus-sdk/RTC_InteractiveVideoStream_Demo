@@ -90,6 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#99FFFFFF"
+                android:maxLines="1"
                 android:textSize="8sp"
                 tools:text="ID:123433434" />
         </LinearLayout>
@@ -138,14 +139,6 @@
         </LinearLayout>
     </FrameLayout>
 
-    <com.volcengine.vertcdemo.videochat.feature.roommain.VideoChatBottomOptionLayout
-        android:id="@+id/video_chat_main_bottom_option"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="visible"/>
-
     <FrameLayout
         android:id="@+id/main_disconnect_tip"
         android:layout_width="match_parent"
@@ -173,20 +166,28 @@
             android:textColor="@color/white" />
     </FrameLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/video_chat_main_chat_rv"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_video_chat_chat" />
-
     <FrameLayout
         android:id="@+id/biz_fl"
         android:layout_width="match_parent"
         android:layout_height="270dp"
         android:layout_marginTop="38dp"
         app:layout_constraintTop_toBottomOf="@+id/video_chat_main_title"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/video_chat_main_chat_rv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/video_chat_main_bottom_option"
+        app:layout_constraintTop_toBottomOf="@+id/biz_fl"
+        tools:listitem="@layout/item_video_chat_chat" />
+
+    <com.volcengine.vertcdemo.videochat.feature.roommain.VideoChatBottomOptionLayout
+        android:id="@+id/video_chat_main_bottom_option"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

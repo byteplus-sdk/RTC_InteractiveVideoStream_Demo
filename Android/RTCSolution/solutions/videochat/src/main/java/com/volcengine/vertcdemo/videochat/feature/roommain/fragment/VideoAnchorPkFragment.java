@@ -23,19 +23,19 @@ import androidx.fragment.app.Fragment;
 import com.ss.bytertc.engine.data.ForwardStreamInfo;
 import com.ss.bytertc.engine.type.NetworkQuality;
 import com.volcengine.vertcdemo.common.SolutionToast;
-import com.volcengine.vertcdemo.utils.AppUtil;
-import com.volcengine.vertcdemo.utils.Utils;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.core.net.IRequestCallback;
+import com.volcengine.vertcdemo.utils.AppUtil;
+import com.volcengine.vertcdemo.utils.Utils;
 import com.volcengine.vertcdemo.videochat.R;
 import com.volcengine.vertcdemo.videochat.bean.ManageOtherAnchorEvent;
 import com.volcengine.vertcdemo.videochat.bean.MediaChangedEvent;
-import com.volcengine.vertcdemo.videochat.event.SDKNetStatusEvent;
 import com.volcengine.vertcdemo.videochat.bean.UserJoinedEvent;
-import com.volcengine.vertcdemo.videochat.bean.VideoChatUserInfo;
 import com.volcengine.vertcdemo.videochat.bean.VideoChatResponse;
+import com.volcengine.vertcdemo.videochat.bean.VideoChatUserInfo;
 import com.volcengine.vertcdemo.videochat.core.VideoChatDataManager;
 import com.volcengine.vertcdemo.videochat.core.VideoChatRTCManager;
+import com.volcengine.vertcdemo.videochat.event.SDKNetStatusEvent;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -145,11 +145,19 @@ public class VideoAnchorPkFragment extends Fragment {
         mRemoteUserNamePrefixTv.setText(TextUtils.isEmpty(mPeerUname) ? "" : mPeerUname.substring(0, 1));
 
         Drawable localMicDrawable = mLocalAnchorMicOn ? null : ContextCompat.getDrawable(AppUtil.getApplicationContext(), R.drawable.mic_off_1x);
-        mLocalNameTv.setCompoundDrawablesWithIntrinsicBounds(null, null, localMicDrawable, null);
+        if (localMicDrawable != null) {
+            localMicDrawable.setBounds(0, 0, (int) Utils.dp2Px(12), (int) Utils.dp2Px(12));
+        }
+        mLocalNameTv.setCompoundDrawables(null, null, localMicDrawable, null);
+
         mLocalVideoContainer.setVisibility(mLocalAnchorCameraOn ? View.VISIBLE : View.INVISIBLE);
 
         Drawable peerMicDrawable = mPeerAnchorMicOn ? null : ContextCompat.getDrawable(AppUtil.getApplicationContext(), R.drawable.mic_off_1x);
-        mRemoteNameTv.setCompoundDrawablesWithIntrinsicBounds(null, null, peerMicDrawable, null);
+        if (peerMicDrawable != null) {
+            peerMicDrawable.setBounds(0, 0, (int) Utils.dp2Px(12), (int) Utils.dp2Px(12));
+        }
+        mRemoteNameTv.setCompoundDrawables(null, null, peerMicDrawable, null);
+
         mRemoteVideoContainer.setVisibility(mPeerAnchorCameraOn ? View.VISIBLE : View.INVISIBLE);
 
         VideoChatRTCManager.ins().muteRemoteAudio(mPeerUid, mPeerAnchorMuted);
@@ -170,25 +178,25 @@ public class VideoAnchorPkFragment extends Fragment {
                         VideoChatDataManager.ins().selfUserInfo.userId,
                         VideoChatDataManager.ins().selfUserInfo.roomId,
                         mPeerUid, targetType, new IRequestCallback<VideoChatResponse>() {
-                    @Override
-                    public void onSuccess(VideoChatResponse data) {
-                        mMutingPeerAnchor = false;
-                        VideoChatRTCManager.ins().muteRemoteAudio(mPeerUid, !mPeerAnchorMuted);
-                        mPeerAnchorMuted = !mPeerAnchorMuted;
-                        mMuteRemoteIv.setImageResource(mPeerAnchorMuted
-                                ? R.drawable.video_chat_main_pk_mute_remote
-                                : R.drawable.video_chat_main_pk_unmute_remote);
-                    }
+                            @Override
+                            public void onSuccess(VideoChatResponse data) {
+                                mMutingPeerAnchor = false;
+                                VideoChatRTCManager.ins().muteRemoteAudio(mPeerUid, !mPeerAnchorMuted);
+                                mPeerAnchorMuted = !mPeerAnchorMuted;
+                                mMuteRemoteIv.setImageResource(mPeerAnchorMuted
+                                        ? R.drawable.video_chat_main_pk_mute_remote
+                                        : R.drawable.video_chat_main_pk_unmute_remote);
+                            }
 
-                    @Override
-                    public void onError(int errorCode, String message) {
-                        mMutingPeerAnchor = false;
-                        String msg = mPeerAnchorMuted
-                                ? getString(R.string.failed_unmute_remote_co_host)
-                                : getString(R.string.failed_mute_remote_co_host);
-                        SolutionToast.show(msg + errorCode + "," + message);
-                    }
-                });
+                            @Override
+                            public void onError(int errorCode, String message) {
+                                mMutingPeerAnchor = false;
+                                String msg = mPeerAnchorMuted
+                                        ? getString(R.string.failed_unmute_remote_co_host)
+                                        : getString(R.string.failed_mute_remote_co_host);
+                                SolutionToast.show(msg + errorCode + "," + message);
+                            }
+                        });
 
             });
         }
@@ -283,13 +291,16 @@ public class VideoAnchorPkFragment extends Fragment {
             return;
         }
         Drawable drawable = event.userInfo.mic == 1 ? null : ContextCompat.getDrawable(AppUtil.getApplicationContext(), R.drawable.mic_off_1x);
+        if (drawable != null) {
+            drawable.setBounds(0, 0, (int) Utils.dp2Px(12), (int) Utils.dp2Px(12));
+        }
         if (TextUtils.equals(event.userInfo.userId, mPeerUid)) {
-            mRemoteNameTv.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+            mRemoteNameTv.setCompoundDrawables(null, null, drawable, null);
             mRemoteVideoContainer.setVisibility(event.userInfo.camera == 1 ? View.VISIBLE : View.INVISIBLE);
             return;
         }
         if (getHostUserInfo() != null && TextUtils.equals(getHostUserInfo().userId, event.userInfo.userId)) {
-            mLocalNameTv.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+            mLocalNameTv.setCompoundDrawables(null, null, drawable, null);
             mLocalVideoContainer.setVisibility(event.userInfo.camera == 1 ? View.VISIBLE : View.INVISIBLE);
         }
     }
@@ -305,10 +316,6 @@ public class VideoAnchorPkFragment extends Fragment {
                 && TextUtils.equals(stats.uid, getHostUserInfo().userId)) {
             updateNetStatus(mLocalStatusTv, stats.networkQuality);
         }
-    }
-
-    public String getPeerUid() {
-        return mPeerUid;
     }
 
     public String getPeerUname() {
@@ -331,6 +338,9 @@ public class VideoAnchorPkFragment extends Fragment {
                 networkQuality == NetworkQuality.NETWORK_QUALITY_EXCELLENT;
         textView.setText(good ? R.string.net_excellent : R.string.net_stuck_stopped);
         Drawable netStatusDrawable = ContextCompat.getDrawable(AppUtil.getApplicationContext(), good ? R.drawable.net_status_good : R.drawable.net_status_bad);
-        textView.setCompoundDrawablesWithIntrinsicBounds(netStatusDrawable, null, null, null);
+        if (netStatusDrawable != null) {
+            netStatusDrawable.setBounds(0, 0, (int) Utils.dp2Px(12), (int) Utils.dp2Px(12));
+        }
+        textView.setCompoundDrawables(netStatusDrawable, null, null, null);
     }
 }

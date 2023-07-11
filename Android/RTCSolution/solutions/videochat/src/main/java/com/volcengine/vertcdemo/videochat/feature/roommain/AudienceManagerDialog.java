@@ -287,7 +287,7 @@ public class AudienceManagerDialog extends BaseDialog {
     }
 
     /**
-     * 用户加入离开事件
+     * 用户加入/离开事件
      *
      * @param event 事件
      */
@@ -437,7 +437,7 @@ public class AudienceManagerDialog extends BaseDialog {
                     mUserOption.setText(R.string.video_chat_invited);
                     mUserOption.setBackgroundResource(R.drawable.item_video_listener_option_unselected_bg);
                 } else if (status == VideoChatUserInfo.USER_STATUS_APPLYING) {
-                    mUserOption.setText(R.string.accept);
+                    mUserOption.setText(R.string.video_chat_agree);
                     mUserOption.setBackgroundResource(R.drawable.item_video_listener_option_selected_bg);
                 } else {
                     mUserOption.setText(R.string.video_chat_invite_on_mic);
