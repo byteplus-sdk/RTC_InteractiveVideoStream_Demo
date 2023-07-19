@@ -1,9 +1,7 @@
-source 'https://github.com/CocoaPods/Specs.git'
-source 'https://github.com/byteplus-sdk/byteplus-specs.git'
-source 'https://github.com/volcengine/volcengine-specs.git'
+
 
 # RTC SDK
-pod 'BytePlusRTC', '3.52.117'
+pod 'BytePlusRTC', '3.52.117', :source => 'https://github.com/byteplus-sdk/byteplus-specs.git'
 
 target 'RTCSolution' do
   platform :ios, '12.0'
