@@ -1,7 +1,7 @@
 
 
 # RTC SDK
-pod 'BytePlusRTC', '3.52.117', :source => 'https://github.com/byteplus-sdk/byteplus-specs.git'
+pod 'BytePlusRTC', '3.52.118', :source => 'https://github.com/byteplus-sdk/byteplus-specs.git'
 
 target 'RTCSolution' do
   platform :ios, '12.0'
