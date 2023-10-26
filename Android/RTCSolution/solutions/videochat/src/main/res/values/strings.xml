@@ -74,4 +74,5 @@
     <string name="no_created_room_title">No one has created a chatting room. Create one.</string>
     <string name="go_live">Go LIVE</string>
     <string name="sheet_apply_message">Request</string>
+    <string name="operate_failed">The operation failed. Please try again later.</string>
 </resources>

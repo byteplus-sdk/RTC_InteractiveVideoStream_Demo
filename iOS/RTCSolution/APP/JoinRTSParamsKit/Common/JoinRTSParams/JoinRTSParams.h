@@ -6,10 +6,21 @@
 #import <Foundation/Foundation.h>
 #import "JoinRTSParamsModel.h"
 #import "JoinRTSInputModel.h"
+#import "JoinGlobalRTSParamsModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JoinRTSParams : NSObject
+
+/**
+ *
+ * @brief Get global RTS login information
+ * @param loginToken Login user token
+ * @param block callback
+ */
++ (void)getJoinGlobalRTSParams:(NSString *)loginToken
+                         block:(void(^)(JoinGlobalRTSParamsModel *_Nullable model))block;
+
 
 /*
  * Get RTS login information

@@ -3,13 +3,7 @@ plugins {
 }
 
 android {
-
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-    }
-
-    compileSdkVersion project.compileSdkVersion
+    compileSdk project.compileSdkVersion
 
     defaultConfig {
         applicationId "rtc.byteplusdemo.android"
@@ -46,24 +40,18 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    sourceSets {
-        main {
-            jniLibs {
-                srcDir {
-                    "libs/jniLibs"
-                }
-            }
-        }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.all { output ->
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
                 String versionStr = project.APP_VERSION_NAME
                 String suffix = versionStr.replace('.', '')
                 outputFileName = "BytePlusRTC${suffix}.apk"
-                println('product file path: ' + outputFile.path)
             }
         }
     }
@@ -85,7 +73,7 @@ dependencies {
 
     implementation "com.github.bumptech.glide:glide:$GlideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$GlideVersion"
-    implementation project(":component:$LOGIN_MODULE")
+    implementation project(':component:LoginKit')
     implementation project(':component:ToolKit')
 
     implementation project(":solutions:videochat")

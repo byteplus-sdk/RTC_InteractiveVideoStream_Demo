@@ -18,16 +18,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
+import com.volcengine.vertcdemo.common.AppExecutors;
+import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.common.SolutionBaseActivity;
 import com.volcengine.vertcdemo.common.SolutionToast;
-import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.core.SolutionDataManager;
+import com.volcengine.vertcdemo.protocol.ILogin;
 import com.volcengine.vertcdemo.protocol.ProtocolUtil;
+import com.volcengine.vertcdemo.utils.AppUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -38,6 +42,20 @@ import java.util.Set;
 
 public class SceneEntryFragment extends Fragment {
     public static final String TAG = "SceneEntryFragment";
+
+    @CallSuper
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ILogin loginService = ILoginImpl.getLoginService();
+        if (!loginService.isLogin()) {
+            loginService.showLoginView(getContext(), this::initIMService);
+        } else {
+            initIMService();
+        }
+    }
+
+    public void initIMService() {
+    }
 
     @Nullable
     @Override
@@ -75,7 +93,9 @@ public class SceneEntryFragment extends Fragment {
             }
 
             label.setText(scene.loadLabel(packageManager));
-            card.setOnClickListener(createSceneHandler(scene));
+            card.setOnClickListener(v -> {
+                createSceneHandler(scene).onClick(v);
+            });
             cards.addView(card);
 
             availableSceneNameAbbr.add(extractSceneNameAbbr(scene));
@@ -95,28 +115,28 @@ public class SceneEntryFragment extends Fragment {
                 SolutionToast.show("SceneCode not set");
                 return;
             }
-            String token = SolutionDataManager.ins().getToken();
-            if (TextUtils.isEmpty(token)) {
-                new ILoginImpl().showLoginView(getContext());
-                return;
-            }
+            showLoading();
             v.setEnabled(false);
-            Activity activity = getActivity();
-            final SolutionBaseActivity solutionBaseActivity;
-            if (activity instanceof SolutionBaseActivity) {
-                solutionBaseActivity = (SolutionBaseActivity) activity;
-                solutionBaseActivity.showLoadingDialog();
-            } else {
-                solutionBaseActivity = null;
-            }
             IAction<Object> action = (o) -> {
                 v.setEnabled(true);
-                if (solutionBaseActivity != null) {
-                    solutionBaseActivity.dismissLoadingDialog();
-                }
+                hiddenLoading();
             };
-            startScene(scene.activityInfo.name, action);
+            startScene(scene.activityInfo.name, sceneNameAbbr, action);
         };
+    }
+
+    private void showLoading() {
+        Activity activity = getActivity();
+        if (activity instanceof SolutionBaseActivity) {
+            ((SolutionBaseActivity) activity).showLoadingDialog();
+        }
+    }
+
+    private void hiddenLoading() {
+        Activity activity = getActivity();
+        if (activity instanceof SolutionBaseActivity) {
+            ((SolutionBaseActivity) activity).dismissLoadingDialog();
+        }
     }
 
     /***
@@ -124,8 +144,8 @@ public class SceneEntryFragment extends Fragment {
      * @param targetActivity 开启目标业务场景的入口Activity类名
      * @param doneAction 开启目标业务场景的执行后执行的代码块
      */
-    private void startScene(String targetActivity, IAction<Object> doneAction) {
-        boolean res = invokePrepareSolutionParams(targetActivity, doneAction);
+    private void startScene(String targetActivity, String sceneNameAbbr, IAction<Object> doneAction) {
+        boolean res = invokePrepareSolutionParams(targetActivity, sceneNameAbbr, doneAction);
         if (!res) {
             SolutionToast.show("enter solution failed");
         }
@@ -143,7 +163,7 @@ public class SceneEntryFragment extends Fragment {
      * @param targetActivity 要启动类的类名
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    private boolean invokePrepareSolutionParams(String targetActivity, IAction doneAction) {
+    private boolean invokePrepareSolutionParams(String targetActivity, String sceneNameAbbr, IAction doneAction) {
         try {
             Class clz = Class.forName(targetActivity);
             if (clz == null) {
@@ -170,6 +190,7 @@ public class SceneEntryFragment extends Fragment {
 
     /**
      * 读取指定 ResolveInfo 中配置的 scene_name_abbr 信息，并获取该缩略词在配置文件中的顺序信息
+     *
      * @param info 各个场景的ResolveInfo
      * @return 该场景在配置文件中的下标
      */

@@ -80,7 +80,7 @@
 "voice_chat_scenes"="Chatting Room";
 "video_chat"="Interactive Video Streaming";
 "ktv"="Karaoke";
-"audio_video_calls"="Video Call";
+"group_audio_video_calls"="Group Video Call";
 "chorus_ktv"="Duet";
 "watch_live_together"="Watch LIVE\nTogether";
 "watch_video_together"="Watch Video\nTogether";
@@ -89,3 +89,6 @@
 "interactive_live_scenes"="Interactive\nLive Streaming";
 "video_chat_scenes"="Interactive\nVideo Streaming";
 "language_code"="english";
+"audio_video_calls"="Video Call";
+"video_call_in_audio_calling_tip" = "当前正在语音通话中，\n确定退出通话？";
+"video_call_in_video_calling_tip" = "当前正在视频通话中，\n确定退出通话？";

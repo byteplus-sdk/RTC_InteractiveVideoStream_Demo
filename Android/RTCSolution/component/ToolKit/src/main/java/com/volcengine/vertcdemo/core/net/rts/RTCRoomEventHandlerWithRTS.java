@@ -7,22 +7,12 @@ import android.text.TextUtils;
 
 import androidx.annotation.CallSuper;
 
-import com.ss.bytertc.engine.SubscribeConfig;
-import com.ss.bytertc.engine.UserInfo;
-import com.ss.bytertc.engine.data.AVSyncState;
 import com.ss.bytertc.engine.handler.IRTCRoomEventHandler;
 import com.ss.bytertc.engine.type.ErrorCode;
-import com.ss.bytertc.engine.type.LocalStreamStats;
-import com.ss.bytertc.engine.type.MediaStreamType;
-import com.ss.bytertc.engine.type.RTCRoomStats;
-import com.ss.bytertc.engine.type.RemoteStreamStats;
-import com.ss.bytertc.engine.type.StreamRemoveReason;
 import com.volcengine.vertcdemo.core.eventbus.RTSLogoutEvent;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 
 import org.json.JSONObject;
-
-import java.nio.ByteBuffer;
 
 public class RTCRoomEventHandlerWithRTS extends IRTCRoomEventHandler {
 
@@ -59,7 +49,7 @@ public class RTCRoomEventHandlerWithRTS extends IRTCRoomEventHandler {
      * @param extraInfo 进房回调接口返回的额外信息
      *                  joinType表示加入房间的类型，0为首次进房，1为重连进房。
      */
-    protected int joinRoomType(String extraInfo) {
+    protected final int joinRoomType(String extraInfo) {
         int joinType = -1;
         try {
             // 341后 SDK传的固定键
@@ -102,116 +92,11 @@ public class RTCRoomEventHandlerWithRTS extends IRTCRoomEventHandler {
         onMessageReceived(uid, message);
     }
 
-    @Override
-    public void onLeaveRoom(RTCRoomStats stats) {
-
-    }
-
     @CallSuper
     @Override
     public void onRoomStateChanged(String roomId, String uid, int state, String extraInfo) {
         if (state == ErrorCode.ERROR_CODE_DUPLICATE_LOGIN) {
             SolutionDemoEventManager.post(new RTSLogoutEvent());
         }
-    }
-
-    @Override
-    public void onStreamStateChanged(String roomId, String uid, int state, String extraInfo) {
-
-    }
-
-    @Override
-    public void onAVSyncStateChange(AVSyncState state) {
-
-    }
-
-    @Override
-    public void onRoomStats(RTCRoomStats stats) {
-
-    }
-
-    @Override
-    public void onUserJoined(UserInfo userInfo, int elapsed) {
-
-    }
-
-    @Override
-    public void onUserLeave(String uid, int reason) {
-
-    }
-
-    @Override
-    public void onTokenWillExpire() {
-
-    }
-
-    @Override
-    public void onUserPublishStream(String uid, MediaStreamType type) {
-
-    }
-
-    @Override
-    public void onUserUnpublishStream(String uid, MediaStreamType type, StreamRemoveReason reason) {
-
-    }
-
-    @Override
-    public void onUserPublishScreen(String uid, MediaStreamType type) {
-
-    }
-
-    @Override
-    public void onUserUnpublishScreen(String uid, MediaStreamType type, StreamRemoveReason reason) {
-
-    }
-
-    @Override
-    public void onLocalStreamStats(LocalStreamStats stats) {
-
-    }
-
-    @Override
-    public void onRemoteStreamStats(RemoteStreamStats stats) {
-
-    }
-
-    @Override
-    public void onStreamSubscribed(int stateCode, String userId, SubscribeConfig info) {
-
-    }
-
-    @Override
-    public void onStreamPublishSuccess(String uid, boolean isScreen) {
-
-    }
-
-    @Override
-    public void onRoomBinaryMessageReceived(String uid, ByteBuffer message) {
-
-    }
-
-    @Override
-    public void onUserBinaryMessageReceived(String uid, ByteBuffer message) {
-
-    }
-
-    @Override
-    public void onUserMessageSendResult(long msgid, int error) {
-
-    }
-
-    @Override
-    public void onRoomMessageSendResult(long msgid, int error) {
-
-    }
-
-    @Override
-    public void onVideoStreamBanned(String uid, boolean banned) {
-
-    }
-
-    @Override
-    public void onAudioStreamBanned(String uid, boolean banned) {
-
     }
 }

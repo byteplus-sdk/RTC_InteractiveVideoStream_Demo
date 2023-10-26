@@ -27,9 +27,10 @@ import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
  */
 public class AppNetworkStatusUtil {
 
+    private static Context sContext;
     private static final String TAG = "AppNetworkStatus";
 
-    private static final NetworkCallback sCallback = new NetworkCallback(){
+    private static final NetworkCallback sCallback = new NetworkCallback() {
         /**
          * Network connection successful
          */
@@ -37,7 +38,7 @@ public class AppNetworkStatusUtil {
         public void onAvailable(@NonNull Network network) {
             super.onAvailable(network);
             Log.e(TAG, "onAvailable");
-            SolutionDemoEventManager.post(new AppNetworkStatusEvent(AppNetworkStatusEvent.NETWORK_STATUS_CONNECTED));
+            notifyNetStatus();
         }
         /**
          * Network disconnected
@@ -46,7 +47,7 @@ public class AppNetworkStatusUtil {
         public void onLost(@NonNull Network network) {
             super.onLost(network);
             Log.e(TAG, "onLost");
-            SolutionDemoEventManager.post(new AppNetworkStatusEvent(AppNetworkStatusEvent.NETWORK_STATUS_DISCONNECTED));
+            notifyNetStatus();
         }
         /**
          * The network connection timed out or the network is unreachable
@@ -55,9 +56,16 @@ public class AppNetworkStatusUtil {
         public void onUnavailable() {
             super.onUnavailable();
             Log.e(TAG, "onUnavailable");
-            SolutionDemoEventManager.post(new AppNetworkStatusEvent(AppNetworkStatusEvent.NETWORK_STATUS_DISCONNECTED));
+            notifyNetStatus();
         }
     };
+
+    private static void notifyNetStatus() {
+        boolean netConnected = isConnected(sContext);
+        SolutionDemoEventManager.post(new AppNetworkStatusEvent(netConnected
+                ? AppNetworkStatusEvent.NETWORK_STATUS_CONNECTED
+                : AppNetworkStatusEvent.NETWORK_STATUS_DISCONNECTED));
+    }
     /**
      * Register network status monitoring
      * @param context context object, if it is empty, the registration will fail
@@ -67,8 +75,8 @@ public class AppNetworkStatusUtil {
             Log.e(TAG, "registerNetworkCallback failed, because app context is null");
             return;
         }
-        Context appContext = context.getApplicationContext();
-        ConnectivityManager connectivityManager = (ConnectivityManager) appContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        sContext = context.getApplicationContext();
+        ConnectivityManager connectivityManager = (ConnectivityManager) sContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
             Log.e(TAG, "registerNetworkCallback invoke");
             NetworkRequest.Builder builder = new NetworkRequest.Builder();

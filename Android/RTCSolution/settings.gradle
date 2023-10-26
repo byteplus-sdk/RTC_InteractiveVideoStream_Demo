@@ -7,3 +7,4 @@ include ':component:LoginKit'
 include ':component:JoinRTSParamsKit'
 
 include ':solutions:videochat'
+

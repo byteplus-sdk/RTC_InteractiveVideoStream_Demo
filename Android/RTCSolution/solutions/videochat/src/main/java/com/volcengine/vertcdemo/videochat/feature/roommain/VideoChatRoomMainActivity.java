@@ -452,18 +452,6 @@ public class VideoChatRoomMainActivity extends SolutionBaseActivity {
         VideoChatRTCManager.ins().startAudioCapture(false);
         VideoChatRTCManager.ins().leaveRoom();
         VideoChatRTCManager.ins().stopAudioMixing();
-        if (getSelfUserInfo() == null || getRoomInfo() == null) {
-            return;
-        }
-
-        VideoChatRTSClient rtsClient = VideoChatRTCManager.ins().getRTSClient();
-        if (!isLeaveByKickOut && rtsClient != null) {
-            if (getSelfUserInfo().isHost()) {
-                rtsClient.requestFinishLive(getRoomInfo().roomId, null);
-            } else {
-                rtsClient.requestLeaveRoom(getRoomInfo().roomId, null);
-            }
-        }
         VideoChatDataManager.ins().clearData();
     }
 
@@ -505,18 +493,42 @@ public class VideoChatRoomMainActivity extends SolutionBaseActivity {
             if (selfUserInfo != null && selfUserInfo.userStatus == USER_STATUS_INTERACT) {
                 SolutionToast.show(R.string.video_chat_you_off_mic);
             }
-            finish();
+            requestLeave();
             return;
         }
         SolutionCommonDialog dialog = new SolutionCommonDialog(this);
         dialog.setMessage(getString(R.string.video_chat_end_live_alert));
         dialog.setPositiveBtnText(R.string.video_chat_end_live);
         dialog.setPositiveListener((v) -> {
-            finish();
+            requestLeave();
             dialog.dismiss();
         });
         dialog.setNegativeListener((v) -> dialog.dismiss());
         dialog.show();
+    }
+
+
+    private void requestLeave() {
+        VideoChatRTSClient rtsClient = VideoChatRTCManager.ins().getRTSClient();
+        if (!isLeaveByKickOut && rtsClient != null) {
+            boolean isHost = getSelfUserInfo().isHost();
+            IRequestCallback callback = new IRequestCallback() {
+                @Override
+                public void onSuccess(Object data) {
+                    finish();
+                }
+
+                @Override
+                public void onError(int errorCode, String message) {
+                    SolutionToast.show(getString(R.string.accept));
+                }
+            };
+            if (isHost) {
+                rtsClient.requestFinishLive(getRoomInfo().roomId, callback);
+            } else {
+                rtsClient.requestLeaveRoom(getRoomInfo().roomId, callback);
+            }
+        }
     }
 
     /**

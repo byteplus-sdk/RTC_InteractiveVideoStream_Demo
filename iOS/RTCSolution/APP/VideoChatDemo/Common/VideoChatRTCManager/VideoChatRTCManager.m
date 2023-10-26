@@ -77,8 +77,8 @@
 
 - (void)leaveRTCRoom {
     // Leave the RTC room
-    ByteRTCAudioMixingManager *audioMixingManager = [self.rtcEngineKit getAudioMixingManager];
-    [audioMixingManager stopAudioMixing:_audioMixingID];
+    ByteRTCAudioEffectPlayer *audioManager = [self.rtcEngineKit getAudioEffectPlayer];
+    [audioManager stop:_audioMixingID];
     [self.rtcEngineKit stopAudioCapture];
     [self switchFrontFacingCamera:YES];
     [self.rtcRoom leaveRoom];
@@ -109,7 +109,7 @@
 - (void)startForwardStream:(NSString *)roomID token:(NSString *)token {
     [self stopForwardStream];
     // enable start forward stream
-    ForwardStreamConfiguration *configuration = [[ForwardStreamConfiguration alloc] init];
+    ByteRTCForwardStreamConfiguration *configuration = [[ByteRTCForwardStreamConfiguration alloc] init];
     configuration.roomId = roomID;
     configuration.token = token;
     [self.rtcRoom startForwardStreamToRooms:@[configuration]];
@@ -216,24 +216,24 @@
     if (IsEmptyStr(filePath)) {
         return;
     }
-    ByteRTCAudioMixingManager *audioMixingManager = [self.rtcEngineKit getAudioMixingManager];
+    ByteRTCAudioEffectPlayer *audioManager = [self.rtcEngineKit getAudioEffectPlayer];
     
-    ByteRTCAudioMixingConfig *config = [[ByteRTCAudioMixingConfig alloc] init];
+    ByteRTCAudioEffectPlayerConfig *config = [[ByteRTCAudioEffectPlayerConfig alloc] init];
     config.type = ByteRTCAudioMixingTypePlayoutAndPublish;
     config.playCount = -1;
-    [audioMixingManager startAudioMixing:_audioMixingID filePath:filePath config:config];
+    [audioManager start:_audioMixingID filePath:filePath config:config];
 }
 
 - (void)pauseBackgroundMusic {
-    ByteRTCAudioMixingManager *audioMixingManager = [self.rtcEngineKit getAudioMixingManager];
+    ByteRTCAudioEffectPlayer *audioManager = [self.rtcEngineKit getAudioEffectPlayer];
     
-    [audioMixingManager pauseAudioMixing:_audioMixingID];
+    [audioManager pause:_audioMixingID];
 }
 
 - (void)resumeBackgroundMusic {
-    ByteRTCAudioMixingManager *audioMixingManager = [self.rtcEngineKit getAudioMixingManager];
+    ByteRTCAudioEffectPlayer *audioManager = [self.rtcEngineKit getAudioEffectPlayer];
     
-    [audioMixingManager resumeAudioMixing:_audioMixingID];
+    [audioManager resume:_audioMixingID];
 }
 
 - (void)setRecordingVolume:(NSInteger)volume {
@@ -241,9 +241,9 @@
 }
 
 - (void)setMusicVolume:(NSInteger)volume {
-    ByteRTCAudioMixingManager *audioMixingManager = [self.rtcEngineKit getAudioMixingManager];
+    ByteRTCAudioEffectPlayer *audioManager = [self.rtcEngineKit getAudioEffectPlayer];
     
-    [audioMixingManager setAudioMixingVolume:_audioMixingID volume:(int)volume type:ByteRTCAudioMixingTypePlayoutAndPublish];
+    [audioManager setVolume:_audioMixingID volume:(int)volume];
 }
 
 #pragma mark - Render
@@ -333,8 +333,8 @@
 - (void)rtcRoom:(ByteRTCRoom *)rtcRoom onLocalStreamStats:(ByteRTCLocalStreamStats *)stats {
 
     VideoChatNetworkQualityStatus liveStatus = VideoChatNetworkQualityStatusNone;
-    if (stats.tx_quality == ByteRTCNetworkQualityExcellent ||
-        stats.tx_quality == ByteRTCNetworkQualityGood) {
+    if (stats.txQuality == ByteRTCNetworkQualityExcellent ||
+        stats.txQuality == ByteRTCNetworkQualityGood) {
         liveStatus = VideoChatNetworkQualityStatusGood;
     } else {
         liveStatus = VideoChatNetworkQualityStatusBad;
@@ -348,8 +348,8 @@
 
 - (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRemoteStreamStats:(ByteRTCRemoteStreamStats *)stats {
     VideoChatNetworkQualityStatus liveStatus = VideoChatNetworkQualityStatusNone;
-    if (stats.tx_quality == ByteRTCNetworkQualityExcellent ||
-        stats.tx_quality == ByteRTCNetworkQualityGood) {
+    if (stats.txQuality == ByteRTCNetworkQualityExcellent ||
+        stats.txQuality == ByteRTCNetworkQualityGood) {
         liveStatus = VideoChatNetworkQualityStatusGood;
     } else {
         liveStatus = VideoChatNetworkQualityStatusBad;

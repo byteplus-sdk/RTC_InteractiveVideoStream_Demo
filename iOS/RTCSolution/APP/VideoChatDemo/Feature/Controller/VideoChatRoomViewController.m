@@ -315,6 +315,7 @@
     [self.pkUserListComponent resetPkWaitingReplyStstus];
 
     if (reply == VideoChatPKReplyAccept) {
+        [[VideoChatRTCManager shareRtc] bindCanvasViewToUid:anchorModel.uid];
         [self.pkUserListComponent startForwardStream:roomID token:token];
     } else {
         [[ToastComponent shareToastComponent] showWithMessage:[NSString stringWithFormat:LocalizedString(@"video_%@_declined_invitation"), anchorModel.name]];
@@ -322,6 +323,7 @@
 }
 
 - (void)receivedAnchorPKNewAnchorJoined:(VideoChatUserModel *)anchorModel {
+    [[VideoChatRTCManager shareRtc] bindCanvasViewToUid:anchorModel.uid];
     self.chatRoomMode = VideoChatRoomModeMakeCoHost;
     self.pkComponent.anchorModel = anchorModel;
     [self.bottomView updateBottomListsWithPK:YES];
@@ -562,6 +564,11 @@
         self.settingComponent.camera = userModel.camera == VideoChatUserCameraOn;
         [[VideoChatRTCManager shareRtc] makeGuest:self.settingComponent.camera
                                        microphone:self.settingComponent.mic];
+    } else {
+        [[VideoChatRTCManager shareRtc] bindCanvasViewToUid:hostUserModel.uid];
+        for (VideoChatUserModel *userModel in anchorList) {
+            [[VideoChatRTCManager shareRtc] bindCanvasViewToUid:userModel.uid];
+        }
     }
     self.staticView.roomModel = self.roomModel;
     [self.bottomView updateBottomLists:userModel isPKing:anchorList.count >= 2];

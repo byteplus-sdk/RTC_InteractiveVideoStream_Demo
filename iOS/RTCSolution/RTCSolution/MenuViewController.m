@@ -58,6 +58,7 @@
     }];
     
     [self scenesButtonAction];
+    [self initializeIMKitIfNeed];
     [MenuLoginHome showLoginViewControllerAnimated:NO];
 }
 
@@ -88,6 +89,11 @@
     } else {
         [MenuLoginHome showLoginViewControllerAnimated:YES];
     }
+}
+
+- (void)initializeIMKitIfNeed {
+    // If the IM component is imported and initialized, IMService rewrites the initialize method
+    [NSClassFromString(@"IMService") initialize];
 }
 
 #pragma mark - Touch Action
