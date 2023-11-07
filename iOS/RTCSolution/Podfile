@@ -2,7 +2,7 @@ source 'https://cdn.cocoapods.org/'
 source 'https://github.com/byteplus-sdk/byteplus-specs.git'
 
 # RTC SDK
-pod 'BytePlusRTC', '3.56.1.500200'
+pod 'BytePlusRTC', '3.56.1.2300'
 
 target 'RTCSolution' do
   platform :ios, '12.0'
