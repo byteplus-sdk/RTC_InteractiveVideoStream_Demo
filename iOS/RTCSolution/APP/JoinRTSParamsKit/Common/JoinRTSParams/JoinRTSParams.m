@@ -1,17 +1,16 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "JoinRTSParams.h"
-#import "NetworkingManager+joinRTSParams.h"
 #import "JoinRTSConfig.h"
+#import "NetworkingManager+joinRTSParams.h"
 
 @implementation JoinRTSParams
 
 + (void)getJoinGlobalRTSParams:(NSString *)loginToken
-                         block:(void (^)(JoinGlobalRTSParamsModel * _Nullable))block {
-    
+                         block:(void (^)(JoinGlobalRTSParamsModel *_Nullable))block {
     NSString *errorMessage = @"";
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     if (NOEmptyStr(APPID)) {
@@ -19,33 +18,33 @@
     } else {
         errorMessage = @"APPID";
     }
-    
+
     if (NOEmptyStr(APPKey)) {
         [dic setValue:APPKey forKey:@"app_key"];
     } else {
         errorMessage = @"APPKey";
     }
-    
+
     if (NOEmptyStr(AccessKeyID)) {
         [dic setValue:AccessKeyID forKey:@"volc_ak"];
     } else {
         errorMessage = @"AccessKeyID";
     }
-    
+
     if (NOEmptyStr(SecretAccessKey)) {
         [dic setValue:SecretAccessKey forKey:@"volc_sk"];
     } else {
         errorMessage = @"SecretAccessKey";
     }
-    
+
     if (NOEmptyStr([LocalUserComponent userModel].loginToken)) {
         [dic setValue:[LocalUserComponent userModel].loginToken forKey:@"login_token"];
     } else {
         errorMessage = @"loginToken";
     }
-    
+
     [dic setValue:@"ios" forKey:@"platform"];
-    
+
     if (NOEmptyStr(errorMessage)) {
         errorMessage = [NSString stringWithFormat:@"%@ 为空请查看配置", errorMessage];
         if (block) {
@@ -53,24 +52,23 @@
         }
         return;
     }
-    
+
     [PublicParameterComponent share].appId = APPID;
     [NetworkingManager postWithEventName:@"getIMChannelInfo"
                                    space:@"login"
                                  content:dic
-                                   block:^(NetworkingResponse * _Nonnull response) {
-        
-        if (response.result) {
-            JoinGlobalRTSParamsModel *model = [JoinGlobalRTSParamsModel yy_modelWithJSON:response.response];
-            if (block) {
-                block(model);
-            }
-        } else {
-            if (block) {
-                block(nil);
-            }
-        }
-    }];
+                                   block:^(NetworkingResponse *_Nonnull response) {
+                                       if (response.result) {
+                                           JoinGlobalRTSParamsModel *model = [JoinGlobalRTSParamsModel yy_modelWithJSON:response.response];
+                                           if (block) {
+                                               block(model);
+                                           }
+                                       } else {
+                                           if (block) {
+                                               block(nil);
+                                           }
+                                       }
+                                   }];
 }
 
 + (void)getJoinRTSParams:(JoinRTSInputModel *)inputModel
@@ -82,31 +80,31 @@
     } else {
         errorMessage = @"APPID";
     }
-    
+
     if (NOEmptyStr(APPKey)) {
         [dic setValue:APPKey forKey:@"appKey"];
     } else {
         errorMessage = @"APPKey";
     }
-    
+
     if (NOEmptyStr(AccessKeyID)) {
         [dic setValue:AccessKeyID forKey:@"volcAk"];
     } else {
         errorMessage = @"AccessKeyID";
     }
-    
+
     if (NOEmptyStr(SecretAccessKey)) {
         [dic setValue:SecretAccessKey forKey:@"volcSk"];
     } else {
         errorMessage = @"SecretAccessKey";
     }
-    
+
     if (NOEmptyStr(inputModel.scenesName)) {
         [dic setValue:inputModel.scenesName forKey:@"scenesName"];
     } else {
         errorMessage = @"scenes";
     }
-    
+
     if (NOEmptyStr(inputModel.loginToken)) {
         [dic setValue:inputModel.loginToken forKey:@"loginToken"];
     } else {
@@ -133,20 +131,20 @@
     }
     [PublicParameterComponent share].appId = APPID;
     [NetworkingManager setAppInfoWithAppId:dic
-                                     block:^(NetworkingResponse * _Nonnull response) {
-        if (response.result) {
-            JoinRTSParamsModel *paramsModel = [JoinRTSParamsModel yy_modelWithJSON:response.response];
-            if (block) {
-                block(paramsModel);
-            }
-        } else {
-            if (block) {
-                block(nil);
-            }
-        }
-    }];
+                                     block:^(NetworkingResponse *_Nonnull response) {
+                                         if (response.result) {
+                                             JoinRTSParamsModel *paramsModel = [JoinRTSParamsModel yy_modelWithJSON:response.response];
+                                             if (block) {
+                                                 block(paramsModel);
+                                             }
+                                         } else {
+                                             if (block) {
+                                                 block(nil);
+                                             }
+                                         }
+                                     }];
 }
-                          
+
 + (NSDictionary *)addTokenToParams:(NSDictionary *)dic {
     NSMutableDictionary *tokenDic = nil;
     if (dic && [dic isKindOfClass:[NSDictionary class]] && dic.count > 0) {
@@ -170,7 +168,7 @@
         [tokenDic setValue:[PublicParameterComponent share].roomId
                     forKey:@"room_id"];
     }
-    
+
     return [tokenDic copy];
 }
 

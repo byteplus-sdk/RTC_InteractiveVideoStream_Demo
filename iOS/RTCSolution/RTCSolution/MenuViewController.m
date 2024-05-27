@@ -1,16 +1,16 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "MenuViewController.h"
-#import "ScenesViewController.h"
-#import "UserViewController.h"
-#import "MenuItemButton.h"
-#import "MenuLoginHome.h"
 #import "LocalizatorBundle.h"
 #import "Masonry.h"
+#import "MenuItemButton.h"
+#import "MenuLoginHome.h"
+#import "ScenesViewController.h"
 #import "ToolKit.h"
+#import "UserViewController.h"
 
 @interface MenuViewController ()
 
@@ -26,21 +26,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginExpiredNotificate:) name:NotificationLoginExpired object:nil];
-    
+
     [self addChildViewController:self.userViewController];
     [self.view addSubview:self.userViewController.view];
     [self.userViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
+
     [self addChildViewController:self.scenesViewController];
     [self.view addSubview:self.scenesViewController.view];
     [self.scenesViewController.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
+
     [self.view addSubview:self.scenesButton];
     [self.scenesButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.view).multipliedBy(0.5);
@@ -48,7 +48,7 @@
         make.left.mas_equalTo(0);
         make.bottom.mas_equalTo(-[DeviceInforTool getVirtualHomeHeight]);
     }];
-    
+
     [self.view addSubview:self.userButton];
     [self.userButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(self.view).multipliedBy(0.5);
@@ -56,7 +56,7 @@
         make.right.mas_equalTo(0);
         make.bottom.mas_equalTo(-[DeviceInforTool getVirtualHomeHeight]);
     }];
-    
+
     [self scenesButtonAction];
     [self initializeIMKitIfNeed];
     [MenuLoginHome showLoginViewControllerAnimated:NO];
@@ -76,9 +76,9 @@
 - (void)loginExpiredNotificate:(NSNotification *)sender {
     [LocalUserComponent userModel].loginToken = @"";
     [LocalUserComponent updateLocalUserModel:nil];
-    
+
     [DeviceInforTool backToRootViewController];
-    
+
     NSString *key = (NSString *)sender.object;
     if ([key isKindOfClass:[NSString class]] &&
         [key isEqualToString:@"logout"]) {
@@ -137,11 +137,11 @@
         _scenesButton = [[MenuItemButton alloc] init];
         _scenesButton.backgroundColor = [UIColor clearColor];
         [_scenesButton addTarget:self action:@selector(scenesButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        
+
         _scenesButton.imageEdgeInsets = UIEdgeInsetsMake(4, 0, 20, 0);
         _scenesButton.desTitle = LocalizedStringFromBundle(@"home", @"");
         _scenesButton.isAction = NO;
-        
+
         [_scenesButton bingImage:[UIImage imageNamed:@"menu_list"] status:ButtonStatusNone];
         [_scenesButton bingImage:[UIImage imageNamed:@"menu_list_s"] status:ButtonStatusActive];
     }
@@ -153,11 +153,11 @@
         _userButton = [[MenuItemButton alloc] init];
         _userButton.backgroundColor = [UIColor clearColor];
         [_userButton addTarget:self action:@selector(userButtonAction) forControlEvents:UIControlEventTouchUpInside];
-        
+
         _userButton.imageEdgeInsets = UIEdgeInsetsMake(4, 0, 20, 0);
         _userButton.desTitle = LocalizedStringFromBundle(@"me", @"");
         _userButton.isAction = NO;
-        
+
         [_userButton bingImage:[UIImage imageNamed:@"menu_user"] status:ButtonStatusNone];
         [_userButton bingImage:[UIImage imageNamed:@"menu_user_s"] status:ButtonStatusActive];
     }

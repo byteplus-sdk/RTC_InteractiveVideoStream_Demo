@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatCreateRoomTipView.h"
 
@@ -50,7 +50,7 @@
     self.tipLabel.text = message;
 
     [self mas_updateConstraints:^(MASConstraintMaker *make) {
-      make.bottom.equalTo(self.contentView);
+        make.bottom.equalTo(self.contentView);
     }];
 }
 

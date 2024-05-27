@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatPKComponent.h"
 #import "VideoChatPKItemView.h"
@@ -31,13 +31,13 @@
         [self.contentView addSubview:self.hostItemView];
         [self.contentView addSubview:self.anchorItemView];
         [self.contentView addSubview:self.pkImageView];
-        
+
         [self.pkImageView addSubview:self.connectingLabel];
         [self.connectingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(66);
             make.height.centerX.equalTo(self.pkImageView);
         }];
-        
+
         [self resetUI];
     }
     return self;
@@ -59,8 +59,7 @@
     if (mode == VideoChatRoomModeMakeCoHost) {
         [self resetUI];
         [self updateRenderView:self.hostModel.uid];
-    }
-    else {
+    } else {
         self.contentView.hidden = YES;
     }
 }
@@ -88,7 +87,7 @@
         make.left.equalTo(self.superView);
         make.right.equalTo(self.superView.mas_centerX);
         make.top.equalTo(self.superView).offset(124);
-        make.height.equalTo(self.hostItemView.mas_width).multipliedBy(270.0/188.0);
+        make.height.equalTo(self.hostItemView.mas_width).multipliedBy(270.0 / 188.0);
     }];
     [self.anchorItemView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.hostItemView.mas_right);
@@ -112,15 +111,15 @@
     if (![self.hostModel.uid isEqualToString:[LocalUserComponent userModel].uid]) {
         return;
     }
-    VideoChatOtherAnchorMicType type = isMute? VideoChatOtherAnchorMicTypeMute:VideoChatOtherAnchorMicTypeUnmute;
+    VideoChatOtherAnchorMicType type = isMute ? VideoChatOtherAnchorMicTypeMute : VideoChatOtherAnchorMicTypeUnmute;
     [VideoChatRTSManager requestMuteOtherAnchorRoomID:self.roomModel.roomID
-                                           otherAnchorUserID:self.anchorModel.uid
-                                                        type:type
-                                                    complete:^(RTSACKModel * _Nonnull model) {
-        if (!model.result) {
-            [[ToastComponent shareToastComponent] showWithMessage:model.message];
-        }
-    }];
+                                    otherAnchorUserID:self.anchorModel.uid
+                                                 type:type
+                                             complete:^(RTSACKModel *_Nonnull model) {
+                                                 if (!model.result) {
+                                                     [[ToastComponent shareToastComponent] showWithMessage:model.message];
+                                                 }
+                                             }];
 }
 
 - (void)updateNetworkQuality:(VideoChatNetworkQualityStatus)status uid:(NSString *)uid {
@@ -138,8 +137,7 @@
     if ([userModel.uid isEqualToString:self.hostModel.uid]) {
         self.hostModel = userModel;
         self.hostItemView.userModel = self.hostModel;
-    }
-    else if ([userModel.uid isEqualToString:self.anchorModel.uid]) {
+    } else if ([userModel.uid isEqualToString:self.anchorModel.uid]) {
         self.anchorModel = userModel;
         self.anchorItemView.userModel = self.anchorModel;
     }
@@ -175,7 +173,7 @@
 - (void)reqeustStopForwardStream {
     self.activeEndPK = YES;
     __weak typeof(self) weakSelf = self;
-    [VideoChatRTSManager requestStopPKWithRoomID:self.roomModel.roomID userID:self.roomModel.hostUid complete:^(RTSACKModel * _Nonnull model) {
+    [VideoChatRTSManager requestStopPKWithRoomID:self.roomModel.roomID userID:self.roomModel.hostUid complete:^(RTSACKModel *_Nonnull model) {
         if (!model.result) {
             weakSelf.activeEndPK = NO;
         }

@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRTSManager.h"
 #import "JoinRTSParams.h"
@@ -17,13 +17,12 @@
                              VideoChatRoomModel *roomModel,
                              VideoChatUserModel *hostUserModel,
                              RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_name" : roomName ?: @"",
-                          @"background_image_name" : @"bgImageName",
-                          @"user_name" : userName ?: @""};
+    NSDictionary *dic = @{@"room_name": roomName ?: @"",
+                          @"background_image_name": @"bgImageName",
+                          @"user_name": userName ?: @""};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viCreateRoom" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-        
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viCreateRoom" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         NSString *RTCToken = @"";
         VideoChatRoomModel *roomModel = nil;
         VideoChatUserModel *hostUserModel = nil;
@@ -41,11 +40,10 @@
 
 + (void)startLive:(NSString *)roomID
             block:(void (^)(RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @""};
+    NSDictionary *dic = @{@"room_id": roomID ?: @""};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viStartLive" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-        
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viStartLive" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -56,10 +54,10 @@
 + (void)getAudienceList:(NSString *)roomID
                   block:(void (^)(NSArray<VideoChatUserModel *> *userLists,
                                   RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @""};
+    NSDictionary *dic = @{@"room_id": roomID ?: @""};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viGetAudienceList" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viGetAudienceList" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         NSMutableArray<VideoChatUserModel *> *userLists = [[NSMutableArray alloc] init];
         if ([VideoChatRTSManager ackModelResponseClass:ackModel]) {
             NSArray *list = ackModel.response[@"audience_list"];
@@ -78,11 +76,10 @@
 + (void)getApplyAudienceList:(NSString *)roomID
                        block:(void (^)(NSArray<VideoChatUserModel *> *userLists,
                                        RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @""};
+    NSDictionary *dic = @{@"room_id": roomID ?: @""};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viGetApplyAudienceList" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-        
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viGetApplyAudienceList" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         NSMutableArray<VideoChatUserModel *> *userLists = [[NSMutableArray alloc] init];
         if ([VideoChatRTSManager ackModelResponseClass:ackModel]) {
             NSArray *list = ackModel.response[@"audience_list"];
@@ -102,12 +99,12 @@
                    uid:(NSString *)uid
                 seatID:(NSString *)seatID
                  block:(void (^)(RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"audience_user_id" : uid ?: @"",
-                          @"seat_id" : @(seatID.integerValue)};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"audience_user_id": uid ?: @"",
+                          @"seat_id": @(seatID.integerValue)};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viInviteInteract" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viInviteInteract" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -118,11 +115,11 @@
 + (void)agreeApply:(NSString *)roomID
                uid:(NSString *)uid
              block:(void (^)(RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"audience_user_id" : uid ?: @""};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"audience_user_id": uid ?: @""};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viAgreeApply" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viAgreeApply" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -133,11 +130,11 @@
 + (void)managerInteractApply:(NSString *)roomID
                         type:(NSInteger)type
                        block:(void (^)(RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"type" : @(type)};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"type": @(type)};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viManageInteractApply" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viManageInteractApply" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -149,12 +146,12 @@
              seatID:(NSString *)seatID
                type:(NSInteger)type
               block:(void (^)(RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"seat_id" : @(seatID.integerValue),
-                          @"type" : @(type)};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"seat_id": @(seatID.integerValue),
+                          @"type": @(type)};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viManageSeat" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viManageSeat" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -166,19 +163,19 @@
     if (IsEmptyStr(roomID)) {
         return;
     }
-    NSDictionary *dic = @{@"room_id" : roomID ?: @""};
+    NSDictionary *dic = @{@"room_id": roomID ?: @""};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viFinishLive" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viFinishLive" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         NSLog(@"[%@]-viFinishLive %@ \n %@", [self class], dic, ackModel.response);
     }];
 }
 
-+ (void)requestPKUserListComplete:(void(^)(NSArray<VideoChatUserModel *> *userList,  RTSACKModel *model))complete {
++ (void)requestPKUserListComplete:(void (^)(NSArray<VideoChatUserModel *> *userList, RTSACKModel *model))complete {
     NSDictionary *dic = @{};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viGetAnchorList" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viGetAnchorList" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         NSMutableArray<VideoChatUserModel *> *userLists = [[NSMutableArray alloc] init];
         if ([VideoChatRTSManager ackModelResponseClass:ackModel]) {
             NSArray *list = ackModel.response[@"anchor_list"];
@@ -199,17 +196,17 @@
                                  toRoomID:(NSString *)toRoomID
                                  toUserID:(NSString *)toUserID
                                    seatID:(NSInteger)seatID
-                                 complete:(void (^)(RTSACKModel * _Nonnull))complete {
+                                 complete:(void (^)(RTSACKModel *_Nonnull))complete {
     NSDictionary *dic = @{
-        @"inviter_room_id" : fromRoomID ?: @"",
-        @"inviter_user_id" : fromUserID ?: @"",
-        @"invitee_room_id" : toRoomID ?: @"",
-        @"invitee_user_id" : toUserID ?: @"",
-        @"seat_id" : @(seatID),
+        @"inviter_room_id": fromRoomID ?: @"",
+        @"inviter_user_id": fromUserID ?: @"",
+        @"invitee_room_id": toRoomID ?: @"",
+        @"invitee_user_id": toUserID ?: @"",
+        @"seat_id": @(seatID),
     };
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viInviteAnchor" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viInviteAnchor" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (complete) {
             complete(ackModel);
         }
@@ -222,18 +219,17 @@
                               roomID:(NSString *)roomID
                               userID:(NSString *)userID
                                reply:(VideoChatPKReply)reply
-                            complete:(void(^)(NSString *roomID, NSString *token, RTSACKModel *model))complete {
+                            complete:(void (^)(NSString *roomID, NSString *token, RTSACKModel *model))complete {
     NSDictionary *dic = @{
-        @"inviter_room_id" : inviterRoomID ?: @"",
-        @"inviter_user_id" : inviterUserID ?: @"",
-        @"invitee_room_id" : roomID ?: @"",
-        @"invitee_user_id" : userID ?: @"",
-        @"reply" : @(reply),
+        @"inviter_room_id": inviterRoomID ?: @"",
+        @"inviter_user_id": inviterUserID ?: @"",
+        @"invitee_room_id": roomID ?: @"",
+        @"invitee_user_id": userID ?: @"",
+        @"reply": @(reply),
     };
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viReplyAnchor" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-        
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viReplyAnchor" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         NSString *roomID = @"";
         NSString *token = @"";
         if ([VideoChatRTSManager ackModelResponseClass:ackModel]) {
@@ -253,15 +249,14 @@
 
 + (void)requestStopPKWithRoomID:(NSString *)roomID
                          userID:(NSString *)userID
-                       complete:(void(^)(RTSACKModel *model))complete {
+                       complete:(void (^)(RTSACKModel *model))complete {
     NSDictionary *dic = @{
-        @"room_id" : roomID ?: @"",
-        @"user_id" : userID ?: @"",
+        @"room_id": roomID ?: @"",
+        @"user_id": userID ?: @"",
     };
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viFinishAnchorInteract" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-        
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viFinishAnchorInteract" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (complete) {
             complete(ackModel);
         }
@@ -270,14 +265,13 @@
 }
 
 + (void)requestCloseChatRoomMode:(NSString *)roomID
-                        complete:(void(^)(RTSACKModel *model))complete {
+                        complete:(void (^)(RTSACKModel *model))complete {
     NSDictionary *dic = @{
-        @"room_id" : roomID ?: @"",
+        @"room_id": roomID ?: @"",
     };
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viCloseChatRoom" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-       
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viCloseChatRoom" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (complete) {
             complete(ackModel);
         }
@@ -288,16 +282,15 @@
 + (void)requestMuteOtherAnchorRoomID:(NSString *)roomID
                    otherAnchorUserID:(NSString *)otherAnchorUserID
                                 type:(VideoChatOtherAnchorMicType)type
-                            complete:(void(^)(RTSACKModel *model))complete {
+                            complete:(void (^)(RTSACKModel *model))complete {
     NSDictionary *dic = @{
-        @"room_id" : roomID ?: @"",
-        @"other_anchor_user_id" : otherAnchorUserID ?: @"",
-        @"type" : @(type),
+        @"room_id": roomID ?: @"",
+        @"other_anchor_user_id": otherAnchorUserID ?: @"",
+        @"type": @(type),
     };
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viManageOtherAnchor" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-        
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viManageOtherAnchor" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (complete) {
             complete(ackModel);
         }
@@ -316,18 +309,18 @@
                                NSArray<VideoChatSeatModel *> *seatList,
                                NSArray<VideoChatUserModel *> *anchorList,
                                RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"user_name" : userName ?: @""};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"user_name": userName ?: @""};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viJoinLiveRoom" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-        
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viJoinLiveRoom" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         NSString *RTCToken = @"";
         VideoChatRoomModel *roomModel = nil;
         VideoChatUserModel *hostUserModel = nil;
         VideoChatUserModel *userModel = nil;
         NSArray<VideoChatUserModel *> *anchorList = nil;
-        NSMutableArray<VideoChatSeatModel *> *seatList = [[NSMutableArray alloc] init];;
+        NSMutableArray<VideoChatSeatModel *> *seatList = [[NSMutableArray alloc] init];
+        ;
         if ([VideoChatRTSManager ackModelResponseClass:ackModel]) {
             roomModel = [VideoChatRoomModel yy_modelWithJSON:ackModel.response[@"room_info"]];
             roomModel.audienceCount = [[NSString stringWithFormat:@"%@", ackModel.response[@"audience_count"]] integerValue];
@@ -360,11 +353,11 @@
 + (void)replyInvite:(NSString *)roomID
               reply:(NSInteger)reply
               block:(void (^)(RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"reply" : @(reply)};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"reply": @(reply)};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viReplyInvite" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viReplyInvite" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -375,11 +368,11 @@
 + (void)finishInteract:(NSString *)roomID
                 seatID:(NSString *)seatID
                  block:(void (^)(RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"seat_id" : @(seatID.integerValue)};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"seat_id": @(seatID.integerValue)};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viFinishInteract" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viFinishInteract" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -391,11 +384,11 @@
                seatID:(NSString *)seatID
                 block:(void (^)(BOOL isNeedApply,
                                 RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"seat_id" : @(seatID.integerValue)};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"seat_id": @(seatID.integerValue)};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viApplyInteract" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viApplyInteract" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         BOOL isNeedApply = NO;
         if ([VideoChatRTSManager ackModelResponseClass:ackModel]) {
             isNeedApply = [[NSString stringWithFormat:@"%@", ackModel.response[@"is_need_apply"]] boolValue];
@@ -408,23 +401,21 @@
 }
 
 + (void)leaveLiveRoom:(NSString *)roomID {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @""};
+    NSDictionary *dic = @{@"room_id": roomID ?: @""};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viLeaveLiveRoom" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viLeaveLiveRoom" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         NSLog(@"[%@]-viLeaveLiveRoom %@ \n %@", [self class], dic, ackModel.response);
     }];
 }
-
 
 #pragma mark - Publish API
 
 + (void)getActiveLiveRoomListWithBlock:(void (^)(NSArray<VideoChatRoomModel *> *roomList,
                                                  RTSACKModel *model))block {
     NSDictionary *dic = [JoinRTSParams addTokenToParams:nil];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viGetActiveLiveRoomList" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-        
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viGetActiveLiveRoomList" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         NSMutableArray<VideoChatRoomModel *> *roomModelList = [[NSMutableArray alloc] init];
         if ([VideoChatRTSManager ackModelResponseClass:ackModel]) {
             NSArray *list = ackModel.response[@"room_list"];
@@ -442,8 +433,8 @@
 
 + (void)clearUser:(void (^)(RTSACKModel *model))block {
     NSDictionary *dic = [JoinRTSParams addTokenToParams:nil];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viClearUser" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viClearUser" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -454,11 +445,11 @@
 + (void)sendMessage:(NSString *)roomID
             message:(NSString *)message
               block:(void (^)(RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"message" : message ?: @""};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"message": message ?: @""};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viSendMessage" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viSendMessage" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -470,12 +461,12 @@
                       mic:(NSInteger)mic
                    camera:(NSInteger)camera
                     block:(void (^)(RTSACKModel *model))block {
-    NSDictionary *dic = @{@"room_id" : roomID ?: @"",
-                          @"mic" : @(mic),
-                          @"camera" : @(camera)};
+    NSDictionary *dic = @{@"room_id": roomID ?: @"",
+                          @"mic": @(mic),
+                          @"camera": @(camera)};
     dic = [JoinRTSParams addTokenToParams:dic];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viUpdateMediaStatus" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viUpdateMediaStatus" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         if (block) {
             block(ackModel);
         }
@@ -492,9 +483,8 @@
                                      NSArray<VideoChatUserModel *> *anchorInteractList,
                                      RTSACKModel *model))block {
     NSDictionary *dic = [JoinRTSParams addTokenToParams:nil];
-    
-    [[VideoChatRTCManager shareRtc] emitWithAck:@"viReconnect" with:dic block:^(RTSACKModel * _Nonnull ackModel) {
-        
+
+    [[VideoChatRTCManager shareRtc] emitWithAck:@"viReconnect" with:dic block:^(RTSACKModel *_Nonnull ackModel) {
         VideoChatRoomModel *roomModel = nil;
         VideoChatUserModel *hostUserModel = nil;
         VideoChatUserModel *userModel = nil;
@@ -515,7 +505,7 @@
                 [seatList addObject:seatModel];
             }
             RTCToken = [NSString stringWithFormat:@"%@", ackModel.response[@"rtc_token"]];
-            
+
             anchorList = [NSArray yy_modelArrayWithClass:[VideoChatUserModel class] json:ackModel.response[@"anchor_list"]];
             anchorInteractList = [NSArray yy_modelArrayWithClass:[VideoChatUserModel class] json:ackModel.response[@"interact_info_list"]];
         }
@@ -537,8 +527,7 @@
 
 + (void)onAudienceJoinRoomWithBlock:(void (^)(VideoChatUserModel *userModel,
                                               NSInteger count))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAudienceJoinRoom" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAudienceJoinRoom" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *model = nil;
         NSInteger count = -1;
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
@@ -555,8 +544,7 @@
 
 + (void)onAudienceLeaveRoomWithBlock:(void (^)(VideoChatUserModel *userModel,
                                                NSInteger count))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAudienceLeaveRoom" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAudienceLeaveRoom" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *model = nil;
         NSInteger count = -1;
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
@@ -572,8 +560,7 @@
 }
 
 + (void)onFinishLiveWithBlock:(void (^)(NSString *rommID, NSInteger type))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnFinishLive" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnFinishLive" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         NSInteger type = -1;
         NSString *rommID = @"";
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
@@ -590,8 +577,7 @@
 
 + (void)onJoinInteractWithBlock:(void (^)(VideoChatUserModel *userModel,
                                           NSString *seatID))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnJoinInteract" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnJoinInteract" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *model = nil;
         NSString *seatID = @"";
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
@@ -608,8 +594,7 @@
 + (void)onFinishInteractWithBlock:(void (^)(VideoChatUserModel *userModel,
                                             NSString *seatID,
                                             NSInteger type))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnFinishInteract" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnFinishInteract" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *model = nil;
         NSString *seatID = @"";
         NSInteger type = -1;
@@ -628,8 +613,7 @@
 
 + (void)onSeatStatusChangeWithBlock:(void (^)(NSString *seatID,
                                               NSInteger type))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnSeatStatusChange" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnSeatStatusChange" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         NSInteger type = -1;
         NSString *seatID = @"";
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
@@ -648,8 +632,7 @@
                                                NSString *seatID,
                                                NSInteger mic,
                                                NSInteger camera))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnMediaStatusChange" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnMediaStatusChange" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *model = nil;
         NSString *seatID = @"";
         NSInteger mic = -1;
@@ -660,7 +643,7 @@
             seatID = [NSString stringWithFormat:@"%@", noticeModel.data[@"seat_id"]];
             NSString *str = [NSString stringWithFormat:@"%@", noticeModel.data[@"mic"]];
             mic = [str integerValue];
-            
+
             NSString *cameraStr = [NSString stringWithFormat:@"%@", noticeModel.data[@"camera"]];
             camera = [cameraStr integerValue];
         }
@@ -673,8 +656,7 @@
 
 + (void)onMessageWithBlock:(void (^)(VideoChatUserModel *userModel,
                                      NSString *message))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnMessage" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnMessage" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *model = nil;
         NSString *message = @"";
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
@@ -689,13 +671,11 @@
     }];
 }
 
-
 #pragma mark - Single Notification Message
 
 + (void)onInviteInteractWithBlock:(void (^)(VideoChatUserModel *hostUserModel,
                                             NSString *seatID))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnInviteInteract" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnInviteInteract" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *model = nil;
         NSString *seatID = @"";
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
@@ -711,8 +691,7 @@
 
 + (void)onInviteResultWithBlock:(void (^)(VideoChatUserModel *userModel,
                                           NSInteger reply))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnInviteResult" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnInviteResult" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *model = nil;
         NSInteger reply = -1;
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
@@ -729,8 +708,7 @@
 
 + (void)onApplyInteractWithBlock:(void (^)(VideoChatUserModel *userModel,
                                            NSString *seatID))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnApplyInteract" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnApplyInteract" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *model = nil;
         NSString *seatID = @"";
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
@@ -744,15 +722,14 @@
     }];
 }
 
-+ (void)onMediaOperateWithBlock:(void (^)(NSInteger mic, NSInteger camera))block  {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnMediaOperate" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
++ (void)onMediaOperateWithBlock:(void (^)(NSInteger mic, NSInteger camera))block {
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnMediaOperate" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         NSInteger mic = -1;
         NSInteger camera = -1;
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
             NSString *str = [NSString stringWithFormat:@"%@", noticeModel.data[@"mic"]];
             mic = [str integerValue];
-            
+
             NSString *cameraStr = [NSString stringWithFormat:@"%@", noticeModel.data[@"camera"]];
             camera = [cameraStr integerValue];
         }
@@ -764,8 +741,7 @@
 }
 
 + (void)onClearUserWithBlock:(void (^)(NSString *uid))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnClearUser" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnClearUser" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         NSString *uid = @"";
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
             uid = [NSString stringWithFormat:@"%@", noticeModel.data[@"user_id"]];
@@ -777,11 +753,10 @@
     }];
 }
 
-+ (void)onAnchorInviteWithBlock:(void (^)(VideoChatUserModel * _Nonnull))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAnchorInvite" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
++ (void)onAnchorInviteWithBlock:(void (^)(VideoChatUserModel *_Nonnull))block {
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAnchorInvite" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *anchorModel = nil;
-        
+
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
             anchorModel = [VideoChatUserModel yy_modelWithJSON:noticeModel.data];
         }
@@ -792,14 +767,13 @@
     }];
 }
 
-+ (void)onAnchorReplyWithBlock:(void (^)(VideoChatPKReply, NSString * _Nonnull, NSString * _Nonnull, VideoChatUserModel * _Nonnull))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAnchorReply" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
++ (void)onAnchorReplyWithBlock:(void (^)(VideoChatPKReply, NSString *_Nonnull, NSString *_Nonnull, VideoChatUserModel *_Nonnull))block {
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAnchorReply" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatPKReply reply = VideoChatPKReplyTimeOut;
         NSString *roomID = @"";
         NSString *token = @"";
         VideoChatUserModel *anchorModel = nil;
-        
+
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
             reply = [noticeModel.data[@"reply"] integerValue];
             anchorModel = [VideoChatUserModel yy_modelWithJSON:noticeModel.data];
@@ -816,11 +790,10 @@
     }];
 }
 
-+ (void)onNewAnchorJoinWithBlock:(void (^)(VideoChatUserModel * _Nonnull))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnNewAnchorJoin" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
++ (void)onNewAnchorJoinWithBlock:(void (^)(VideoChatUserModel *_Nonnull))block {
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnNewAnchorJoin" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         VideoChatUserModel *anchorModel = nil;
-        
+
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
             anchorModel = [VideoChatUserModel yy_modelWithJSON:noticeModel.data];
             anchorModel.otherAnchorMicType = VideoChatOtherAnchorMicTypeUnmute;
@@ -832,9 +805,8 @@
     }];
 }
 
-+ (void)onAnchorPKEndWithBlock:(void(^)(void))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAnchorInteractFinish" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
++ (void)onAnchorPKEndWithBlock:(void (^)(void))block {
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnAnchorInteractFinish" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         if (block) {
             block();
         }
@@ -842,9 +814,8 @@
     }];
 }
 
-+ (void)onClosedChatRoomModeWithBlock:(void(^)(NSString *roomID))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnCloseChatRoom" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
++ (void)onClosedChatRoomModeWithBlock:(void (^)(NSString *roomID))block {
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnCloseChatRoom" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         NSString *roomID = @"";
         if (noticeModel.data && [noticeModel.data isKindOfClass:[NSDictionary class]]) {
             roomID = [NSString stringWithFormat:@"%@", noticeModel.data[@"room_id"]];
@@ -856,9 +827,8 @@
     }];
 }
 
-+ (void)onMuteOtherAnchorWithBlock:(void(^)(NSString *roomID, NSString *otherAnchorUserID, VideoChatOtherAnchorMicType type))block {
-    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnManageOtherAnchor" block:^(RTSNoticeModel * _Nonnull noticeModel) {
-        
++ (void)onMuteOtherAnchorWithBlock:(void (^)(NSString *roomID, NSString *otherAnchorUserID, VideoChatOtherAnchorMicType type))block {
+    [[VideoChatRTCManager shareRtc] onSceneListener:@"viOnManageOtherAnchor" block:^(RTSNoticeModel *_Nonnull noticeModel) {
         NSString *roomID = @"";
         NSString *otherAnchorUserID = @"";
         NSInteger type = 1;

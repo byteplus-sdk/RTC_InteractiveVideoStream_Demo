@@ -1,20 +1,19 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <Foundation/Foundation.h>
-
-#import <BytePlusRTC/objc/ByteRTCVideo.h>
-#import <BytePlusRTC/objc/ByteRTCRoom.h>
-#import <YYModel/YYModel.h>
-#import "RTSRequestModel.h"
+#import "LocalUserComponent.h"
+#import "NetworkingTool.h"
+#import "PublicParameterComponent.h"
+#import "RTCJoinModel.h"
 #import "RTSACKModel.h"
 #import "RTSNoticeModel.h"
-#import "LocalUserComponent.h"
-#import "PublicParameterComponent.h"
-#import "NetworkingTool.h"
-#import "RTCJoinModel.h"
+#import "RTSRequestModel.h"
+#import <BytePlusRTC/objc/ByteRTCRoom.h>
+#import <BytePlusRTC/objc/ByteRTCVideo.h>
+#import <Foundation/Foundation.h>
+#import <YYModel/YYModel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -24,7 +23,6 @@ typedef void (^RTCRoomMessageBlock)(RTSNoticeModel *noticeModel);
 
 // Engine management
 @property (nonatomic, strong, nullable) ByteRTCVideo *rtcEngineKit;
-
 
 /**
  * @brief Open RTS connection
@@ -42,12 +40,10 @@ typedef void (^RTCRoomMessageBlock)(RTSNoticeModel *noticeModel);
             bid:(NSString *)bid
           block:(void (^)(BOOL result))block;
 
-
 /**
  * @brief Close the RTS connection
  */
 - (void)disconnect;
-
 
 /**
  * @brief Emit an RTS request
@@ -58,7 +54,6 @@ typedef void (^RTCRoomMessageBlock)(RTSNoticeModel *noticeModel);
 - (void)emitWithAck:(NSString *)event
                with:(NSDictionary *)item
               block:(__nullable RTCSendServerMessageBlock)block;
-           
 
 /**
  * @brief Register RTS listener
@@ -68,12 +63,10 @@ typedef void (^RTCRoomMessageBlock)(RTSNoticeModel *noticeModel);
 - (void)onSceneListener:(NSString *)key
                   block:(RTCRoomMessageBlock)block;
 
-
 /**
  * @brief Remove broadcast listener
  */
 - (void)offSceneListener;
-
 
 #pragma mark - Config
 
@@ -81,7 +74,6 @@ typedef void (^RTCRoomMessageBlock)(RTSNoticeModel *noticeModel);
  * @brief It will be called every time rtcEngineKit is initialized, and the subclass overrides the implementation.
  */
 - (void)configeRTCEngine;
-
 
 /**
  * @brief Get Sdk Version.

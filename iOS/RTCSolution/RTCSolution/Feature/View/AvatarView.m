@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "AvatarView.h"
 #import "Masonry.h"
@@ -23,7 +23,7 @@
         [self.avatarBgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
-        
+
         [self addSubview:self.avatarLabel];
         [self.avatarLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self.avatarBgView);
@@ -34,13 +34,13 @@
 
 - (void)setFontSize:(NSInteger)fontSize {
     _fontSize = fontSize;
-    
+
     self.avatarLabel.font = [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
 }
 
 - (void)setText:(NSString *)text {
     _text = text;
-    
+
     if (NOEmptyStr(text)) {
         if (text.length > 0) {
             self.avatarLabel.text = [text substringToIndex:1];
@@ -62,7 +62,6 @@
     if (!_avatarLabel) {
         _avatarLabel = [[UILabel alloc] init];
         _avatarLabel.textColor = [UIColor colorFromHexString:@"#FFFFFF"];
-        
     }
     return _avatarLabel;
 }

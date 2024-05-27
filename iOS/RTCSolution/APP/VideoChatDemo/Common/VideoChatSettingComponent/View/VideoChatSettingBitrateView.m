@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSettingBitrateView.h"
 
@@ -20,27 +20,27 @@
     if (self = [super initWithFrame:frame]) {
         [self addSubview:self.leftLabel];
         [self.leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.top.mas_equalTo(0);
-          make.left.mas_equalTo(16);
+            make.top.mas_equalTo(0);
+            make.left.mas_equalTo(16);
         }];
 
         [self addSubview:self.rightLabel];
         [self.rightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.centerY.equalTo(self.leftLabel);
-          make.right.mas_equalTo(-16);
+            make.centerY.equalTo(self.leftLabel);
+            make.right.mas_equalTo(-16);
         }];
 
         [self addSubview:self.bitrateLabel];
         [self.bitrateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.centerY.equalTo(self.leftLabel);
-          make.right.equalTo(self.rightLabel.mas_left).offset(-8);
+            make.centerY.equalTo(self.leftLabel);
+            make.right.equalTo(self.rightLabel.mas_left).offset(-8);
         }];
 
         [self addSubview:self.slider];
         [self.slider mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.top.equalTo(self.leftLabel.mas_bottom).offset(16);
-          make.left.mas_equalTo(16);
-          make.right.mas_equalTo(-16);
+            make.top.equalTo(self.leftLabel.mas_bottom).offset(16);
+            make.left.mas_equalTo(16);
+            make.right.mas_equalTo(-16);
         }];
     }
     return self;

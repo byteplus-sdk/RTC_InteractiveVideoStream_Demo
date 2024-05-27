@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomSettingResolutionView.h"
 
@@ -25,19 +25,19 @@
 
         [self addSubview:self.titleLabel];
         [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.centerX.equalTo(self);
-          make.top.mas_equalTo(16);
+            make.centerX.equalTo(self);
+            make.top.mas_equalTo(16);
         }];
 
         [self addSubview:self.backButton];
         [self.backButton mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.left.mas_equalTo(20);
-          make.centerY.equalTo(self.titleLabel);
-          make.width.mas_equalTo(15);
-          make.height.mas_equalTo(27);
+            make.left.mas_equalTo(20);
+            make.centerY.equalTo(self.titleLabel);
+            make.width.mas_equalTo(15);
+            make.height.mas_equalTo(27);
         }];
 
-        NSArray *items = @[ @"480p", @"540p", @"720p", @"1080p" ];
+        NSArray *items = @[@"480p", @"540p", @"720p", @"1080p"];
 
         for (int i = 0; i < items.count; i++) {
             NSString *title = items[i];
@@ -57,10 +57,10 @@
             [self addSubview:button];
 
             [button mas_makeConstraints:^(MASConstraintMaker *make) {
-              make.centerX.equalTo(self).multipliedBy(0.5 * i + 0.25);
-              make.top.equalTo(self.titleLabel.mas_bottom).offset(32);
-              make.width.mas_equalTo(64);
-              make.height.mas_equalTo(32);
+                make.centerX.equalTo(self).multipliedBy(0.5 * i + 0.25);
+                make.top.equalTo(self.titleLabel.mas_bottom).offset(32);
+                make.width.mas_equalTo(64);
+                make.height.mas_equalTo(32);
             }];
 
             [self.buttons addObject:button];

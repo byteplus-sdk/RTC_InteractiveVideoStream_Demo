@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <UIKit/UIKit.h>
 typedef NS_ENUM(NSInteger, ScreenOrientation) {
@@ -17,4 +17,3 @@ typedef NS_ENUM(NSInteger, ScreenOrientation) {
 @property (nonatomic, assign) ScreenOrientation screenOrientation;
 
 @end
-

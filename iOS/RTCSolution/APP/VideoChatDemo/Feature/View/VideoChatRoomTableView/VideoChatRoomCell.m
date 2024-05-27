@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomCell.h"
 #import "VideoChatAvatarComponent.h"
@@ -47,7 +47,7 @@
         make.left.equalTo(self.contentView).offset(20);
         make.right.equalTo(self.contentView).offset(-20);
     }];
-    
+
     [self.bgView addSubview:self.avatarView];
     [self.avatarView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.height.mas_equalTo(60);
@@ -55,41 +55,41 @@
         make.top.equalTo(self.bgView).offset(32);
         make.bottom.equalTo(self.bgView).offset(-32);
     }];
-    
+
     [self.bgView addSubview:self.hostroomIDLabel];
     [self.hostroomIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.bgView).offset(40);
         make.left.equalTo(self.avatarView.mas_right).offset(16);
         make.right.mas_lessThanOrEqualTo(self.bgView.mas_right).offset(-60);
     }];
-    
+
     [self.bgView addSubview:self.roomIDLabel];
     [self.roomIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.hostroomIDLabel.mas_bottom).offset(8);
         make.left.equalTo(self.hostroomIDLabel);
         make.right.mas_lessThanOrEqualTo(self.bgView.mas_right).offset(-15);
     }];
-    
+
     [self.bgView addSubview:self.iconImageView];
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(56, 20));
         make.right.equalTo(self.bgView).offset(-16);
         make.top.equalTo(self.bgView).offset(24);
     }];
-    
+
     [self.bgView addSubview:self.peopleNumLabel];
     [self.peopleNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.bgView).offset(-16);
         make.bottom.equalTo(self.bgView).offset(-32);
     }];
-    
+
     [self.bgView addSubview:self.peopleNumImageView];
     [self.peopleNumImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(12, 12));
         make.right.equalTo(self.peopleNumLabel.mas_left).offset(-4);
         make.centerY.equalTo(self.peopleNumLabel);
     }];
-    
+
     [self.bgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.contentView);
     }];
@@ -97,16 +97,16 @@
 
 #pragma mark - Private Action
 
-- (void)setLineSpace:(CGFloat)lineSpace withText:(NSString *)text inLabel:(UILabel *)label{
+- (void)setLineSpace:(CGFloat)lineSpace withText:(NSString *)text inLabel:(UILabel *)label {
     if (!text || !label) {
         return;
     }
-    
+
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineSpacing = lineSpace;
     paragraphStyle.lineBreakMode = label.lineBreakMode;
     paragraphStyle.alignment = label.textAlignment;
-    
+
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [text length])];
     label.attributedText = attributedString;

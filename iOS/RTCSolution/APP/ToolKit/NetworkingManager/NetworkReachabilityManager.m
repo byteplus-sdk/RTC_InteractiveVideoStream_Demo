@@ -1,14 +1,14 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <AFNetworking/AFNetworkReachabilityManager.h>
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import "NetworkReachabilityManager.h"
-#import "ToastComponent.h"
 #import "DeviceInforTool.h"
 #import "LocalizatorBundle.h"
+#import "ToastComponent.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
 
 @interface NetworkReachabilityManager ()
 
@@ -59,14 +59,14 @@
         NSArray *network2G = @[CTRadioAccessTechnologyGPRS, CTRadioAccessTechnologyEdge, CTRadioAccessTechnologyCDMA1x];
         NSArray *network3G = @[CTRadioAccessTechnologyWCDMA, CTRadioAccessTechnologyHSDPA, CTRadioAccessTechnologyHSUPA, CTRadioAccessTechnologyCDMAEVDORev0, CTRadioAccessTechnologyCDMAEVDORevA, CTRadioAccessTechnologyCDMAEVDORevB, CTRadioAccessTechnologyeHRPD];
         NSArray *network4G = @[CTRadioAccessTechnologyLTE];
-        
+
         if ([network2G containsObject:currentStatus]) {
             networkType = @"2G";
-        }else if ([network3G containsObject:currentStatus]) {
+        } else if ([network3G containsObject:currentStatus]) {
             networkType = @"3G";
-        }else if ([network4G containsObject:currentStatus]){
+        } else if ([network4G containsObject:currentStatus]) {
             networkType = @"4G";
-        }else {
+        } else {
             networkType = @"unknown network";
         }
     }
@@ -83,8 +83,8 @@
     if (isDisconnect) {
         self.isMissConnect = YES;
         UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-        [[ToastComponent shareToastComponent] showWithMessage:LocalizedStringFromBundle(@"network_link_down", @"ToolKit") view:keyWindow keep:YES block:^(BOOL result) {
-            
+        [[ToastComponent shareToastComponent] showWithMessage:LocalizedStringFromBundle(@"network_link_down", @"ToolKit") view:keyWindow keep:YES block:^(BOOL result){
+
         }];
     } else {
         self.isMissConnect = NO;
@@ -92,7 +92,7 @@
     }
 }
 
--(BOOL)isDisconnect {
+- (BOOL)isDisconnect {
     return self.isMissConnect;
 }
 

@@ -19,8 +19,5 @@ Pod::Spec.new do |spec|
   spec.dependency 'Masonry'
   spec.dependency 'YYModel'
   spec.dependency 'AFNetworking'
-
-  
-  spec.dependency 'BytePlusRTC'
-  
+  spec.dependency 'BytePlusRTC'  
 end

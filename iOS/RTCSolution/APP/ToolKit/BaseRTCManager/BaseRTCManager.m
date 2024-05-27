@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "BaseRTCManager.h"
 #import "LocalizatorBundle.h"
 
-typedef NSString* RTSMessageType;
+typedef NSString *RTSMessageType;
 static RTSMessageType const RTSMessageTypeResponse = @"return";
 static RTSMessageType const RTSMessageTypeNotice = @"inform";
 
@@ -40,17 +40,17 @@ static RTSMessageType const RTSMessageTypeNotice = @"inform";
         [ByteRTCVideo destroyRTCVideo];
         self.rtcEngineKit = nil;
     }
-    
+
     // Create an engine instance.
     self.rtcEngineKit = [ByteRTCVideo createRTCVideo:appID delegate:self parameters:@{}];
     [self configeRTCEngine];
-    
+
     // Set Business ID
     [self.rtcEngineKit setBusinessId:bid];
-    
+
     // Log in RTS
     [self.rtcEngineKit login:RTSToken uid:uid];
-    
+
     // Login RTS result callback
     __weak __typeof(self) wself = self;
     self.rtcLoginBlock = ^(BOOL result) {
@@ -118,15 +118,15 @@ static RTSMessageType const RTSMessageTypeNotice = @"inform";
     requestModel.deviceID = [NetworkingTool getDeviceId];
     requestModel.requestBlock = block;
     NSString *json = [requestModel yy_modelToJSONString];
-    
+
     // Client side sends a text message to the application server (P2Server)
     requestModel.msgid = (NSInteger)[self.rtcEngineKit sendServerMessage:json];
-    
+
     NSString *key = requestModel.requestID;
     [self.senderDic setValue:requestModel forKey:key];
     [self addLog:@"sendServerMessage-" message:json];
 }
-           
+
 - (void)onSceneListener:(NSString *)key
                   block:(RTCRoomMessageBlock)block {
     if (IsEmptyStr(key)) {
@@ -184,7 +184,7 @@ static RTSMessageType const RTSMessageTypeNotice = @"inform";
         if (NOEmptyStr(key)) {
             [self.senderDic removeObjectForKey:key];
         }
-        
+
         if (error == ByteRTCUserMessageSendResultNotLogin) {
             dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:NotificationLoginExpired object:@"logout"];
@@ -195,7 +195,6 @@ static RTSMessageType const RTSMessageTypeNotice = @"inform";
 
 // Callback when receiving a message from outside the room
 - (void)rtcEngine:(ByteRTCVideo *)engine onUserMessageReceivedOutsideRoom:(NSString *)uid message:(NSString *)message {
-
     [self dispatchMessageFrom:uid message:message];
     [self addLog:@"onUserMessageReceivedOutsideRoom-" message:message];
 }
@@ -220,9 +219,9 @@ static RTSMessageType const RTSMessageTypeNotice = @"inform";
 #pragma mark - ByteRTCRoomDelegate
 // Receive RTC/RTS join room result
 - (void)rtcRoom:(ByteRTCRoom *)rtcRoom onRoomStateChanged:(NSString *)roomId
-        withUid:(NSString *)uid
-          state:(NSInteger)state
-      extraInfo:(NSString *)extraInfo {
+               withUid:(NSString *)uid
+                 state:(NSInteger)state
+             extraInfo:(NSString *)extraInfo {
     dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
         if (state == ByteRTCErrorCodeDuplicateLogin) {
             [[NSNotificationCenter defaultCenter] postNotificationName:NotificationLoginExpired object:@"logout"];
@@ -255,7 +254,7 @@ static RTSMessageType const RTSMessageTypeNotice = @"inform";
         [self receivedResponseFrom:uid object:dic];
         return;
     }
-    
+
     if ([messageType isKindOfClass:[NSString class]] &&
         [messageType isEqualToString:RTSMessageTypeNotice]) {
         [self receivedNoticeFrom:uid object:dic];

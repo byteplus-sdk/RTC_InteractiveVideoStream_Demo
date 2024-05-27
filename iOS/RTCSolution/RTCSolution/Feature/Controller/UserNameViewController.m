@@ -1,13 +1,13 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "UserNameViewController.h"
-#import "MenuCreateTextFieldView.h"
-#import "NetworkingManager.h"
 #import "LocalizatorBundle.h"
 #import "Masonry.h"
+#import "MenuCreateTextFieldView.h"
+#import "NetworkingManager.h"
 #import "ToolKit.h"
 
 @interface UserNameViewController ()
@@ -26,32 +26,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorFromHexString:@"#272E3B"];
-    
+
     [self.view addSubview:self.navView];
     [self.navView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.view);
         make.height.mas_equalTo([DeviceInforTool getStatusBarHight] + 44);
     }];
-    
+
     [self.navView addSubview:self.navLabel];
     [self.navLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.navView);
-        make.centerY.equalTo(self.navView).offset([DeviceInforTool getStatusBarHight]/2);
+        make.centerY.equalTo(self.navView).offset([DeviceInforTool getStatusBarHight] / 2);
     }];
-    
+
     [self.navView addSubview:self.leftButton];
     [self.leftButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.width.mas_equalTo(16);
         make.left.mas_equalTo(16);
         make.centerY.equalTo(self.navLabel);
     }];
-    
+
     [self.navView addSubview:self.rightButton];
     [self.rightButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-16);
         make.centerY.equalTo(self.navLabel);
     }];
-    
+
     [self.view addSubview:self.userNameTextFieldView];
     [self.userNameTextFieldView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(16);
@@ -59,13 +59,13 @@
         make.height.mas_equalTo(32);
         make.top.equalTo(self.navView.mas_bottom).offset(30);
     }];
-    
+
     self.userNameTextFieldView.text = [LocalUserComponent userModel].name;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+
     [self.userNameTextFieldView becomeFirstResponder];
 }
 
@@ -80,15 +80,15 @@
     [[ToastComponent shareToastComponent] showLoading];
     [NetworkingManager changeUserName:userModel.name
                            loginToken:[LocalUserComponent userModel].loginToken
-                                block:^(NetworkingResponse * _Nonnull response) {
-        [[ToastComponent shareToastComponent] dismiss];
-        if (response.result) {
-            [LocalUserComponent updateLocalUserModel:userModel];
-            [wself.navigationController popViewControllerAnimated:YES];
-        } else {
-            [[ToastComponent shareToastComponent] showWithMessage:response.message];
-        }
-    }];
+                                block:^(NetworkingResponse *_Nonnull response) {
+                                    [[ToastComponent shareToastComponent] dismiss];
+                                    if (response.result) {
+                                        [LocalUserComponent updateLocalUserModel:userModel];
+                                        [wself.navigationController popViewControllerAnimated:YES];
+                                    } else {
+                                        [[ToastComponent shareToastComponent] showWithMessage:response.message];
+                                    }
+                                }];
 }
 
 - (void)navBackAction {
@@ -109,7 +109,8 @@
 
 - (BaseButton *)rightButton {
     if (!_rightButton) {
-        _rightButton = [[BaseButton alloc] init];;
+        _rightButton = [[BaseButton alloc] init];
+        ;
         [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _rightButton.titleLabel.font = [UIFont systemFontOfSize:15];
         [_rightButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -136,11 +137,10 @@
     return _navLabel;
 }
 
-
 - (MenuCreateTextFieldView *)userNameTextFieldView {
     if (!_userNameTextFieldView) {
         _userNameTextFieldView = [[MenuCreateTextFieldView alloc] initWithModify:YES];
-        _userNameTextFieldView.placeholderStr = LocalizedStringFromBundle(@"please_enter_user_nickname", @"")  ?: @"";
+        _userNameTextFieldView.placeholderStr = LocalizedStringFromBundle(@"please_enter_user_nickname", @"") ?: @"";
         _userNameTextFieldView.maxLimit = 18;
         _userNameTextFieldView.minLimit = 1;
     }

@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <Foundation/Foundation.h>
 @class FeedbackManagerProtocol;
@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)protocol:(FeedbackManagerProtocol *)protocol
        initWithSuperView:(UIView *)superView
                scenesDic:(NSDictionary *)scenesDic;
-        
 
 @end
 

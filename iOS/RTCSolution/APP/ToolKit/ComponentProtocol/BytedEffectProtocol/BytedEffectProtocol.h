@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <Foundation/Foundation.h>
 
@@ -48,7 +48,6 @@ typedef NS_ENUM(NSInteger, BytedEffectType) {
 
 @interface BytedEffectProtocol : NSObject
 
-
 /**
  * @brief Initialization
  * @param rtcEngineKit Rtc Engine
@@ -62,8 +61,6 @@ typedef NS_ENUM(NSInteger, BytedEffectType) {
  */
 - (instancetype)initWithRTCEngineKit:(id)rtcEngineKit
                                 type:(BytedEffectType)type;
-
-
 
 /**
  * @brief Show effect beauty view

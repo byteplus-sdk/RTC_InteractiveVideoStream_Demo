@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "ToastComponent.h"
-#import "ToastView.h"
-#import "Masonry.h"
 #import "DeviceInforTool.h"
+#import "Masonry.h"
+#import "ToastView.h"
 
 @interface ToastComponent ()
 
@@ -17,12 +17,12 @@
 @implementation ToastComponent
 
 + (ToastComponent *)shareToastComponent {
-    static dispatch_once_t onceToken ;
+    static dispatch_once_t onceToken;
     static ToastComponent *toastComponent = nil;
     dispatch_once(&onceToken, ^{
         toastComponent = [[self alloc] init];
     });
-    return toastComponent ;
+    return toastComponent;
 }
 
 #pragma mark - Publish Action
@@ -38,7 +38,7 @@
     if (isKeep && _keepToastView) {
         return;
     }
-    
+
     dispatch_async(dispatch_get_main_queue(), ^{
         __block ToastView *toastView = [[ToastView alloc] init];
         [toastView setMeesage:message];
@@ -46,7 +46,7 @@
         [toastView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(windowView);
         }];
-        
+
         if (isKeep) {
             self.keepToastView = toastView;
         } else {
@@ -63,8 +63,8 @@
 }
 
 - (void)showWithMessage:(NSString *)message view:(UIView *)windowView {
-    [self showWithMessage:message view:windowView block:^(BOOL result) {
-        
+    [self showWithMessage:message view:windowView block:^(BOOL result){
+
     }];
 }
 
@@ -98,7 +98,7 @@
         _keepToastView.contentType != ToastViewContentTypeActivityIndicator) {
         [self dismiss];
     }
-    
+
     dispatch_queue_async_safe(dispatch_get_main_queue(), ^{
         ToastView *toastView = [[ToastView alloc] initWithFrame:windowView.frame];
         [toastView startLoading];

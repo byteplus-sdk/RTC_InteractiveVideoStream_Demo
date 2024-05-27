@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef void (^AlertModelClickBlock)(UIAlertAction * _Nonnull action);
+typedef void (^AlertModelClickBlock)(UIAlertAction *_Nonnull action);
 
 NS_ASSUME_NONNULL_BEGIN
 

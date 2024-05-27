@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSettingVideoConfig.h"
 
@@ -11,7 +11,7 @@
     static VideoChatSettingVideoConfig *_instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-      _instance = [[self alloc] init];
+        _instance = [[self alloc] init];
     });
 
     return _instance;

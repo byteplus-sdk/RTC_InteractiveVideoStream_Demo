@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "ToastView.h"
 #import "Masonry.h"
@@ -14,7 +14,6 @@
 
 @end
 
-
 @implementation ToastView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -26,7 +25,7 @@
         self.bgView.layer.cornerRadius = 4;
         self.bgView.layer.masksToBounds = YES;
         [self addSubview:self.bgView];
-        
+
         [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self);
         }];
@@ -82,17 +81,19 @@
     titleLabel.font = [UIFont systemFontOfSize:16.0 * scale weight:UIFontWeightRegular];
     [self.bgView addSubview:titleLabel];
     self.titleLabel = titleLabel;
-    
+
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.bgView);
         make.width.mas_lessThanOrEqualTo(minScreen - 24 * 2);
     }];
-    
+
     [self.bgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(titleLabel).offset(-12);
         make.right.equalTo(titleLabel).offset(12);
-        make.top.equalTo(titleLabel).offset(-12);;
-        make.bottom.equalTo(titleLabel).offset(12);;
+        make.top.equalTo(titleLabel).offset(-12);
+        ;
+        make.bottom.equalTo(titleLabel).offset(12);
+        ;
     }];
 }
 
@@ -106,16 +107,18 @@
     }
     [self.bgView addSubview:activityIndicatorView];
     self.activityIndicatorView = activityIndicatorView;
-    
+
     [activityIndicatorView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.bgView);
     }];
-    
+
     [self.bgView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(activityIndicatorView).offset(-12);
         make.right.equalTo(activityIndicatorView).offset(12);
-        make.top.equalTo(activityIndicatorView).offset(-12);;
-        make.bottom.equalTo(activityIndicatorView).offset(12);;
+        make.top.equalTo(activityIndicatorView).offset(-12);
+        ;
+        make.bottom.equalTo(activityIndicatorView).offset(12);
+        ;
     }];
 }
 

@@ -1,11 +1,11 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomUserListComponent.h"
-#import "VideoChatRoomTopSelectView.h"
 #import "VideoChatRoomTopSeatView.h"
+#import "VideoChatRoomTopSelectView.h"
 
 @interface VideoChatRoomUserListComponent () <VideoChatRoomTopSelectViewDelegate, VideoChatRoomRaiseHandListsViewDelegate, VideoChatRoomAudienceListsViewDelegate>
 
@@ -21,7 +21,6 @@
 @property (nonatomic, assign) BOOL isRed;
 
 @end
-
 
 @implementation VideoChatRoomUserListComponent
 
@@ -42,13 +41,13 @@
     _seatID = seatID;
     self.dismissBlock = dismissBlock;
     UIViewController *rootVC = [DeviceInforTool topViewController];
-    
+
     [rootVC.view addSubview:self.maskButton];
     [self.maskButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.left.height.equalTo(rootVC.view);
         make.top.equalTo(rootVC.view).offset(SCREEN_HEIGHT);
     }];
-    
+
     [self.maskButton addSubview:self.applyListsView];
     [self.applyListsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
@@ -57,37 +56,37 @@
         make.height.mas_offset(hetight + [DeviceInforTool getVirtualHomeHeight]);
         make.bottom.mas_offset(0);
     }];
-    
+
     [self.maskButton addSubview:self.onlineListsView];
     [self.onlineListsView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.applyListsView);
     }];
-    
+
     [self.maskButton addSubview:self.topSelectView];
     [self.topSelectView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.maskButton);
         make.bottom.equalTo(self.applyListsView.mas_top);
         make.height.mas_equalTo(52);
     }];
-    
+
     [self.maskButton addSubview:self.topSeatView];
     [self.topSeatView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.maskButton);
         make.bottom.equalTo(self.topSelectView.mas_top);
         make.height.mas_equalTo(48);
     }];
-    
+
     // Start animation
     [rootVC.view layoutIfNeeded];
     [self.maskButton.superview setNeedsUpdateConstraints];
     [UIView animateWithDuration:0.25
                      animations:^{
-        [self.maskButton mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(rootVC.view).offset(0);
-        }];
-        [self.maskButton.superview layoutIfNeeded];
-    }];
-    
+                         [self.maskButton mas_updateConstraints:^(MASConstraintMaker *make) {
+                             make.top.equalTo(rootVC.view).offset(0);
+                         }];
+                         [self.maskButton.superview layoutIfNeeded];
+                     }];
+
     if (_isRed) {
         [self loadDataWithApplyLists];
         [self.topSelectView updateSelectItem:NO];
@@ -99,7 +98,7 @@
         self.onlineListsView.hidden = NO;
         self.applyListsView.hidden = YES;
     }
-    
+
     __weak typeof(self) weakSelf = self;
     self.topSeatView.clickCloseChatRoomBlock = ^{
         [weakSelf closeChatRoom];
@@ -112,7 +111,6 @@
     } else if (self.applyListsView.superview && !self.applyListsView.hidden) {
         [self loadDataWithApplyLists];
     } else {
-        
     }
 }
 
@@ -135,21 +133,21 @@
 - (void)loadDataWithOnlineLists {
     __weak __typeof(self) wself = self;
     [VideoChatRTSManager getAudienceList:_roomModel.roomID
-                                          block:^(NSArray<VideoChatUserModel *> * _Nonnull userLists, RTSACKModel * _Nonnull model) {
-        if (model.result) {
-            wself.onlineListsView.dataLists = userLists;
-        }
-    }];
+                                   block:^(NSArray<VideoChatUserModel *> *_Nonnull userLists, RTSACKModel *_Nonnull model) {
+                                       if (model.result) {
+                                           wself.onlineListsView.dataLists = userLists;
+                                       }
+                                   }];
 }
 
 - (void)loadDataWithApplyLists {
     __weak __typeof(self) wself = self;
     [VideoChatRTSManager getApplyAudienceList:_roomModel.roomID
-                                               block:^(NSArray<VideoChatUserModel *> * _Nonnull userLists, RTSACKModel * _Nonnull model) {
-        if (model.result) {
-            wself.applyListsView.dataLists = userLists;
-        }
-    }];
+                                        block:^(NSArray<VideoChatUserModel *> *_Nonnull userLists, RTSACKModel *_Nonnull model) {
+                                            if (model.result) {
+                                                wself.applyListsView.dataLists = userLists;
+                                            }
+                                        }];
 }
 
 #pragma mark - VideoChatRoomTopSelectViewDelegate
@@ -189,40 +187,37 @@
         __weak typeof(self) weakSelf = self;
         button.userInteractionEnabled = NO;
         [VideoChatRTSManager inviteInteract:userModel.roomID
-                                               uid:userModel.uid
-                                            seatID:_seatID
-                                             block:^(RTSACKModel * _Nonnull model) {
-            button.userInteractionEnabled = YES;
-            if (!model.result) {
-                [[ToastComponent shareToastComponent] showWithMessage:model.message];
-            } else {
-                [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"invitation_audience_waiting")];
-                [weakSelf dismissUserListView];
-                
-                weakSelf.isInviteInteractionWaitingReply = YES;
-                [weakSelf performSelector:@selector(resetInviteInteractionWaitingReplyStstus) withObject:nil afterDelay:5];
-            }
-        }];
+                                        uid:userModel.uid
+                                     seatID:_seatID
+                                      block:^(RTSACKModel *_Nonnull model) {
+                                          button.userInteractionEnabled = YES;
+                                          if (!model.result) {
+                                              [[ToastComponent shareToastComponent] showWithMessage:model.message];
+                                          } else {
+                                              [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"invitation_audience_waiting")];
+                                              [weakSelf dismissUserListView];
+
+                                              weakSelf.isInviteInteractionWaitingReply = YES;
+                                              [weakSelf performSelector:@selector(resetInviteInteractionWaitingReplyStstus) withObject:nil afterDelay:5];
+                                          }
+                                      }];
     } else if (userModel.status == VideoChatUserStatusApply) {
-        __weak __typeof(self)wself = self;
+        __weak __typeof(self) wself = self;
         button.userInteractionEnabled = NO;
         [VideoChatRTSManager agreeApply:userModel.roomID
-                                           uid:userModel.uid
-                                         block:^(RTSACKModel * _Nonnull model) {
-            button.userInteractionEnabled = YES;
-            if (model.result) {
-                userModel.status = VideoChatUserStatusApply;
-                [wself updateDataLists:dataLists model:userModel];
-            } else {
-                [[ToastComponent shareToastComponent] showWithMessage:model.message];
-            }
-        }];
+                                    uid:userModel.uid
+                                  block:^(RTSACKModel *_Nonnull model) {
+                                      button.userInteractionEnabled = YES;
+                                      if (model.result) {
+                                          userModel.status = VideoChatUserStatusApply;
+                                          [wself updateDataLists:dataLists model:userModel];
+                                      } else {
+                                          [[ToastComponent shareToastComponent] showWithMessage:model.message];
+                                      }
+                                  }];
     } else {
-        
     }
 }
-
-
 
 - (void)updateDataLists:(NSArray<VideoChatUserModel *> *)dataLists
                   model:(VideoChatUserModel *)model {
@@ -280,11 +275,11 @@
     AlertActionModel *cancelModel = [[AlertActionModel alloc] init];
     cancelModel.title = LocalizedString(@"cancel");
     [[AlertActionManager shareAlertActionManager] showWithMessage:LocalizedString(@"turn_off_chat_room") actions:@[cancelModel, alertModel]];
-    
+
     __weak typeof(self) weakSelf = self;
-    alertModel.alertModelClickBlock = ^(UIAlertAction * _Nonnull action) {
+    alertModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
         if ([action.title isEqualToString:LocalizedString(@"ok")]) {
-            [VideoChatRTSManager requestCloseChatRoomMode:weakSelf.roomModel.roomID complete:^(RTSACKModel * _Nonnull model) {
+            [VideoChatRTSManager requestCloseChatRoomMode:weakSelf.roomModel.roomID complete:^(RTSACKModel *_Nonnull model) {
                 if (!model.result) {
                     [[ToastComponent shareToastComponent] showWithMessage:model.message];
                 } else {
@@ -293,9 +288,8 @@
             }];
         }
     };
-    cancelModel.alertModelClickBlock = ^(UIAlertAction * _Nonnull action) {
+    cancelModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
         if ([action.title isEqualToString:LocalizedString(@"cancel")]) {
-            
         }
     };
 }
@@ -345,7 +339,7 @@
 }
 
 - (void)dealloc {
-    NSLog(@"dealloc %@",NSStringFromClass([self class]));
+    NSLog(@"dealloc %@", NSStringFromClass([self class]));
 }
 
 @end

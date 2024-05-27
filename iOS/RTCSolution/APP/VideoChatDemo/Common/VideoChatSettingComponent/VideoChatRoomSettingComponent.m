@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomSettingComponent.h"
-#import "VideoChatRTSManager.h"
 #import "VideoChatCreateRoomSettingView.h"
 #import "VideoChatRTCManager.h"
+#import "VideoChatRTSManager.h"
 #import "VideoChatRoomGuestSettingView.h"
 #import "VideoChatSettingVideoConfig.h"
 
@@ -40,10 +40,9 @@
 - (void)showWithType:(VideoChatRoomSettingType)type
        fromSuperView:(UIView *)superView
            roomModel:(VideoChatRoomModel *)videoChatRoomModel {
-    
     self.superView = superView;
     _videoChatRoomModel = videoChatRoomModel;
-    
+
     [superView addSubview:self.maskButton];
     [self.maskButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(superView);
@@ -63,13 +62,13 @@
 
             [UIView animateWithDuration:0.25
                              animations:^{
-               [self.createRoomSettingView mas_updateConstraints:^(MASConstraintMaker *make) {
-                   make.bottom.equalTo(superView);
-               }];
-               [superView layoutIfNeeded];
-             }];
+                                 [self.createRoomSettingView mas_updateConstraints:^(MASConstraintMaker *make) {
+                                     make.bottom.equalTo(superView);
+                                 }];
+                                 [superView layoutIfNeeded];
+                             }];
         } break;
-        
+
         case VideoChatRoomSettingTypeGuest: {
             self.guestSettingView.isMicOn = _mic;
             self.guestSettingView.isCameraOn = _camera;
@@ -85,13 +84,12 @@
 
             [UIView animateWithDuration:0.25
                              animations:^{
-               [self.guestSettingView mas_updateConstraints:^(MASConstraintMaker *make) {
-                   make.bottom.equalTo(superView);
-               }];
-               [superView layoutIfNeeded];
-             }];
+                                 [self.guestSettingView mas_updateConstraints:^(MASConstraintMaker *make) {
+                                     make.bottom.equalTo(superView);
+                                 }];
+                                 [superView layoutIfNeeded];
+                             }];
         } break;
-        
 
         default:
             break;
@@ -159,25 +157,25 @@
 - (void)videoChatRoomGuestSettingView:(nonnull VideoChatRoomGuestSettingView *)settingView didChangeCameraState:(BOOL)isOn {
     _camera = !isOn;
     [VideoChatRTSManager updateMediaStatus:self.videoChatRoomModel.roomID
-                                              mic:_mic ? 1 : 0
-                                           camera:_camera ? 1 : 0
-                                            block:^(RTSACKModel * _Nonnull model) {
-        if (!model.result) {
-            [[ToastComponent shareToastComponent] showWithMessage:model.message];
-        }
-    }];
+                                       mic:_mic ? 1 : 0
+                                    camera:_camera ? 1 : 0
+                                     block:^(RTSACKModel *_Nonnull model) {
+                                         if (!model.result) {
+                                             [[ToastComponent shareToastComponent] showWithMessage:model.message];
+                                         }
+                                     }];
 }
 
 - (void)videoChatRoomGuestSettingView:(nonnull VideoChatRoomGuestSettingView *)settingView didChangeMicState:(BOOL)isOn {
     _mic = !isOn;
     [VideoChatRTSManager updateMediaStatus:self.videoChatRoomModel.roomID
-                                              mic:_mic ? 1 : 0
-                                           camera:_camera ? 1 : 0
-                                            block:^(RTSACKModel * _Nonnull model) {
-        if (!model.result) {
-            [[ToastComponent shareToastComponent] showWithMessage:model.message];
-        }
-    }];
+                                       mic:_mic ? 1 : 0
+                                    camera:_camera ? 1 : 0
+                                     block:^(RTSACKModel *_Nonnull model) {
+                                         if (!model.result) {
+                                             [[ToastComponent shareToastComponent] showWithMessage:model.message];
+                                         }
+                                     }];
 }
 
 - (void)videoChatRoomGuestSettingView:(nonnull VideoChatRoomGuestSettingView *)settingView didSwitchCamera:(BOOL)isFront {
@@ -190,7 +188,6 @@
         self.clickMusicBlock();
     }
 }
-
 
 #pragma mark - Getter
 

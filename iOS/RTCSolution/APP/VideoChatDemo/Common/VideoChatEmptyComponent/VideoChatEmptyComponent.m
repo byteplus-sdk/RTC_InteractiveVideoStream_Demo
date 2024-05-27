@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatEmptyComponent.h"
 
@@ -23,13 +23,13 @@
             make.centerX.equalTo(view);
             make.centerY.equalTo(view).offset(-35);
         }];
-        
+
         [view addSubview:self.messageLabel];
         [self.messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.iconImageView.mas_bottom).offset(12);
             make.centerX.equalTo(view);
         }];
-        
+
         self.messageLabel.text = message;
         [self dismiss];
     }
@@ -64,6 +64,5 @@
     }
     return _messageLabel;
 }
-
 
 @end

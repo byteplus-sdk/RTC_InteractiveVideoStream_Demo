@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "PhonePrivacyView.h"
 
@@ -26,7 +26,7 @@ static NSString *const PrivacyKey = @"https://docs.byteplus.com/legal/docs/priva
         NSRange range1 = [all rangeOfString:str1];
         NSRange range2 = [all rangeOfString:str2];
         NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:all];
-        
+
         CGFloat font = MIN(12, 12 * SCREEN_WIDTH / 375);
         [string beginEditing];
         [string addAttribute:NSForegroundColorAttributeName
@@ -35,26 +35,26 @@ static NSString *const PrivacyKey = @"https://docs.byteplus.com/legal/docs/priva
         [string addAttribute:NSFontAttributeName
                        value:[UIFont systemFontOfSize:font]
                        range:NSMakeRange(0, all.length)];
-        [string addAttributes:@{NSLinkAttributeName:ServiceKey}
-                         range:range1];
-        [string addAttributes:@{NSLinkAttributeName:PrivacyKey}
-                         range:range2];
+        [string addAttributes:@{NSLinkAttributeName: ServiceKey}
+                        range:range1];
+        [string addAttributes:@{NSLinkAttributeName: PrivacyKey}
+                        range:range2];
         self.messageLabel.linkTextAttributes =
-        @{NSForegroundColorAttributeName:[UIColor colorFromHexString:@"#0E42D2"]};
+            @{NSForegroundColorAttributeName: [UIColor colorFromHexString:@"#0E42D2"]};
         self.messageLabel.editable = NO;
         self.messageLabel.scrollEnabled = NO;
         self.messageLabel.delegate = self;
         [string endEditing];
 
         self.messageLabel.attributedText = string;
-        
+
         [self addSubview:self.messageLabel];
         [self.messageLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(24);
             make.right.equalTo(self).offset(16);
             make.top.equalTo(self.mas_centerY).offset(-16.5);
         }];
-        
+
         [self addSubview:self.agreeButton];
         [self.agreeButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(16, 16));
@@ -66,7 +66,6 @@ static NSString *const PrivacyKey = @"https://docs.byteplus.com/legal/docs/priva
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction {
-    
     NSString *jumpUrl = @"";
     NSString *urlStr = [NSString stringWithFormat:@"%@", URL];
     if ([urlStr isEqualToString:ServiceKey]) {
@@ -74,15 +73,15 @@ static NSString *const PrivacyKey = @"https://docs.byteplus.com/legal/docs/priva
     } else if ([urlStr isEqualToString:PrivacyKey]) {
         jumpUrl = PrivacyKey;
     }
-    
+
     if (jumpUrl && [jumpUrl isKindOfClass:[NSString class]] && jumpUrl.length > 0) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:jumpUrl]
                                            options:@{}
-                                 completionHandler:^(BOOL success) {
-            
-        }];
+                                 completionHandler:^(BOOL success){
+
+                                 }];
     }
-    
+
     return YES;
 }
 

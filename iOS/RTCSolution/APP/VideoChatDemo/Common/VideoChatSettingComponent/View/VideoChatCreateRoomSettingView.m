@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatCreateRoomSettingView.h"
 #import "VideoChatSettingBitrateView.h"
@@ -49,19 +49,19 @@
             make.top.equalTo(self.resolutoinSelectView.mas_bottom).offset(24);
             make.height.mas_equalTo(48);
         }];
-        
+
         [self addSubview:self.lineView];
         [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self);
             make.height.mas_equalTo(1);
             make.top.equalTo(self.titleLabel.mas_bottom);
         }];
-        
+
         __weak __typeof(self) wself = self;
         [self.fpsSelectView setItemChangeBlock:^(NSInteger index) {
             [wself fpsDidChanged:index];
         }];
-        
+
         [self.resolutoinSelectView setItemChangeBlock:^(NSInteger index) {
             [wself resolutionDidChanged:index];
         }];
@@ -126,14 +126,14 @@
 
 - (VideoChatSettingSingleSelectView *)fpsSelectView {
     if (!_fpsSelectView) {
-        _fpsSelectView = [[VideoChatSettingSingleSelectView alloc] initWithTitle:LocalizedString(@"frame_rate") optionArray:@[ @"15", @"20" ]];
+        _fpsSelectView = [[VideoChatSettingSingleSelectView alloc] initWithTitle:LocalizedString(@"frame_rate") optionArray:@[@"15", @"20"]];
     }
     return _fpsSelectView;
 }
 
 - (VideoChatSettingSingleSelectView *)resolutoinSelectView {
     if (!_resolutoinSelectView) {
-        _resolutoinSelectView = [[VideoChatSettingSingleSelectView alloc] initWithTitle:LocalizedString(@"resolution") optionArray:@[ @"480p", @"540p", @"720p", @"1080p" ]];
+        _resolutoinSelectView = [[VideoChatSettingSingleSelectView alloc] initWithTitle:LocalizedString(@"resolution") optionArray:@[@"480p", @"540p", @"720p", @"1080p"]];
     }
     return _resolutoinSelectView;
 }

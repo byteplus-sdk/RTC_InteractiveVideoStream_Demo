@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatMusicComponent.h"
 #import "VideoChatMusicView.h"
@@ -25,7 +25,7 @@
             make.width.left.height.equalTo(rootVC.view);
             make.top.equalTo(rootVC.view).offset(SCREEN_HEIGHT);
         }];
-        
+
         VideoChatMusicView *musicView = [[VideoChatMusicView alloc] init];
         [self.maskButton addSubview:musicView];
         [musicView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -38,17 +38,17 @@
 
 - (void)show {
     self.maskButton.hidden = NO;
-    
+
     // Start animation
     [self.maskButton.superview layoutIfNeeded];
     [self.maskButton.superview setNeedsUpdateConstraints];
     [UIView animateWithDuration:0.25
                      animations:^{
-        [self.maskButton mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.maskButton.superview).offset(0);
-        }];
-        [self.maskButton.superview layoutIfNeeded];
-    }];
+                         [self.maskButton mas_updateConstraints:^(MASConstraintMaker *make) {
+                             make.top.equalTo(self.maskButton.superview).offset(0);
+                         }];
+                         [self.maskButton.superview layoutIfNeeded];
+                     }];
 }
 
 #pragma mark - Private Action

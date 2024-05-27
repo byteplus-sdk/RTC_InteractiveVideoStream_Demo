@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSeatView.h"
 #import "VideoChatSeatItemView.h"
@@ -32,7 +32,7 @@ static const NSInteger MaxNumber = 6;
 
 - (void)setSeatList:(NSArray<VideoChatSeatModel *> *)seatList {
     _seatList = seatList;
-    
+
     for (int i = 0; i < self.itemViewLists.count; i++) {
         VideoChatSeatItemView *itemView = self.itemViewLists[i];
         if (i < seatList.count) {
@@ -136,7 +136,7 @@ static const NSInteger MaxNumber = 6;
         [self addSubview:itemView];
         [line1List addObject:itemView];
         [self.itemViewLists addObject:itemView];
-        
+
         __weak __typeof(self) wself = self;
         itemView.clickBlock = ^(VideoChatSeatModel *seatModel) {
             if (wself.clickBlock) {
@@ -145,14 +145,14 @@ static const NSInteger MaxNumber = 6;
         };
     }
     [line1List mas_distributeViewsAlongAxis:MASAxisTypeHorizontal
-                                    withFixedSpacing:0
-                                         leadSpacing:0
-                                         tailSpacing:0];
+                           withFixedSpacing:0
+                                leadSpacing:0
+                                tailSpacing:0];
     [line1List mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self);
         make.height.mas_equalTo(SCREEN_WIDTH / 3);
     }];
-    
+
     NSMutableArray *line2List = [[NSMutableArray alloc] init];
     for (int i = 0; i < MaxNumber / 2; i++) {
         VideoChatSeatItemView *itemView = [[VideoChatSeatItemView alloc] init];
@@ -160,7 +160,7 @@ static const NSInteger MaxNumber = 6;
         [self addSubview:itemView];
         [line2List addObject:itemView];
         [self.itemViewLists addObject:itemView];
-        
+
         __weak __typeof(self) wself = self;
         itemView.clickBlock = ^(VideoChatSeatModel *seatModel) {
             if (wself.clickBlock) {

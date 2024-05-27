@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatPeopleNumView.h"
 
@@ -19,19 +19,19 @@
     if (self) {
         [self addSubview:self.iconImageView];
         [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.size.mas_equalTo(CGSizeMake(24, 24));
-          make.left.mas_equalTo(8);
-          make.centerY.equalTo(self);
+            make.size.mas_equalTo(CGSizeMake(24, 24));
+            make.left.mas_equalTo(8);
+            make.centerY.equalTo(self);
         }];
 
         [self addSubview:self.titleLabel];
         [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.centerY.equalTo(self);
-          make.left.equalTo(self.iconImageView.mas_right).offset(8);
+            make.centerY.equalTo(self);
+            make.left.equalTo(self.iconImageView.mas_right).offset(8);
         }];
 
         [self mas_updateConstraints:^(MASConstraintMaker *make) {
-          make.right.equalTo(self.titleLabel.mas_right).offset(8);
+            make.right.equalTo(self.titleLabel.mas_right).offset(8);
         }];
     }
     return self;

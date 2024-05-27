@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "BytedEffectProtocol.h"
 
@@ -29,7 +29,7 @@
     if (effectBeautyComponent) {
         self.bytedEffectDelegate = effectBeautyComponent;
     }
-    
+
     if ([self.bytedEffectDelegate respondsToSelector:@selector(protocol:initWithRTCEngineKit:)]) {
         return [self.bytedEffectDelegate protocol:self
                              initWithRTCEngineKit:rtcEngineKit];

@@ -1,11 +1,11 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "GCDTimer.h"
 
-typedef NS_ENUM(NSInteger,YUTimerStatus) {
+typedef NS_ENUM(NSInteger, YUTimerStatus) {
     YUTimerStatusIng,
     YUTimerStatusSuspend,
     YUTimerStatusStop,
@@ -25,8 +25,7 @@ typedef NS_ENUM(NSInteger,YUTimerStatus) {
 
 @implementation GCDTimer
 
-- (instancetype)init
-{
+- (instancetype)init {
     self = [super init];
     if (self) {
         _timerStatus = YUTimerStatusStop;
@@ -57,7 +56,7 @@ typedef NS_ENUM(NSInteger,YUTimerStatus) {
 
 - (void)resume {
     if (_timerStatus != YUTimerStatusSuspend) {
-        NSLog(@"%@-resume error%ld",[self class],_timerStatus);
+        NSLog(@"%@-resume error%ld", [self class], _timerStatus);
         return;
     }
     [self resumeTime];
@@ -75,7 +74,7 @@ typedef NS_ENUM(NSInteger,YUTimerStatus) {
 
 - (void)suspend {
     if (_timerStatus != YUTimerStatusIng) {
-        NSLog(@"%@-suspend error%ld",[self class],_timerStatus);
+        NSLog(@"%@-suspend error%ld", [self class], _timerStatus);
         return;
     }
     dispatch_semaphore_wait(self.lock, DISPATCH_TIME_FOREVER);
@@ -89,7 +88,7 @@ typedef NS_ENUM(NSInteger,YUTimerStatus) {
 
 - (void)stopTimer {
     if (_timerStatus != YUTimerStatusIng) {
-        NSLog(@"%@-stop error%ld",[self class],_timerStatus);
+        NSLog(@"%@-stop error%ld", [self class], _timerStatus);
         return;
     }
     dispatch_semaphore_wait(self.lock, DISPATCH_TIME_FOREVER);
@@ -102,7 +101,6 @@ typedef NS_ENUM(NSInteger,YUTimerStatus) {
     dispatch_semaphore_signal(self.lock);
 }
 
-
 - (void)dealloc {
     if (self.timer) {
         if (_onFire == NO) {
@@ -112,12 +110,11 @@ typedef NS_ENUM(NSInteger,YUTimerStatus) {
     [self stopTimer];
 }
 
-
 #pragma mark - Getter
 
 - (dispatch_source_t)timer {
     if (_timer == nil) {
-        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0);
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
         _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     }
     return _timer;
@@ -129,10 +126,5 @@ typedef NS_ENUM(NSInteger,YUTimerStatus) {
     }
     return _lock;
 }
-
-
-
-
-
 
 @end

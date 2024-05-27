@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomGuestSettingView.h"
 #import "VideoChatRoomSettingResolutionView.h"
@@ -35,30 +35,31 @@
         }];
 
         NSArray *items = @[
-                            @[ LocalizedString(@"camera_flip"),
-                               @"videoChat_setting_switch_camera",
-                               @"" ],
-                            @[ LocalizedString(@"microphone"),
-                               @"videoChat_setting_audio_enable",
-                               @"videoChat_setting_audio_disable" ],
-                            @[ LocalizedString(@"camera"),
-                               @"videoChat_setting_video_enable",
-                               @"videoChat_setting_video_disable" ] ];
-        
+            @[LocalizedString(@"camera_flip"),
+              @"videoChat_setting_switch_camera",
+              @""],
+            @[LocalizedString(@"microphone"),
+              @"videoChat_setting_audio_enable",
+              @"videoChat_setting_audio_disable"],
+            @[LocalizedString(@"camera"),
+              @"videoChat_setting_video_enable",
+              @"videoChat_setting_video_disable"]
+        ];
+
         if (isHost) {
             items = @[
-                    @[LocalizedString(@"volume"),
-                      @"videochat_setting_music",
-                      @""],
-                    @[ LocalizedString(@"camera_flip"),
-                       @"videoChat_setting_switch_camera",
-                       @"" ],
-                    @[ LocalizedString(@"microphone"),
-                       @"videoChat_setting_audio_enable",
-                       @"videoChat_setting_audio_disable" ],
-                    @[ LocalizedString(@"camera"),
-                       @"videoChat_setting_video_enable",
-                       @"videoChat_setting_video_disable" ]
+                @[LocalizedString(@"volume"),
+                  @"videochat_setting_music",
+                  @""],
+                @[LocalizedString(@"camera_flip"),
+                  @"videoChat_setting_switch_camera",
+                  @""],
+                @[LocalizedString(@"microphone"),
+                  @"videoChat_setting_audio_enable",
+                  @"videoChat_setting_audio_disable"],
+                @[LocalizedString(@"camera"),
+                  @"videoChat_setting_video_enable",
+                  @"videoChat_setting_video_disable"]
             ];
         }
 
@@ -89,7 +90,7 @@
         [self.resolutionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
-        
+
         [self addSubview:self.lineView];
         [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self);
@@ -107,8 +108,7 @@
         if ([self.delegate respondsToSelector:@selector(videoChatRoomGuestSettingViewDidClickMusic:)]) {
             [self.delegate videoChatRoomGuestSettingViewDidClickMusic:self];
         }
-    }
-    else if ([sender.title isEqualToString:LocalizedString(@"camera_flip")]) {
+    } else if ([sender.title isEqualToString:LocalizedString(@"camera_flip")]) {
         if ([self.delegate respondsToSelector:@selector(videoChatRoomGuestSettingView:didSwitchCamera:)]) {
             [self.delegate videoChatRoomGuestSettingView:self didSwitchCamera:!sender.selected];
         }

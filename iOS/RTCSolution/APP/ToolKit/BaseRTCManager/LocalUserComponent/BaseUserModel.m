@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "BaseUserModel.h"
 #import "NetworkingTool.h"
@@ -29,10 +29,9 @@
 }
 
 + (NSDictionary *)modelCustomPropertyMapper {
-    return @{@"uid" : @"user_id",
-             @"name" : @"user_name",
-             @"loginToken" : @"login_token"
-    };
+    return @{@"uid": @"user_id",
+             @"name": @"user_name",
+             @"loginToken": @"login_token"};
 }
 
 @end

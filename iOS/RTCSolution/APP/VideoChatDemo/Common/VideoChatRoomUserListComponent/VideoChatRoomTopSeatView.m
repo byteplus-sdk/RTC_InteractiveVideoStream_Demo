@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomTopSeatView.h"
 
@@ -12,22 +12,20 @@
 
 @end
 
-
 @implementation VideoChatRoomTopSeatView
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        
         self.backgroundColor = [UIColor colorFromRGBHexString:@"#0E0825" andAlpha:0.95 * 255];
-        
+
         [self addSubview:self.lineView];
         [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self);
             make.height.mas_equalTo(1);
             make.bottom.mas_equalTo(-1);
         }];
-        
+
         [self addSubview:self.closeChatRoomButton];
         [self.closeChatRoomButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self).offset(-12.5);
@@ -61,9 +59,9 @@
 - (UIButton *)closeChatRoomButton {
     if (!_closeChatRoomButton) {
         _closeChatRoomButton = [[UIButton alloc] init];
-//        _closeChatRoomButton.hidden = YES;
+        //        _closeChatRoomButton.hidden = YES;
         [_closeChatRoomButton addTarget:self action:@selector(closeChatRoomButtonClick) forControlEvents:UIControlEventTouchUpInside];
-        
+
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"videochat_seatlist_close_chatroom" bundleName:HomeBundleName]];
         UILabel *label = [[UILabel alloc] init];
         label.font = [UIFont systemFontOfSize:16];

@@ -1,18 +1,18 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSeatItemView.h"
+#import "VideoChatAvatarComponent.h"
 #import "VideoChatSeatItemCenterView.h"
 #import "VideoChatSeatItemNameView.h"
-#import "VideoChatAvatarComponent.h"
 #import "VideoChatSeatNetworkQualityView.h"
 
 typedef NS_ENUM(NSInteger, VideoChatSeatItemStatue) {
-    VideoChatSeatItemStatueNull = 0,    //Unmanned or empty model
-    VideoChatSeatItemStatueLock,        //Lock seat
-    VideoChatSeatItemStatueUser,        //There are mic users
+    VideoChatSeatItemStatueNull = 0, // Unmanned or empty model
+    VideoChatSeatItemStatueLock,     // Lock seat
+    VideoChatSeatItemStatueUser,     // There are mic users
 };
 
 @interface VideoChatSeatItemView ()
@@ -38,25 +38,25 @@ typedef NS_ENUM(NSInteger, VideoChatSeatItemStatue) {
         [self addSubview:self.userNameView];
         [self addSubview:self.centerImageView];
         [self addSubview:self.networkQualityView];
-        
+
         [self.borderImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
-        
+
         [self.renderView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
-        
+
         [self.animationView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self);
             make.width.height.mas_equalTo(62);
         }];
-        
+
         [self.userNameView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(18);
             make.left.right.bottom.equalTo(self);
         }];
-        
+
         [self.centerImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(40, 50));
             make.center.equalTo(self);
@@ -66,13 +66,13 @@ typedef NS_ENUM(NSInteger, VideoChatSeatItemStatue) {
             make.top.equalTo(self).offset(8);
             make.height.mas_equalTo(11);
         }];
-        
+
         [self addSubview:self.avatarComponent];
         [self.avatarComponent mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.height.mas_equalTo(48);
             make.center.equalTo(self);
         }];
-        
+
         self.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
         [self addGestureRecognizer:tap];
@@ -104,12 +104,12 @@ typedef NS_ENUM(NSInteger, VideoChatSeatItemStatue) {
 - (void)updateUI:(VideoChatSeatItemStatue)statue
        seatModel:(VideoChatSeatModel *)seatModel {
     self.animationView.hidden = YES;
-    
+
     if (statue == VideoChatSeatItemStatueNull) {
         [self.centerImageView updateImageName:@"videochat_seat_null"
                                       message:LocalizedString(@"video_chat_seat")];
         self.userNameView.userModel = seatModel.userModel;
-        
+
         self.centerImageView.hidden = NO;
         self.renderView.hidden = YES;
         self.userNameView.hidden = YES;
@@ -119,7 +119,7 @@ typedef NS_ENUM(NSInteger, VideoChatSeatItemStatue) {
         [self.centerImageView updateImageName:@"videochat_seat_lock"
                                       message:LocalizedString(@"video_chat_seat")];
         self.userNameView.userModel = seatModel.userModel;
-        
+
         self.centerImageView.hidden = NO;
         self.renderView.hidden = YES;
         self.userNameView.hidden = YES;
@@ -133,13 +133,13 @@ typedef NS_ENUM(NSInteger, VideoChatSeatItemStatue) {
         if (!self.renderView.hidden) {
             [self updateRenderView:seatModel.userModel];
         }
-        
+
         self.centerImageView.hidden = YES;
         self.userNameView.hidden = NO;
         self.networkQualityView.hidden = NO;
-        
+
     } else {
-        //error
+        // error
     }
 }
 
@@ -162,13 +162,13 @@ typedef NS_ENUM(NSInteger, VideoChatSeatItemStatue) {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     animation.values = @[@(0.81), @(1.0), @(1.0)];
     animation.keyTimes = @[@(0), @(0.27), @(1.0)];
-    
+
     CAKeyframeAnimation *animation2 = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
     animation2.values = @[@(0), @(0.2), @(0.4), @(0.2)];
     animation2.keyTimes = @[@(0), @(0.27), @(0.27), @(1.0)];
-    
+
     CAAnimationGroup *group = [CAAnimationGroup animation];
-    group.animations = @[animation,animation2];
+    group.animations = @[animation, animation2];
     group.duration = 1.1;
     group.repeatCount = MAXFLOAT;
     group.removedOnCompletion = NO;

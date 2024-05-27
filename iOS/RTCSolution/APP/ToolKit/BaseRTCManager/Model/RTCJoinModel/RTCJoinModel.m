@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "RTCJoinModel.h"
 #import "NetworkingTool.h"
@@ -18,13 +18,12 @@
         NSString *joinTypeStr = [NSString stringWithFormat:@"%@", dic[@"join_type"]];
         joinType = joinTypeStr.integerValue;
     }
-    
+
     RTCJoinModel *joinModel = [[RTCJoinModel alloc] init];
     joinModel.roomId = roomId;
     joinModel.errorCode = errorCode;
     joinModel.joinType = joinType;
     return joinModel;
 }
-
 
 @end

@@ -1,15 +1,15 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 #define LocalizedString(key) \
-[Localizator localizedStringForKey:(key) bundleName:HomeBundleName]
-        
+    [Localizator localizedStringForKey:(key) bundleName:HomeBundleName]
+
 @interface Localizator : NSObject
 
 + (NSString *)localizedStringForKey:(NSString *)key bundleName:(nullable NSString *)bundleName;

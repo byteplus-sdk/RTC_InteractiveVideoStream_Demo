@@ -1,18 +1,16 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatPKUserListView.h"
-#import "VideoChatPKUserListTableViewCell.h"
 #import "VideoChatEmptyComponent.h"
+#import "VideoChatPKUserListTableViewCell.h"
 
-@interface VideoChatPKUserListView ()
-<
-UITableViewDelegate,
-UITableViewDataSource,
-VideoChatPKUserListTableViewCellDelegate
->
+@interface VideoChatPKUserListView () <
+    UITableViewDelegate,
+    UITableViewDataSource,
+    VideoChatPKUserListTableViewCellDelegate>
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIView *lineView;
@@ -108,7 +106,7 @@ VideoChatPKUserListTableViewCellDelegate
         _tableView.dataSource = self;
         _tableView.rowHeight = 60;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
+
         [_tableView registerClass:[VideoChatPKUserListTableViewCell class] forCellReuseIdentifier:NSStringFromClass([VideoChatPKUserListTableViewCell class])];
     }
     return _tableView;
@@ -117,10 +115,9 @@ VideoChatPKUserListTableViewCellDelegate
 - (VideoChatEmptyComponent *)emptyComponent {
     if (!_emptyComponent) {
         _emptyComponent = [[VideoChatEmptyComponent alloc] initWithView:self.tableView
-                                                                  message:LocalizedString(@"video_chat_no_host_online")];
+                                                                message:LocalizedString(@"video_chat_no_host_online")];
     }
     return _emptyComponent;
 }
-
 
 @end

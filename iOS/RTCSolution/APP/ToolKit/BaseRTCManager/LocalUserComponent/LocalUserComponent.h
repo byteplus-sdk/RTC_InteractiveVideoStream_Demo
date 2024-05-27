@@ -1,10 +1,10 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <Foundation/Foundation.h>
 #import "BaseUserModel.h"
+#import <Foundation/Foundation.h>
 
 @interface LocalUserComponent : NSObject
 

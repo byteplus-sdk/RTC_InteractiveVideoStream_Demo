@@ -1,8 +1,9 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
+#import "VideoChatRoomViewController.h"
 #import "BytedEffectProtocol.h"
 #import "ToolKit.h"
 #import "VideoChatMusicComponent.h"
@@ -13,7 +14,6 @@
 #import "VideoChatRoomSettingComponent.h"
 #import "VideoChatRoomUserListComponent.h"
 #import "VideoChatRoomViewController+SocketControl.h"
-#import "VideoChatRoomViewController.h"
 #import "VideoChatSeatComponent.h"
 #import "VideoChatStaticView.h"
 #import "VideoChatTextInputComponent.h"
@@ -146,7 +146,7 @@
         self.settingComponent.camera = (userModel.camera == VideoChatUserCameraOn);
         [[VideoChatRTCManager shareRtc] makeGuest:self.settingComponent.camera
                                        microphone:self.settingComponent.mic];
-        
+
         [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"video_chat_you_on-mic")];
     }
     // Show local IM messages
@@ -235,18 +235,18 @@
     alertModel.title = LocalizedString(@"accept");
     AlertActionModel *cancelModel = [[AlertActionModel alloc] init];
     cancelModel.title = LocalizedString(@"decline");
-    [[AlertActionManager shareAlertActionManager] showWithMessage:LocalizedString(@"host_invited_you_on-mic") actions:@[ cancelModel, alertModel ]];
+    [[AlertActionManager shareAlertActionManager] showWithMessage:LocalizedString(@"host_invited_you_on-mic") actions:@[cancelModel, alertModel]];
 
     __weak __typeof(self) wself = self;
     alertModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
-      if ([action.title isEqualToString:LocalizedString(@"accept")]) {
-          [wself loadDataWithReplyInvite:1];
-      }
+        if ([action.title isEqualToString:LocalizedString(@"accept")]) {
+            [wself loadDataWithReplyInvite:1];
+        }
     };
     cancelModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
-      if ([action.title isEqualToString:LocalizedString(@"decline")]) {
-          [wself loadDataWithReplyInvite:2];
-      }
+        if ([action.title isEqualToString:LocalizedString(@"decline")]) {
+            [wself loadDataWithReplyInvite:2];
+        }
     };
     [self performSelector:@selector(dismissAnchorInvite) withObject:nil afterDelay:5];
 }
@@ -357,42 +357,42 @@
     __weak __typeof(self) wself = self;
     [VideoChatRTSManager joinLiveRoom:self.roomModel.roomID
                              userName:[LocalUserComponent userModel].name
-                                block:^(NSString * _Nonnull RTCToken,
+                                block:^(NSString *_Nonnull RTCToken,
                                         VideoChatRoomModel *_Nonnull roomModel,
                                         VideoChatUserModel *_Nonnull userModel,
                                         VideoChatUserModel *_Nonnull hostUserModel,
-                                        NSArray<VideoChatSeatModel *> * _Nonnull seatList,
-                                        NSArray<VideoChatUserModel *> * _Nonnull anchorList,
-                                        RTSACKModel * _Nonnull model) {
-        if (NOEmptyStr(roomModel.roomID)) {
-            [wself joinRTCRoomWithData:RTCToken
-                             roomModel:roomModel
-                             userModel:userModel
-                         hostUserModel:hostUserModel
-                              seatList:seatList
-                            anchorList:anchorList];
-        } else {
-            AlertActionModel *alertModel = [[AlertActionModel alloc] init];
-            alertModel.title = LocalizedString(@"ok");
-            alertModel.alertModelClickBlock = ^(UIAlertAction * _Nonnull action) {
-                if ([action.title isEqualToString:LocalizedString(@"ok")]) {
-                    [wself hangUp:NO];
-                }
-            };
-            [[AlertActionManager shareAlertActionManager] showWithMessage:LocalizedString(@"joining_room_failed") actions:@[alertModel]];
-        }
-    }];
+                                        NSArray<VideoChatSeatModel *> *_Nonnull seatList,
+                                        NSArray<VideoChatUserModel *> *_Nonnull anchorList,
+                                        RTSACKModel *_Nonnull model) {
+                                    if (NOEmptyStr(roomModel.roomID)) {
+                                        [wself joinRTCRoomWithData:RTCToken
+                                                         roomModel:roomModel
+                                                         userModel:userModel
+                                                     hostUserModel:hostUserModel
+                                                          seatList:seatList
+                                                        anchorList:anchorList];
+                                    } else {
+                                        AlertActionModel *alertModel = [[AlertActionModel alloc] init];
+                                        alertModel.title = LocalizedString(@"ok");
+                                        alertModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
+                                            if ([action.title isEqualToString:LocalizedString(@"ok")]) {
+                                                [wself hangUp:NO];
+                                            }
+                                        };
+                                        [[AlertActionManager shareAlertActionManager] showWithMessage:LocalizedString(@"joining_room_failed") actions:@[alertModel]];
+                                    }
+                                }];
 }
 
 - (void)loadDataWithReplyInvite:(NSInteger)type {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(dismissAnchorInvite) object:nil];
     [VideoChatRTSManager replyInvite:self.roomModel.roomID
-                                      reply:type
-                                      block:^(RTSACKModel * _Nonnull model) {
-        if (!model.result) {
-            [[ToastComponent shareToastComponent] showWithMessage:model.message];
-        }
-    }];
+                               reply:type
+                               block:^(RTSACKModel *_Nonnull model) {
+                                   if (!model.result) {
+                                       [[ToastComponent shareToastComponent] showWithMessage:model.message];
+                                   }
+                               }];
 }
 
 #pragma mark - VideoChatRoomBottomViewDelegate
@@ -404,12 +404,12 @@
         [self.textInputComponent showWithRoomModel:self.roomModel];
         __weak __typeof(self) wself = self;
         self.textInputComponent.clickSenderBlock = ^(NSString *_Nonnull text) {
-          BaseIMModel *model = [[BaseIMModel alloc] init];
-          NSString *message = [NSString stringWithFormat:@"%@：%@",
-                                                         [LocalUserComponent userModel].name,
-                                                         text];
-          model.message = message;
-          [wself.imComponent addIM:model];
+            BaseIMModel *model = [[BaseIMModel alloc] init];
+            NSString *message = [NSString stringWithFormat:@"%@：%@",
+                                                           [LocalUserComponent userModel].name,
+                                                           text];
+            model.message = message;
+            [wself.imComponent addIM:model];
         };
     } else if (status == VideoChatRoomBottomStatusPhone) {
         if (self.pkUserListComponent.isPKWaitingReply) {
@@ -454,7 +454,7 @@
             alertModel.title = LocalizedString(@"ok");
             AlertActionModel *cancelModel = [[AlertActionModel alloc] init];
             cancelModel.title = LocalizedString(@"cancel");
-            [[AlertActionManager shareAlertActionManager] showWithMessage:LocalizedString(@"video_confirm_disconnecting") actions:@[ cancelModel, alertModel ]];
+            [[AlertActionManager shareAlertActionManager] showWithMessage:LocalizedString(@"video_confirm_disconnecting") actions:@[cancelModel, alertModel]];
 
             __weak typeof(self) weakSelf = self;
             alertModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
@@ -553,7 +553,7 @@
     _roomModel = roomModel;
     _rtcToken = rtcToken;
     BOOL isHost = (userModel.userRole == VideoChatUserRoleHost) ? YES : NO;
-    
+
     [VideoChatRTCManager shareRtc].delegate = self;
     [[VideoChatRTCManager shareRtc] joinRTCRoomWithToken:rtcToken
                                                   roomID:self.roomModel.roomID
@@ -598,18 +598,18 @@
 - (void)addSubviewAndConstraints {
     [self.view addSubview:self.bgImageImageView];
     [self.bgImageImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-      make.edges.equalTo(self.view);
+        make.edges.equalTo(self.view);
     }];
 
     [self pkComponent];
     [self staticView];
-    
+
     [self.view addSubview:self.bottomView];
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-      make.height.mas_equalTo([DeviceInforTool getVirtualHomeHeight] + 36 + 32);
-      make.left.equalTo(self.view).offset(16);
-      make.right.equalTo(self.view).offset(-16);
-      make.bottom.equalTo(self.view);
+        make.height.mas_equalTo([DeviceInforTool getVirtualHomeHeight] + 36 + 32);
+        make.left.equalTo(self.view).offset(16);
+        make.right.equalTo(self.view).offset(-16);
+        make.bottom.equalTo(self.view);
     }];
 
     [self imComponent];
@@ -628,7 +628,7 @@
     AlertActionModel *alertCancelModel = [[AlertActionModel alloc] init];
     alertCancelModel.title = LocalizedString(@"cancel");
     NSString *message = LocalizedString(@"video_chat_end_live_alert");
-    [[AlertActionManager shareAlertActionManager] showWithMessage:message actions:@[ alertCancelModel, alertModel ]];
+    [[AlertActionManager shareAlertActionManager] showWithMessage:message actions:@[alertCancelModel, alertModel]];
 }
 
 - (void)navigationControllerPop {
@@ -692,15 +692,14 @@
 }
 
 - (void)reconnectVideoChatRoom {
-    [VideoChatRTSManager reconnectWithBlock:^(NSString * _Nonnull RTCToken,
-                                              VideoChatRoomModel * _Nonnull roomModel,
-                                              VideoChatUserModel * _Nonnull userModel,
-                                              VideoChatUserModel * _Nonnull hostUserModel,
-                                              NSArray<VideoChatSeatModel *> * _Nonnull seatList,
-                                              NSArray<VideoChatUserModel *> * _Nonnull anchorList,
-                                              NSArray<VideoChatUserModel *> * _Nonnull anchorInteractList,
-                                              RTSACKModel * _Nonnull model) {
-        
+    [VideoChatRTSManager reconnectWithBlock:^(NSString *_Nonnull RTCToken,
+                                              VideoChatRoomModel *_Nonnull roomModel,
+                                              VideoChatUserModel *_Nonnull userModel,
+                                              VideoChatUserModel *_Nonnull hostUserModel,
+                                              NSArray<VideoChatSeatModel *> *_Nonnull seatList,
+                                              NSArray<VideoChatUserModel *> *_Nonnull anchorList,
+                                              NSArray<VideoChatUserModel *> *_Nonnull anchorInteractList,
+                                              RTSACKModel *_Nonnull model) {
         if (model.result) {
             [self joinRTCRoomWithData:RTCToken
                             roomModel:roomModel
@@ -708,25 +707,24 @@
                         hostUserModel:hostUserModel
                              seatList:seatList
                            anchorList:anchorList];
-            
+
             if ([self isHost] && anchorInteractList.count > 0) {
                 for (VideoChatUserModel *anchorModel in anchorInteractList) {
                     if (![anchorModel.uid isEqualToString:self.hostUserModel.uid]) {
                         [self.pkUserListComponent startForwardStream:anchorModel.roomID token:anchorModel.pkToken];
                         break;
                     }
-                    
                 }
             }
-            
+
             for (VideoChatSeatModel *seatModel in seatList) {
                 if ([seatModel.userModel.uid isEqualToString:userModel.uid]) {
                     // Reconnect after disconnection, I need to turn on the microphone to collect
                     self.settingComponent.mic = userModel.mic == VideoChatUserMicOn;
                     self.settingComponent.camera = userModel.camera == VideoChatUserCameraOn;
                     [[VideoChatRTCManager shareRtc] makeGuest:self.settingComponent.camera
-                                                         microphone:self.settingComponent.mic];
-                    
+                                                   microphone:self.settingComponent.mic];
+
                     break;
                 }
             }

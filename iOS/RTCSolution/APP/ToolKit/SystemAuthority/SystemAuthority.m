@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "SystemAuthority.h"
 #import <AVFoundation/AVFoundation.h>
@@ -46,8 +46,8 @@
             NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
             if ([[UIApplication sharedApplication] canOpenURL:url]) {
                 if (@available(iOS 10.0, *)) {
-                    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
-                        
+                    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success){
+
                     }];
                 } else {
                     [[UIApplication sharedApplication] openURL:url];

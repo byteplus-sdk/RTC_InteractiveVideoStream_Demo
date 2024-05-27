@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomTableView.h"
 #import "VideoChatEmptyComponent.h"
@@ -13,13 +13,11 @@
 
 @end
 
-
 @implementation VideoChatRoomTableView
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        
         [self addSubview:self.roomTableView];
         [self.roomTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
@@ -32,7 +30,7 @@
 
 - (void)setDataLists:(NSArray *)dataLists {
     _dataLists = dataLists;
-    
+
     [self.roomTableView reloadData];
     if (dataLists.count <= 0) {
         [self.emptyComponent show];
@@ -40,7 +38,6 @@
         [self.emptyComponent dismiss];
     }
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VideoChatRoomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"videoChatRoomCellID" forIndexPath:indexPath];
@@ -63,9 +60,7 @@
     return self.dataLists.count;
 }
 
-
 #pragma mark - Getter
-
 
 - (UITableView *)roomTableView {
     if (!_roomTableView) {
@@ -84,7 +79,7 @@
 - (VideoChatEmptyComponent *)emptyComponent {
     if (!_emptyComponent) {
         _emptyComponent = [[VideoChatEmptyComponent alloc] initWithView:self
-                                                                  message:LocalizedString(@"no_created_room_title")];
+                                                                message:LocalizedString(@"no_created_room_title")];
     }
     return _emptyComponent;
 }

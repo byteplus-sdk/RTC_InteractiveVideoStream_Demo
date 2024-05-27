@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomItemButton.h"
 
@@ -18,7 +18,7 @@
     if (self) {
         self.clipsToBounds = NO;
         _isRed = NO;
-        
+
         [self addSubview:self.redImageView];
         [self.redImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(10, 10));
@@ -29,17 +29,15 @@
     return self;
 }
 
-
 #pragma mark - Publish Action
 
 - (void)setIsRed:(BOOL)isRed {
     _isRed = isRed;
-    
+
     self.redImageView.hidden = !isRed;
 }
 
 #pragma mark - Getter
-
 
 - (UIImageView *)redImageView {
     if (!_redImageView) {
@@ -49,6 +47,5 @@
     }
     return _redImageView;
 }
-
 
 @end

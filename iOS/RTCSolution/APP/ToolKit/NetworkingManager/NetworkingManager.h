@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <Foundation/Foundation.h>
-#import "NetworkingResponse.h"
-#import "NetworkReachabilityManager.h"
 #import "BaseUserModel.h"
+#import "NetworkReachabilityManager.h"
+#import "NetworkingResponse.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)postWithEventName:(NSString *)eventName
                     space:(NSString *)space
                   content:(NSDictionary *)content
-                    block:(void (^ __nullable)(NetworkingResponse *response))block;
+                    block:(void (^__nullable)(NetworkingResponse *response))block;
 
 #pragma mark - User
 
@@ -29,9 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)changeUserName:(NSString *)userName
             loginToken:(NSString *)loginToken
-                 block:(void (^ __nullable)(NetworkingResponse *response))block;
-
-
+                 block:(void (^__nullable)(NetworkingResponse *response))block;
 
 @end
 

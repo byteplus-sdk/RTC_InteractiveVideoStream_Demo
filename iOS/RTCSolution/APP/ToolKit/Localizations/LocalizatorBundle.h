@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <Foundation/Foundation.h>
 
 #define LocalizedStringFromBundle(key, bundle) \
-        [LocalizatorBundle localizedStringForKey:(key) bundleName:bundle]
+    [LocalizatorBundle localizedStringForKey:(key) bundleName:bundle]
 
 NS_ASSUME_NONNULL_BEGIN
 

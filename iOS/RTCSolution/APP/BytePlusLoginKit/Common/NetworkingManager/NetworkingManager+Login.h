@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <ToolKit/NetworkingManager.h>
 
@@ -17,9 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
  * @param block Callback
  */
 + (void)passwordFreeLogin:(NSString *)userName
-                    block:(void (^ __nullable)(BaseUserModel * _Nullable userModel,
-                                               NSString * _Nullable loginToken,
-                                               NetworkingResponse *response))block;
+                    block:(void (^__nullable)(BaseUserModel *_Nullable userModel,
+                                              NSString *_Nullable loginToken,
+                                              NetworkingResponse *response))block;
 
 @end
 

@@ -1,11 +1,11 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <CommonCrypto/CommonCrypto.h>
 #import "NetworkingTool.h"
 #import "LocalizatorBundle.h"
+#import <CommonCrypto/CommonCrypto.h>
 
 @implementation NetworkingTool
 
@@ -105,7 +105,7 @@
         case RTSStatusCodeBIDFaild:
             message = LocalizedStringFromBundle(@"network_message_806", bundleName);
             break;
-            
+
         default:
             break;
     }
@@ -114,7 +114,7 @@
 
 + (NSString *)getWisd {
     NSString *timeStr = [NSString stringWithFormat:@"%.0f", ([[NSDate date] timeIntervalSince1970] * 1000)];
-    NSString *arcStr = [NSString stringWithFormat:@"%ld", (long)arc4random()%10000];
+    NSString *arcStr = [NSString stringWithFormat:@"%ld", (long)arc4random() % 10000];
     return [NSString stringWithFormat:@"%@%@", timeStr, arcStr];
 }
 

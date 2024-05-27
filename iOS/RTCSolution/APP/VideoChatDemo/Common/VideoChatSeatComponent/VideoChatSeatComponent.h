@@ -1,10 +1,10 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <Foundation/Foundation.h>
 #import "VideoChatSheetView.h"
+#import <Foundation/Foundation.h>
 @class VideoChatSeatComponent;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol VideoChatSeatDelegate <NSObject>
 
 - (void)VideoChatSeatComponent:(VideoChatSeatComponent *)VideoChatSeatComponent
-                    clickButton:(VideoChatSeatModel *)seatModel
-                    sheetStatus:(VideoChatSheetStatus)sheetStatus;
+                   clickButton:(VideoChatSeatModel *)seatModel
+                   sheetStatus:(VideoChatSheetStatus)sheetStatus;
 
 @end
 

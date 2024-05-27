@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <UIKit/UIKit.h>
 
@@ -9,15 +9,15 @@
 
 /**
  Takes a screenshot of the underlying `CALayer` of the receiver and returns a `UIImage` object representation.
- 
+
  @return An image representing the receiver
  */
 - (UIImage *)imageRepresentation;
 
-@property (assign,nonatomic) CGFloat frameX;
-@property (assign,nonatomic) CGFloat frameY;
-@property (assign,nonatomic) CGFloat frameW;
-@property (assign,nonatomic) CGFloat frameH;
+@property (assign, nonatomic) CGFloat frameX;
+@property (assign, nonatomic) CGFloat frameY;
+@property (assign, nonatomic) CGFloat frameW;
+@property (assign, nonatomic) CGFloat frameH;
 /**
  * Shortcut for frame.origin.x.
  *

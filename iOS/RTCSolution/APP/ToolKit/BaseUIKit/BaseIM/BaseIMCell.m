@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "BaseIMCell.h"
 #import "Masonry.h"
@@ -16,7 +16,6 @@
 
 @implementation BaseIMCell
 
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -29,12 +28,12 @@
 
 - (void)setModel:(BaseIMModel *)model {
     _model = model;
-    
+
     [self setLineSpace:5
               withText:model.message
                inLabel:self.roomNameLabel
                  image:model.iconImage];
-    
+
     if (model.backgroundColor) {
         self.bgView.backgroundColor = model.backgroundColor;
     } else {
@@ -51,7 +50,7 @@
         make.top.equalTo(self.contentView).offset(10);
         make.bottom.left.equalTo(self.contentView);
     }];
-    
+
     [self.bgView addSubview:self.roomNameLabel];
     [self.roomNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.bgView).offset(16);
@@ -75,10 +74,10 @@
     paragraphStyle.lineSpacing = lineSpace;
     paragraphStyle.lineBreakMode = label.lineBreakMode;
     paragraphStyle.alignment = label.textAlignment;
-    
+
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [text length])];
-    
+
     if (image) {
         NSTextAttachment *attch = [[NSTextAttachment alloc] init];
         attch.image = image;
@@ -86,7 +85,7 @@
         NSAttributedString *imageString = [NSAttributedString attributedStringWithAttachment:attch];
         [attributedString appendAttributedString:imageString];
     }
-    
+
     label.attributedText = attributedString;
 }
 

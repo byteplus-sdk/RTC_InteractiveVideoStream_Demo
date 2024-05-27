@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "UIViewController+Orientation.h"
 
@@ -10,7 +10,7 @@
 - (void)addOrientationNotice {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeviceOrientationDidChange)
                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
-                                                   object:nil];
+                                               object:nil];
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
 }
 
@@ -23,24 +23,23 @@
     BOOL isLandscape = NO;
     UIInterfaceOrientation interfaceOrientation = [[UIApplication sharedApplication] statusBarOrientation];
     switch (interfaceOrientation) {
-        
         case UIInterfaceOrientationUnknown:
             break;
-        
+
         case UIInterfaceOrientationPortrait:
             break;
-        
+
         case UIInterfaceOrientationPortraitUpsideDown:
             break;
-        
+
         case UIInterfaceOrientationLandscapeLeft:
             isLandscape = YES;
             break;
-        
+
         case UIInterfaceOrientationLandscapeRight:
             isLandscape = YES;
             break;
-    
+
         default:
             break;
     }
@@ -60,14 +59,14 @@
         }
         UIInterfaceOrientationMask mask = [self getOrientationMaskWithDeviceOrientation:orientation];
         UIWindowSceneGeometryPreferencesIOS *preferences = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:mask];
-        [windowScene requestGeometryUpdateWithPreferences:preferences errorHandler:^(NSError * _Nonnull error) {
+        [windowScene requestGeometryUpdateWithPreferences:preferences errorHandler:^(NSError *_Nonnull error){
 
         }];
     } else {
         if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
             NSNumber *orientationUnknown = @(0);
             [[UIDevice currentDevice] setValue:orientationUnknown forKey:@"orientation"];
-            
+
             [[UIDevice currentDevice] setValue:[NSNumber numberWithInteger:orientation] forKey:@"orientation"];
         }
     }
@@ -88,9 +87,9 @@
         case UIDeviceOrientationLandscapeRight:
             orientationMask = UIInterfaceOrientationMaskLandscapeLeft;
             break;
-            
+
         default:
-            
+
             break;
     }
     return orientationMask;

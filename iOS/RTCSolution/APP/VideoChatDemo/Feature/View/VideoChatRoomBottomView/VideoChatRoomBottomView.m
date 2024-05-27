@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomBottomView.h"
 #import "UIView+Fillet.h"
@@ -23,20 +23,20 @@
     if (self) {
         self.clipsToBounds = NO;
         self.backgroundColor = [UIColor clearColor];
-        
+
         [self addSubview:self.contentView];
         [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.top.bottom.equalTo(self);
             make.width.mas_equalTo(0);
         }];
-        
+
         [self addSubview:self.inputButton];
         [self.inputButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(36);
             make.left.top.equalTo(self);
             make.right.equalTo(self.contentView.mas_left).offset(-18);
         }];
-        
+
         [self addSubviewAndConstraints];
     }
     return self;
@@ -84,7 +84,7 @@
         self.loginUserModel.status = VideoChatUserStatusDefault;
         [self updateBottomLists:self.loginUserModel isPKing:NO];
         [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"video_host_disconnected")];
-        
+
         [[VideoChatRTCManager shareRtc] makeAudience];
     }
 }
@@ -93,7 +93,7 @@
     _loginUserModel = userModel;
     _isPKing = isPKing;
     CGFloat itemWidth = 36;
-    
+
     NSArray *status = [self getBottomListsWithModel:userModel isPKing:isPKing];
     NSNumber *number = status.firstObject;
     if (number.integerValue == VideoChatRoomBottomStatusInput) {
@@ -104,14 +104,14 @@
     } else {
         self.inputButton.hidden = YES;
     }
-    
+
     NSMutableArray *lists = [[NSMutableArray alloc] init];
     for (int i = 0; i < self.buttonLists.count; i++) {
         VideoChatRoomItemButton *button = self.buttonLists[i];
         if (i < status.count) {
             NSNumber *number = status[i];
             VideoChatRoomBottomStatus bottomStatus = number.integerValue;
-            
+
             button.tagNum = bottomStatus;
             NSString *imageName = [self getImageWithStatus:bottomStatus];
             UIImage *image = [UIImage imageNamed:imageName bundleName:HomeBundleName];
@@ -124,14 +124,14 @@
             button.hidden = YES;
         }
     }
-    
+
     if (isPKing && self.loginUserModel.userRole == VideoChatUserRoleHost) {
         [self updateButtonStatus:VideoChatRoomBottomStatusPK isSelect:YES];
     }
-    
+
     if (lists.count > 1) {
-        [lists mas_remakeConstraints:^(MASConstraintMaker *make) {
-                
+        [lists mas_remakeConstraints:^(MASConstraintMaker *make){
+
         }];
         [lists mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedItemLength:itemWidth leadSpacing:0 tailSpacing:0];
         [lists mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -147,7 +147,7 @@
             make.width.mas_equalTo(itemWidth);
         }];
     }
-    
+
     if (status.count == 0) {
         [self.contentView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.mas_equalTo(0);
@@ -278,7 +278,7 @@
         [_inputButton setBackgroundImage:[UIImage imageNamed:@"videochat_textinput_border" bundleName:HomeBundleName] forState:UIControlStateNormal];
         [_inputButton addTarget:self action:@selector(inputButtonAction) forControlEvents:UIControlEventTouchUpInside];
         _inputButton.hidden = YES;
-        
+
         UILabel *label = [[UILabel alloc] init];
         [label setBackgroundColor:[UIColor clearColor]];
         [label setTextColor:[UIColor whiteColor]];

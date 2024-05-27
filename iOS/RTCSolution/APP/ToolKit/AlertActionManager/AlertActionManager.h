@@ -1,10 +1,10 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <Foundation/Foundation.h>
 #import "AlertActionModel.h"
+#import <Foundation/Foundation.h>
 
 @interface AlertActionManager : NSObject
 
@@ -42,4 +42,3 @@
 - (void)dismiss:(void (^)(void))completion;
 
 @end
-

@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatStaticHostAvatarView.h"
 #import "VideoChatAvatarComponent.h"
@@ -31,7 +31,7 @@
             make.top.mas_equalTo(5);
             make.left.equalTo(self.avatarView.mas_right).offset(8);
         }];
-        
+
         [self addSubview:self.roomIDLabel];
         [self.roomIDLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.titleLabel.mas_bottom).offset(0);

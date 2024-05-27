@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "FeedbackManagerProtocol.h"
 
@@ -19,7 +19,7 @@
     if (feedback) {
         self.feedbackDelegate = feedback;
     }
-    
+
     if ([self.feedbackDelegate respondsToSelector:@selector(protocol:initWithSuperView:scenesDic:)]) {
         return [self.feedbackDelegate protocol:self
                              initWithSuperView:superView

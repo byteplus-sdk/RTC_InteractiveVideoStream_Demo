@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #ifndef JoinRTSConfig_h
 #define JoinRTSConfig_h
@@ -37,7 +37,6 @@
  * https://console.byteplus.com/iam/keymanage/
  */
 #define SecretAccessKey @""
-
 
 
 #endif /* JoinRTSConfig_h */

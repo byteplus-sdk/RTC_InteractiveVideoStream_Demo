@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatPKUserListComponent.h"
 #import "VideoChatPKUserListView.h"
 
-@interface VideoChatPKUserListComponent ()<VideoChatPKUserListViewDelegate>
+@interface VideoChatPKUserListComponent () <VideoChatPKUserListViewDelegate>
 
 @property (nonatomic, strong) VideoChatRoomModel *roomModel;
 @property (nonatomic, strong) UIControl *dismissControl;
@@ -28,13 +28,13 @@
         [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"video_sent_invitation")];
         return;
     }
-    
+
     UIViewController *rootVC = [DeviceInforTool topViewController];
     CGFloat height = ((300.0 / 667.0) * SCREEN_HEIGHT) + 52 + 48;
-    
+
     [rootVC.view addSubview:self.dismissControl];
     [self.dismissControl addSubview:self.userListView];
-    
+
     [self.dismissControl mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(rootVC.view);
     }];
@@ -52,13 +52,13 @@
         }];
         [rootVC.view layoutIfNeeded];
     }];
-    
+
     [self requestPKUserListData];
 }
 
 - (void)requestPKUserListData {
     __weak typeof(self) weakSelf = self;
-    [VideoChatRTSManager requestPKUserListComplete:^(NSArray<VideoChatUserModel *> * _Nonnull userList, RTSACKModel * _Nonnull model) {
+    [VideoChatRTSManager requestPKUserListComplete:^(NSArray<VideoChatUserModel *> *_Nonnull userList, RTSACKModel *_Nonnull model) {
         if (model.result) {
             weakSelf.userListView.dataArray = userList;
         }
@@ -76,21 +76,21 @@
                                                   toRoomID:userModel.roomID
                                                   toUserID:userModel.uid
                                                     seatID:0
-                                                  complete:^(RTSACKModel * _Nonnull model) {
-        view.userInteractionEnabled = YES;
-        if (model.result) {
-            NSString *message = [NSString stringWithFormat:LocalizedString(@"invitation_sent_%@_waiting"), userModel.name];
-            [[ToastComponent shareToastComponent] showWithMessage:message];
-            weakSelf.isPKWaitingReply = YES;
-            [weakSelf performSelector:@selector(resetPkWaitingReplyStstus) withObject:nil afterDelay:5];
-        } else {
-            if (model.code == 550 || model.code == 551) {
-                [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"host_busy")];
-            } else {
-                [[ToastComponent shareToastComponent] showWithMessage:model.message];
-            }
-        }
-    }];
+                                                  complete:^(RTSACKModel *_Nonnull model) {
+                                                      view.userInteractionEnabled = YES;
+                                                      if (model.result) {
+                                                          NSString *message = [NSString stringWithFormat:LocalizedString(@"invitation_sent_%@_waiting"), userModel.name];
+                                                          [[ToastComponent shareToastComponent] showWithMessage:message];
+                                                          weakSelf.isPKWaitingReply = YES;
+                                                          [weakSelf performSelector:@selector(resetPkWaitingReplyStstus) withObject:nil afterDelay:5];
+                                                      } else {
+                                                          if (model.code == 550 || model.code == 551) {
+                                                              [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"host_busy")];
+                                                          } else {
+                                                              [[ToastComponent shareToastComponent] showWithMessage:model.message];
+                                                          }
+                                                      }
+                                                  }];
 }
 
 #pragma mark - Received
@@ -100,14 +100,14 @@
     AlertActionModel *cancelModel = [[AlertActionModel alloc] init];
     cancelModel.title = LocalizedString(@"decline");
     [[AlertActionManager shareAlertActionManager] showWithMessage:[NSString stringWithFormat:LocalizedString(@"%@_invites_you_connect"), anchorModel.name] actions:@[cancelModel, alertModel]];
-    
+
     __weak typeof(self) weakSelf = self;
-    alertModel.alertModelClickBlock = ^(UIAlertAction * _Nonnull action) {
+    alertModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
         if ([action.title isEqualToString:LocalizedString(@"accept")]) {
             [weakSelf replyInvite:anchorModel.roomID userID:anchorModel.uid reply:VideoChatPKReplyAccept];
         }
     };
-    cancelModel.alertModelClickBlock = ^(UIAlertAction * _Nonnull action) {
+    cancelModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
         if ([action.title isEqualToString:LocalizedString(@"decline")]) {
             [weakSelf replyInvite:anchorModel.roomID userID:anchorModel.uid reply:VideoChatPKReplyReject];
         }
@@ -117,30 +117,28 @@
 
 - (void)alertControllerDismiss {
     [[AlertActionManager shareAlertActionManager] dismiss:^{
-        
+
     }];
 }
 
 - (void)replyInvite:(NSString *)inviterRoomID userID:(NSString *)inviterUserID reply:(VideoChatPKReply)reply {
-    
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(alertControllerDismiss) object:nil];
-    
+
     __weak typeof(self) weakSelf = self;
     [VideoChatRTSManager replyInviteWithInviterRoomID:inviterRoomID
-                                               inviterUserID:inviterUserID
-                                                      roomID:self.roomModel.roomID
-                                                      userID:self.roomModel.hostUid
-                                                       reply:reply
-                                                    complete:^(NSString * _Nonnull roomID, NSString * _Nonnull token, RTSACKModel * _Nonnull model) {
-        if (model.result) {
-            if (reply == 1) {
-                [weakSelf startForwardStream:roomID token:token];
-            }
-        }
-        else {
-            [[ToastComponent shareToastComponent] showWithMessage:model.message];
-        }
-    }];
+                                        inviterUserID:inviterUserID
+                                               roomID:self.roomModel.roomID
+                                               userID:self.roomModel.hostUid
+                                                reply:reply
+                                             complete:^(NSString *_Nonnull roomID, NSString *_Nonnull token, RTSACKModel *_Nonnull model) {
+                                                 if (model.result) {
+                                                     if (reply == 1) {
+                                                         [weakSelf startForwardStream:roomID token:token];
+                                                     }
+                                                 } else {
+                                                     [[ToastComponent shareToastComponent] showWithMessage:model.message];
+                                                 }
+                                             }];
 }
 
 - (void)startForwardStream:(NSString *)roomID token:(NSString *)token {

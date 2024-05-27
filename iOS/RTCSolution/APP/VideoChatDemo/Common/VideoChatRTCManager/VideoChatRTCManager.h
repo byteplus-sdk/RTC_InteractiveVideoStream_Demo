@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRTCManager.h"
 
@@ -12,7 +12,7 @@ typedef NS_ENUM(NSInteger, VideoChatNetworkQualityStatus) {
     VideoChatNetworkQualityStatusGood,
     VideoChatNetworkQualityStatusBad,
 };
-typedef void(^VideoChatNetworkQualityChangeBlock)(VideoChatNetworkQualityStatus status, NSString *uid);
+typedef void (^VideoChatNetworkQualityChangeBlock)(VideoChatNetworkQualityStatus status, NSString *uid);
 
 @class VideoChatRTCManager;
 @protocol VideoChatRTCManagerDelegate <NSObject>
@@ -24,7 +24,6 @@ typedef void(^VideoChatNetworkQualityChangeBlock)(VideoChatNetworkQualityStatus 
  */
 - (void)videoChatRTCManager:(VideoChatRTCManager *)manager
          onRoomStateChanged:(RTCJoinModel *)joinModel;
-
 
 /**
  * @brief Callback for volume information changes
@@ -98,7 +97,6 @@ typedef void(^VideoChatNetworkQualityChangeBlock)(VideoChatNetworkQualityStatus 
  */
 - (void)startForwardStream:(NSString *)roomID
                      token:(NSString *)token;
-
 
 /**
  * @brief turn off forward stream RTC rooms

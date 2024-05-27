@@ -1,13 +1,13 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "MenuLoginViewController.h"
+#import "BuildConfig.h"
+#import "LoginControlComponent.h"
 #import "MenuCreateTextFieldView.h"
 #import "PhonePrivacyView.h"
-#import "LoginControlComponent.h"
-#import "BuildConfig.h"
 
 @interface MenuLoginViewController ()
 
@@ -24,21 +24,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-    
+
     [self addMakeConstraints];
-    
+
     __weak __typeof(self) wself = self;
-    self.userNameTextFieldView.textFieldChangeBlock = ^(NSString * _Nonnull text) {
+    self.userNameTextFieldView.textFieldChangeBlock = ^(NSString *_Nonnull text) {
         [wself updateLoginButtonStatus];
     };
     self.privacyView.changeAgree = ^(BOOL isAgree) {
         [wself updateLoginButtonStatus];
     };
     [self updateLoginButtonStatus];
-    
+
     NSString *sdkVer = [BaseRTCManager getSdkVersion];
     NSString *appVer = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     self.verLabel.text = [NSString stringWithFormat:@"%@ v%@ / %@ v%@", LocalizedString(@"App Version"), appVer, LocalizedString(@"SDK Version"), sdkVer];
@@ -50,7 +50,7 @@
     CGRect keyboardRect = [[notifiction.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     [UIView animateWithDuration:0.25 animations:^{
         [self.loginButton mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view).offset(-keyboardRect.size.height - 80/2);
+            make.bottom.equalTo(self.view).offset(-keyboardRect.size.height - 80 / 2);
         }];
     }];
     self.appTitleLable.hidden = SCREEN_WIDTH <= 320 ? YES : NO;
@@ -72,17 +72,17 @@
     __weak __typeof(self) wself = self;
     [[ToastComponent shareToastComponent] showLoading];
     [LoginControlComponent passwordFreeLogin:self.userNameTextFieldView.text
-                                        block:^(BOOL result, NSString * _Nullable errorStr) {
-        [[ToastComponent shareToastComponent] dismiss];
-        if (result) {
-            [wself dismissViewControllerAnimated:YES completion:^{
-                
-            }];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NotificationLoginSuccess object:nil];
-        } else {
-            [[ToastComponent shareToastComponent] showWithMessage:errorStr];
-        }
-    }];
+                                       block:^(BOOL result, NSString *_Nullable errorStr) {
+                                           [[ToastComponent shareToastComponent] dismiss];
+                                           if (result) {
+                                               [wself dismissViewControllerAnimated:YES completion:^{
+
+                                               }];
+                                               [[NSNotificationCenter defaultCenter] postNotificationName:NotificationLoginSuccess object:nil];
+                                           } else {
+                                               [[ToastComponent shareToastComponent] showWithMessage:errorStr];
+                                           }
+                                       }];
 }
 
 - (void)maskAction {
@@ -113,13 +113,13 @@
     [self.maskImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
+
     [self.view addSubview:self.appTitleLable];
     [self.appTitleLable mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.top.mas_equalTo(100 + [DeviceInforTool getStatusBarHight]);
     }];
-    
+
     [self.view addSubview:self.loginButton];
     [self.loginButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(30);
@@ -127,7 +127,7 @@
         make.height.mas_equalTo(50);
         make.bottom.equalTo(self.view).offset(-(SCREEN_HEIGHT * 0.3) - [DeviceInforTool getVirtualHomeHeight]);
     }];
-    
+
     [self.view addSubview:self.userNameTextFieldView];
     [self.userNameTextFieldView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(30);
@@ -135,14 +135,14 @@
         make.height.mas_equalTo(32);
         make.bottom.equalTo(self.loginButton.mas_top).offset(-94);
     }];
-    
+
     [self.view addSubview:self.privacyView];
     [self.privacyView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(304, 22));
         make.left.equalTo(self.userNameTextFieldView);
         make.top.equalTo(self.userNameTextFieldView.mas_bottom).offset(32);
     }];
-    
+
     [self.view addSubview:self.verLabel];
     [self.verLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
@@ -167,7 +167,7 @@
         _maskImageView.image = [UIImage imageNamed:@"menu_mask" bundleName:HomeBundleName];
         _maskImageView.contentMode = UIViewContentModeScaleAspectFill;
         _maskImageView.clipsToBounds = YES;
-        
+
         UIView *view = [[UIView alloc] init];
         view.userInteractionEnabled = NO;
         view.backgroundColor = [UIColor colorFromRGBHexString:@"#141C2C" andAlpha:0.7 * 255];
@@ -175,7 +175,7 @@
         [view mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(_maskImageView);
         }];
-        
+
         _maskImageView.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(maskAction)];
         [_maskImageView addGestureRecognizer:tap];
@@ -197,7 +197,7 @@
     if (!_loginButton) {
         _loginButton = [[UIButton alloc] init];
         _loginButton.layer.masksToBounds = YES;
-        _loginButton.layer.cornerRadius = 50/2;
+        _loginButton.layer.cornerRadius = 50 / 2;
         [_loginButton setTitle:LocalizedString(@"Log in") forState:UIControlStateNormal];
         _loginButton.titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightRegular];
         [_loginButton addTarget:self action:@selector(loginButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -222,7 +222,6 @@
 }
 
 - (void)dealloc {
-
 }
 
 @end

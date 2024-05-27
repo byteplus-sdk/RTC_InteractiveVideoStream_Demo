@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatPKItemView.h"
 #import "VideoChatAvatarComponent.h"
-#import "VideoChatSeatNetworkQualityView.h"
 #import "VideoChatSeatItemNameView.h"
+#import "VideoChatSeatNetworkQualityView.h"
 
 @interface VideoChatPKItemView ()
 
@@ -36,7 +36,7 @@
     [self addSubview:self.contentView];
     [self.contentView addSubview:self.networkQualityView];
     [self.contentView addSubview:self.userNameView];
-    
+
     [self.renderView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
@@ -57,7 +57,7 @@
         } else {
             make.left.equalTo(self).offset(8);
         }
-        
+
         make.top.equalTo(self).offset(8);
         make.height.mas_equalTo(11);
     }];
@@ -68,7 +68,6 @@
             make.right.equalTo(self.contentView).offset(-8);
         }];
     }
-    
 }
 
 - (void)setUserModel:(VideoChatUserModel *)userModel {
@@ -76,7 +75,7 @@
     self.avatarComponent.text = userModel.name;
     self.userNameView.userModel = userModel;
     self.muteButton.selected = userModel.otherAnchorMicType == VideoChatOtherAnchorMicTypeMute;
-    
+
     if (userModel.camera == VideoChatUserCameraOn) {
         UIView *streamView = [[VideoChatRTCManager shareRtc] getStreamViewWithUid:userModel.uid];
         if (streamView) {
@@ -156,11 +155,10 @@
         _muteButton.adjustsImageWhenHighlighted = NO;
         [_muteButton setImage:[UIImage imageNamed:@"videochat_pk_other_mute_off" bundleName:HomeBundleName] forState:UIControlStateNormal];
         [_muteButton setImage:[UIImage imageNamed:@"videochat_pk_other_mute_on" bundleName:HomeBundleName] forState:UIControlStateSelected];
-        
+
         [_muteButton addTarget:self action:@selector(muteButtonClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _muteButton;
 }
-
 
 @end

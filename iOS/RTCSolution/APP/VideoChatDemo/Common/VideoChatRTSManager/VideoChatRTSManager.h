@@ -1,14 +1,14 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <Foundation/Foundation.h>
-#import "VideoChatUserModel.h"
+#import "RTSACKModel.h"
+#import "VideoChatControlRecordModel.h"
 #import "VideoChatRoomModel.h"
 #import "VideoChatSeatModel.h"
-#import "VideoChatControlRecordModel.h"
-#import "RTSACKModel.h"
+#import "VideoChatUserModel.h"
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,12 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
                              VideoChatUserModel *hostUserModel,
                              RTSACKModel *model))block;
 
-
 /// The host start a live room
 /// @param block Callback
 + (void)startLive:(NSString *)roomID
             block:(void (^)(RTSACKModel *model))block;
-
 
 /// Get the list of audience in the room
 /// @param roomID Room ID
@@ -43,14 +41,12 @@ NS_ASSUME_NONNULL_BEGIN
                   block:(void (^)(NSArray<VideoChatUserModel *> *userLists,
                                   RTSACKModel *model))block;
 
-
 /// Get the list of audiences applied for in the room
 /// @param roomID Room ID
 /// @param block Callback
 + (void)getApplyAudienceList:(NSString *)roomID
                        block:(void (^)(NSArray<VideoChatUserModel *> *userLists,
                                        RTSACKModel *model))block;
-
 
 /// The anchor invites the audience to come on stage
 /// @param roomID Room ID
@@ -62,7 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
                 seatID:(NSString *)seatID
                  block:(void (^)(RTSACKModel *model))block;
 
-
 /// The anchor agrees to the audience's application
 /// @param roomID Room ID
 /// @param uid User ID
@@ -71,8 +66,6 @@ NS_ASSUME_NONNULL_BEGIN
                uid:(NSString *)uid
              block:(void (^)(RTSACKModel *model))block;
 
-
-
 /// Whether the host switch is turned on to apply
 /// @param roomID Room ID
 /// @param type 1 open, other close
@@ -80,7 +73,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)managerInteractApply:(NSString *)roomID
                         type:(NSInteger)type
                        block:(void (^)(RTSACKModel *model))block;
-
 
 /// Host management Shangmai guests
 /// @param roomID Room ID
@@ -92,15 +84,13 @@ NS_ASSUME_NONNULL_BEGIN
                type:(NSInteger)type
               block:(void (^)(RTSACKModel *model))block;
 
-
-
 /// The host ends the live broadcast
 /// @param roomID Room ID
 + (void)finishLive:(NSString *)roomID;
 
 /// Request the list of PK user
 /// @param complete Callback
-+ (void)requestPKUserListComplete:(void(^)(NSArray<VideoChatUserModel *> *userList,  RTSACKModel *model))complete;
++ (void)requestPKUserListComplete:(void (^)(NSArray<VideoChatUserModel *> *userList, RTSACKModel *model))complete;
 
 /// Invite anchor pk
 /// @param fromRoomID From roomID
@@ -114,7 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
                                  toRoomID:(NSString *)toRoomID
                                  toUserID:(NSString *)toUserID
                                    seatID:(NSInteger)seatID
-                                 complete:(void(^)(RTSACKModel *model))complete;
+                                 complete:(void (^)(RTSACKModel *model))complete;
 
 /// Reply to host invitation
 /// @param inviterRoomID Inviter roomID
@@ -128,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
                               roomID:(NSString *)roomID
                               userID:(NSString *)userID
                                reply:(VideoChatPKReply)reply
-                            complete:(void(^)(NSString *roomID, NSString *token, RTSACKModel *model))complete;
+                            complete:(void (^)(NSString *roomID, NSString *token, RTSACKModel *model))complete;
 
 /// Request end PK
 /// @param roomID RoomID
@@ -136,13 +126,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param complete Callback
 + (void)requestStopPKWithRoomID:(NSString *)roomID
                          userID:(NSString *)userID
-                       complete:(void(^)(RTSACKModel *model))complete;
+                       complete:(void (^)(RTSACKModel *model))complete;
 
 /// Request close chat room mode
 /// @param roomID RoomID
 /// @param complete Callback
 + (void)requestCloseChatRoomMode:(NSString *)roomID
-                        complete:(void(^)(RTSACKModel *model))complete;
+                        complete:(void (^)(RTSACKModel *model))complete;
 
 /// Request mute other anchor
 /// @param roomID RoomID
@@ -152,10 +142,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)requestMuteOtherAnchorRoomID:(NSString *)roomID
                    otherAnchorUserID:(NSString *)otherAnchorUserID
                                 type:(VideoChatOtherAnchorMicType)type
-                            complete:(void(^)(RTSACKModel *model))complete;
+                            complete:(void (^)(RTSACKModel *model))complete;
 
 #pragma mark - Audience API
-
 
 /// The audience joins the room
 /// @param roomID Room ID
@@ -171,9 +160,6 @@ NS_ASSUME_NONNULL_BEGIN
                                NSArray<VideoChatUserModel *> *anchorList,
                                RTSACKModel *model))block;
 
-
-
-
 /// Reply to the host’s invitation
 /// @param roomID Room ID
 /// @param reply 1 accept, 2 Refuse
@@ -182,15 +168,13 @@ NS_ASSUME_NONNULL_BEGIN
               reply:(NSInteger)reply
               block:(void (^)(RTSACKModel *model))block;
 
-
 /// Distinguished guests
 /// @param roomID Room ID
 /// @param seatID Seat ID
 /// @param block Callback
 + (void)finishInteract:(NSString *)roomID
                 seatID:(NSString *)seatID
-                block:(void (^)(RTSACKModel *model))block;
-
+                 block:(void (^)(RTSACKModel *model))block;
 
 /// Audience application on stage
 /// @param roomID Room ID
@@ -201,25 +185,20 @@ NS_ASSUME_NONNULL_BEGIN
                 block:(void (^)(BOOL isNeedApply,
                                 RTSACKModel *model))block;
 
-
 /// The audience leaves the room
 /// @param roomID Room ID
 + (void)leaveLiveRoom:(NSString *)roomID;
 
-
 #pragma mark - Publish API
-
 
 /// Received the audience
 /// @param block Callback
 + (void)getActiveLiveRoomListWithBlock:(void (^)(NSArray<VideoChatRoomModel *> *roomList,
                                                  RTSACKModel *model))block;
 
-
 /// Mutual kick notification
 /// @param block Callback
 + (void)clearUser:(void (^)(RTSACKModel *model))block;
-
 
 /// Send IM message
 /// @param roomID Room ID
@@ -229,7 +208,6 @@ NS_ASSUME_NONNULL_BEGIN
             message:(NSString *)message
               block:(void (^)(RTSACKModel *model))block;
 
-
 /// Update microphone status
 /// @param roomID Room ID
 /// @param mic 0 close ,1 open
@@ -238,8 +216,6 @@ NS_ASSUME_NONNULL_BEGIN
                       mic:(NSInteger)mic
                    camera:(NSInteger)camera
                     block:(void (^)(RTSACKModel *model))block;
-
-
 
 /// reconnect
 /// @param block Callback
@@ -252,33 +228,26 @@ NS_ASSUME_NONNULL_BEGIN
                                      NSArray<VideoChatUserModel *> *anchorInteractList,
                                      RTSACKModel *model))block;
 
-
-
 #pragma mark - Notification Message
-
 
 /// The audience joins the room
 /// @param block Callback
 + (void)onAudienceJoinRoomWithBlock:(void (^)(VideoChatUserModel *userModel,
                                               NSInteger count))block;
 
-
 /// The audience leaves the room
 /// @param block Callback
 + (void)onAudienceLeaveRoomWithBlock:(void (^)(VideoChatUserModel *userModel,
                                                NSInteger count))block;
 
-
 /// Received the end of the live broadcast room
 /// @param block Callback
 + (void)onFinishLiveWithBlock:(void (^)(NSString *rommID, NSInteger type))block;
-
 
 /// Successful audience
 /// @param block Callback
 + (void)onJoinInteractWithBlock:(void (^)(VideoChatUserModel *userModel,
                                           NSString *seatID))block;
-
 
 /// Distinguished guests
 /// @param block Callback
@@ -286,12 +255,10 @@ NS_ASSUME_NONNULL_BEGIN
                                             NSString *seatID,
                                             NSInteger type))block;
 
-
 /// Seat status changes
 /// @param block Callback
 + (void)onSeatStatusChangeWithBlock:(void (^)(NSString *seatID,
                                               NSInteger type))block;
-
 
 /// Microphone status changes
 /// @param block Callback
@@ -300,15 +267,12 @@ NS_ASSUME_NONNULL_BEGIN
                                                NSInteger mic,
                                                NSInteger camera))block;
 
-
 /// IM message received
 /// @param block Callback
 + (void)onMessageWithBlock:(void (^)(VideoChatUserModel *userModel,
                                      NSString *message))block;
 
-
 #pragma mark - Single Notification Message
-
 
 /// Received an invitation
 /// @param block Callback
@@ -320,7 +284,6 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)onApplyInteractWithBlock:(void (^)(VideoChatUserModel *userModel,
                                            NSString *seatID))block;
 
-
 /// Receipt of invitation result
 /// @param block Callback
 + (void)onInviteResultWithBlock:(void (^)(VideoChatUserModel *userModel,
@@ -331,34 +294,33 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)onMediaOperateWithBlock:(void (^)(NSInteger mic,
                                           NSInteger camera))block;
 
-
 /// Received mutual kick notification
 /// @param block Callback
 + (void)onClearUserWithBlock:(void (^)(NSString *uid))block;
 
 /// Received anchor invite
 /// @param block CallBack
-+ (void)onAnchorInviteWithBlock:(void(^)(VideoChatUserModel *anchorModel))block;
++ (void)onAnchorInviteWithBlock:(void (^)(VideoChatUserModel *anchorModel))block;
 
 /// Received anchor reply
 /// @param block Callback
-+ (void)onAnchorReplyWithBlock:(void(^)(VideoChatPKReply reply, NSString *roomID, NSString *token, VideoChatUserModel *anchorModel))block;
++ (void)onAnchorReplyWithBlock:(void (^)(VideoChatPKReply reply, NSString *roomID, NSString *token, VideoChatUserModel *anchorModel))block;
 
 /// Received new anchor joined
 /// @param block Callback
-+ (void)onNewAnchorJoinWithBlock:(void(^)(VideoChatUserModel *anchorModel))block;
++ (void)onNewAnchorJoinWithBlock:(void (^)(VideoChatUserModel *anchorModel))block;
 
 /// Received anchor pk end
 /// @param block Callback
-+ (void)onAnchorPKEndWithBlock:(void(^)(void))block;
++ (void)onAnchorPKEndWithBlock:(void (^)(void))block;
 
 /// Received close chat room mode
 /// @param block Callback
-+ (void)onClosedChatRoomModeWithBlock:(void(^)(NSString *roomID))block;
++ (void)onClosedChatRoomModeWithBlock:(void (^)(NSString *roomID))block;
 
 /// Received mute other anchor
 /// @param block Callback
-+ (void)onMuteOtherAnchorWithBlock:(void(^)(NSString *roomID, NSString *otherAnchorUserID, VideoChatOtherAnchorMicType type))block;
++ (void)onMuteOtherAnchorWithBlock:(void (^)(NSString *roomID, NSString *otherAnchorUserID, VideoChatOtherAnchorMicType type))block;
 
 @end
 

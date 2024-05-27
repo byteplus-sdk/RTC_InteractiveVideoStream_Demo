@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "UserHeadView.h"
 #import "AvatarView.h"
@@ -29,7 +29,7 @@
 
 - (void)setNameString:(NSString *)nameString {
     _nameString = nameString;
-    
+
     self.avatarView.text = nameString;
 }
 
@@ -42,6 +42,5 @@
     }
     return _avatarView;
 }
-
 
 @end

@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatRoomTopSelectView.h"
 
@@ -20,11 +20,11 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor colorFromRGBHexString:@"#0E0825" andAlpha:0.95 * 255];
-        
+
         [self addSubview:self.onlineButton];
         [self addSubview:self.appleButton];
         [self addSubview:self.selectLineView];
-        
+
         [self addConstraints];
         [self onlineButtonAction];
     }
@@ -36,19 +36,19 @@
         make.left.bottom.height.equalTo(self);
         make.width.mas_equalTo(SCREEN_WIDTH / 2);
     }];
-    
+
     [self.appleButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.bottom.height.equalTo(self);
         make.width.mas_equalTo(SCREEN_WIDTH / 2);
     }];
-    
+
     [self.selectLineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(64);
         make.height.mas_equalTo(2);
         make.bottom.mas_equalTo(-2);
         make.centerX.equalTo(self.onlineButton);
     }];
-    
+
     [self addSubview:self.redImageView];
     [self.redImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(10, 10));
@@ -73,14 +73,14 @@
 - (void)onlineButtonAction {
     [self.onlineButton setTitleColor:[UIColor colorFromHexString:@"#4080FF"] forState:UIControlStateNormal];
     [self.appleButton setTitleColor:[UIColor colorFromHexString:@"#E5E6EB"] forState:UIControlStateNormal];
-    
+
     [self.selectLineView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(64);
         make.height.mas_equalTo(2);
         make.bottom.mas_equalTo(-10);
         make.centerX.equalTo(self.onlineButton);
     }];
-    
+
     if ([self.delegate respondsToSelector:@selector(VideoChatRoomTopSelectView:clickSwitchItem:)]) {
         [self.delegate VideoChatRoomTopSelectView:self clickSwitchItem:NO];
     }
@@ -89,14 +89,14 @@
 - (void)appleButtonAction {
     [self.onlineButton setTitleColor:[UIColor colorFromHexString:@"#E5E6EB"] forState:UIControlStateNormal];
     [self.appleButton setTitleColor:[UIColor colorFromHexString:@"#4080FF"] forState:UIControlStateNormal];
-    
+
     [self.selectLineView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(64);
         make.height.mas_equalTo(2);
         make.bottom.mas_equalTo(-10);
         make.centerX.equalTo(self.appleButton);
     }];
-    
+
     if ([self.delegate respondsToSelector:@selector(VideoChatRoomTopSelectView:clickSwitchItem:)]) {
         [self.delegate VideoChatRoomTopSelectView:self clickSwitchItem:YES];
     }

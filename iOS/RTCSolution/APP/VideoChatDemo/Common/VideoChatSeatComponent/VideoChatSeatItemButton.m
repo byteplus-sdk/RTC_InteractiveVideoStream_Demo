@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSeatItemButton.h"
 
@@ -17,7 +17,7 @@
     self = [super init];
     if (self) {
         self.clipsToBounds = NO;
-        
+
         [self addSubview:self.desLabel];
         [self.desLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.equalTo(self).offset(0);
@@ -29,7 +29,7 @@
 
 - (void)setDesTitle:(NSString *)desTitle {
     _desTitle = desTitle;
-    
+
     self.desLabel.text = desTitle;
 }
 

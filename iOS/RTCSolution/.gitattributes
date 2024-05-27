@@ -1,2 +1,0 @@
-APP/AllIMKit/*.xcframework/**/* filter=lfs diff=lfs merge=lfs -text
-APP/AllEffectKit/*.framework/**/* filter=lfs diff=lfs merge=lfs -text

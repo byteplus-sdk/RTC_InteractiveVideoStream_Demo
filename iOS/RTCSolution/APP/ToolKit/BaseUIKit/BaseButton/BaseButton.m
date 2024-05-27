@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "BaseButton.h"
 
@@ -32,7 +32,7 @@
     }
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event {
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
     CGRect bounds = self.bounds;
     CGFloat widthDelta = MAX(44.0 - bounds.size.width, 0);
     CGFloat heightDelta = MAX(44.0 - bounds.size.height, 0);

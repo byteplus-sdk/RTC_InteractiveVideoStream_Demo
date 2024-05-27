@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSeatItemCenterView.h"
 
@@ -22,7 +22,7 @@
             make.size.mas_equalTo(CGSizeMake(28, 28));
             make.top.centerX.equalTo(self);
         }];
-        
+
         [self addSubview:self.titleLabel];
         [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.centerX.equalTo(self);

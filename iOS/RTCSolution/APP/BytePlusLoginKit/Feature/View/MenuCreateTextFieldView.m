@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "MenuCreateTextFieldView.h"
 
@@ -26,19 +26,19 @@
         self.clipsToBounds = NO;
         _isIllega = NO;
         self.backgroundColor = [UIColor clearColor];
-        
+
         [self addSubview:self.textField];
         [self addSubview:self.cancelButton];
         [self addSubview:self.lineView];
         [self addSubview:self.errorLabel];
-        
+
         self.cancelButton.hidden = !isModify;
         [self.cancelButton mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(20, 20));
             make.right.equalTo(self);
             make.top.equalTo(self);
         }];
-        
+
         [self.textField mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.top.equalTo(self);
             make.height.mas_equalTo(20);
@@ -48,7 +48,7 @@
                 make.right.equalTo(self).offset(-16);
             }
         }];
-        
+
         [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.bottom.centerX.equalTo(self);
             make.height.mas_equalTo(1);
@@ -58,7 +58,7 @@
                 make.width.equalTo(self);
             }
         }];
-        
+
         [self addSubview:self.errorLabel];
         [self.errorLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.equalTo(self);
@@ -72,7 +72,7 @@
 
 - (void)setRightSpace:(CGFloat)rightSpace {
     _rightSpace = rightSpace;
-    
+
     [self.textField mas_updateConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self).offset(-rightSpace);
     }];
@@ -80,13 +80,13 @@
 
 - (void)setBoardType:(UIKeyboardType)boardType {
     _boardType = boardType;
-    
+
     self.textField.keyboardType = boardType;
 }
 
 - (void)setText:(NSString *)text {
     _text = text;
-    
+
     self.textField.text = text;
 }
 
@@ -104,17 +104,15 @@
 
 - (void)setPlaceholderStr:(NSString *)placeholderStr {
     _placeholderStr = placeholderStr;
-    
+
     NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:placeholderStr attributes:
-    @{NSForegroundColorAttributeName:[UIColor colorFromHexString:@"#86909C"],
-                 NSFontAttributeName:self.textField.font
-         }];
+                                                                                                   @{NSForegroundColorAttributeName: [UIColor colorFromHexString:@"#86909C"],
+                                                                                                     NSFontAttributeName: self.textField.font}];
     self.textField.attributedPlaceholder = attrString;
 }
 
 - (void)setIsModify:(BOOL)isModify {
     _isModify = isModify;
-    
 }
 
 #pragma mark - touch action
@@ -135,10 +133,10 @@
 
 - (void)roomNumTextFieldChange:(UITextField *)textField {
     if (self.maxLimit <= 0) {
-        //No Limit
+        // No Limit
         return;
     }
-    
+
     NSInteger maxLimit = self.maxLimit;
     NSInteger minLimit = self.minLimit;
     BOOL isIllega = ![LocalUserComponent isMatchUserName:textField.text];
@@ -163,14 +161,13 @@
             [self performSelector:@selector(dismissErrorLabel:) withObject:textField afterDelay:2];
             textField.text = [textField.text substringToIndex:maxLimit];
         } else {
-            
         }
         _isIllega = isIllega;
     } else {
         [self dismissErrorLabel:textField];
         _isIllega = NO;
     }
-    
+
     if (self.textFieldChangeBlock) {
         self.textFieldChangeBlock(textField.text);
     }

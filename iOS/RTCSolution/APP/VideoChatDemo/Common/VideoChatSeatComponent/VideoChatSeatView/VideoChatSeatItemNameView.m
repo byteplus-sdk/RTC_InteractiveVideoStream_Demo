@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSeatItemNameView.h"
 
@@ -23,23 +23,23 @@
         [self addSubview:self.nameLabel];
         [self addSubview:self.micImageView];
         [self addSubview:self.hostImageView];
-        
+
         [self.maskImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.bottom.equalTo(self);
             make.height.mas_equalTo(18);
         }];
-        
+
         [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(self);
             make.width.lessThanOrEqualTo(self).multipliedBy(0.5);
         }];
-        
+
         [self.micImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(12, 12));
             make.centerY.equalTo(self);
             make.right.equalTo(self.nameLabel.mas_left).offset(-4);
         }];
-        
+
         [self.hostImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(26, 12));
             make.bottom.mas_equalTo(-3);
@@ -62,7 +62,7 @@
 
 - (void)setUserModel:(VideoChatUserModel *)userModel {
     _userModel = userModel;
-    
+
     self.nameLabel.text = userModel.name;
     self.micImageView.hidden = (userModel.mic == VideoChatUserMicOn) ? YES : NO;
     if (userModel.userRole == VideoChatUserRoleHost && !self.isPK) {

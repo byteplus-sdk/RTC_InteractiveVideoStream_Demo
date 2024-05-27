@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -19,9 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol BytedPlayerDelegate <NSObject>
 
 - (void)protocol:(BytedPlayerProtocol *)protocol
- setPlayerWithURL:(NSString *)urlString
-        superView:(UIView *)superView
-        SEIBlcok:(void (^)(NSDictionary *SEIDic))SEIBlcok;
+    setPlayerWithURL:(NSString *)urlString
+           superView:(UIView *)superView
+            SEIBlcok:(void (^)(NSDictionary *SEIDic))SEIBlcok;
 
 - (void)protocol:(BytedPlayerProtocol *)protocol updatePlayScaleMode:(PullScalingMode)scalingMode;
 
@@ -46,7 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)startWithConfiguration;
 
-
 /**
  * @brief Set playback address, parent view
  * @param urlString stream URL
@@ -57,32 +56,27 @@ NS_ASSUME_NONNULL_BEGIN
                superView:(UIView *)superView
                 SEIBlcok:(void (^)(NSDictionary *SEIDic))SEIBlcok;
 
-
 /**
  * @brief update playback scale mode
  * @param scalingMode playback scale mode
  */
 - (void)updatePlayScaleMode:(PullScalingMode)scalingMode;
 
-
 /**
  * @brief start playing
  */
 - (void)play;
-
 
 /**
  * @brief stop playback
  */
 - (void)stop;
 
-
 /**
  * @brief Update the new playback address
  * @param url new play URL
  */
 - (void)replacePlayWithUrl:(NSString *)url;
-
 
 /**
  * @brief Whether the player supports SEI function

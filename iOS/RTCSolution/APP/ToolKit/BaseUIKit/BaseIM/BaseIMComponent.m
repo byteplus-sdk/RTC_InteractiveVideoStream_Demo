@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "BaseIMComponent.h"
 #import "BaseIMView.h"
-#import "Masonry.h"
 #import "DeviceInforTool.h"
+#import "Masonry.h"
 
 @interface BaseIMComponent ()
 

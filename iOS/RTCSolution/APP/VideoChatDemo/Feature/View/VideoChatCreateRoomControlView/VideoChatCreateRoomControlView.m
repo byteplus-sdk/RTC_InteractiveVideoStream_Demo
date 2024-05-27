@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatCreateRoomControlView.h"
 
@@ -20,38 +20,38 @@
     if (self = [super initWithFrame:frame]) {
         self.layer.cornerRadius = 15;
         self.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.2];
-        
+
         [self addSubview:self.beautyButton];
         [self.beautyButton mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.top.mas_equalTo(20);
-          make.centerX.equalTo(self);
+            make.top.mas_equalTo(20);
+            make.centerX.equalTo(self);
         }];
         [self addSubview:self.beautyLabel];
         [self.beautyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.top.equalTo(self.beautyButton.mas_bottom).offset(8);
-          make.centerX.equalTo(self.beautyButton);
+            make.top.equalTo(self.beautyButton.mas_bottom).offset(8);
+            make.centerX.equalTo(self.beautyButton);
         }];
 
         [self addSubview:self.switchCameraButton];
         [self.switchCameraButton mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.right.equalTo(self.beautyButton.mas_left).offset(-47);
-          make.centerY.equalTo(self.beautyButton);
+            make.right.equalTo(self.beautyButton.mas_left).offset(-47);
+            make.centerY.equalTo(self.beautyButton);
         }];
         [self addSubview:self.switchCameraLabel];
         [self.switchCameraLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.centerY.equalTo(self.beautyLabel);
-          make.centerX.equalTo(self.switchCameraButton);
+            make.centerY.equalTo(self.beautyLabel);
+            make.centerX.equalTo(self.switchCameraButton);
         }];
 
         [self addSubview:self.settingButton];
         [self.settingButton mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.left.equalTo(self.beautyButton.mas_right).offset(47);
-          make.centerY.equalTo(self.beautyButton);
+            make.left.equalTo(self.beautyButton.mas_right).offset(47);
+            make.centerY.equalTo(self.beautyButton);
         }];
         [self addSubview:self.settingLabel];
         [self.settingLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.centerY.equalTo(self.beautyLabel);
-          make.centerX.equalTo(self.settingButton);
+            make.centerY.equalTo(self.beautyLabel);
+            make.centerX.equalTo(self.settingButton);
         }];
     }
     return self;

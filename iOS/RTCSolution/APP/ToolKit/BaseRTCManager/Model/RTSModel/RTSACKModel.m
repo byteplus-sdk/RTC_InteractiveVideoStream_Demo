@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "RTSACKModel.h"
 #import "NetworkingTool.h"
@@ -10,8 +10,8 @@
 @implementation RTSACKModel
 
 + (NSDictionary *)modelCustomPropertyMapper {
-    return @{@"requestID" : @"request_id",
-             @"response" : @"response"};
+    return @{@"requestID": @"request_id",
+             @"response": @"response"};
 }
 
 + (instancetype)modelWithMessageData:(id)data {

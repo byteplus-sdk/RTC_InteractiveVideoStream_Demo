@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSeatComponent.h"
 #import "VideoChatSeatView.h"
@@ -11,7 +11,6 @@
 @property (nonatomic, weak) VideoChatSeatView *seatView;
 @property (nonatomic, weak) VideoChatSheetView *sheetView;
 @property (nonatomic, weak) UIView *superView;
-
 
 @end
 
@@ -32,7 +31,7 @@
        hostUserModel:(VideoChatUserModel *)hostUserModel {
     _loginUserModel = loginUserModel;
     self.hostUserModel = hostUserModel;
-    
+
     if (!_seatView) {
         VideoChatSeatView *seatView = [[VideoChatSeatView alloc] init];
         [_superView addSubview:seatView];
@@ -44,7 +43,7 @@
         }];
         _seatView = seatView;
     }
-    
+
     // Add host
     NSMutableArray *seatMutableList = [seatList mutableCopy];
     VideoChatSeatModel *hostSeatModel = [[VideoChatSeatModel alloc] init];
@@ -53,11 +52,11 @@
     hostSeatModel.userModel = hostUserModel;
     [seatMutableList insertObject:hostSeatModel atIndex:0];
     seatList = [seatMutableList copy];
-    
+
     _seatView.seatList = seatList;
-    
+
     __weak __typeof(self) wself = self;
-    _seatView.clickBlock = ^(VideoChatSeatModel * _Nonnull seatModel) {
+    _seatView.clickBlock = ^(VideoChatSeatModel *_Nonnull seatModel) {
         VideoChatSheetView *sheetView = [[VideoChatSheetView alloc] init];
         sheetView.delegate = wself;
         [wself.superView addSubview:sheetView];
@@ -116,8 +115,7 @@
 - (void)changeChatRoomMode:(VideoChatRoomMode)mode {
     if (mode == VideoChatRoomModeChatRoom) {
         [self showSeatView:[self getDefaultSeatDataList] loginUserModel:self.loginUserModel hostUserModel:self.hostUserModel];
-    }
-    else {
+    } else {
         [_seatView removeFromSuperview];
         _seatView = nil;
     }
@@ -127,7 +125,7 @@
     VideoChatSeatModel *seatModel = [[VideoChatSeatModel alloc] init];
     seatModel.status = 1;
     seatModel.index = -1;
-    
+
     VideoChatSheetView *sheetView = [[VideoChatSheetView alloc] init];
     sheetView.delegate = self;
     [self.superView addSubview:sheetView];
@@ -156,10 +154,10 @@
                clickButton:(VideoChatSheetStatus)sheetState {
     if (sheetState == VideoChatSheetStatusInvite) {
         if ([self.delegate respondsToSelector:@selector
-             (VideoChatSeatComponent:clickButton:sheetStatus:)]) {
+                           (VideoChatSeatComponent:clickButton:sheetStatus:)]) {
             [self.delegate VideoChatSeatComponent:self
-                                       clickButton:VideoChatSheetView.seatModel
-                                       sheetStatus:sheetState];
+                                      clickButton:VideoChatSheetView.seatModel
+                                      sheetStatus:sheetState];
         }
         [VideoChatSheetView dismiss];
     } else if (sheetState == VideoChatSheetStatusKick) {
@@ -177,7 +175,7 @@
     } else if (sheetState == VideoChatSheetStatusLeave) {
         [self loadDataLeave:VideoChatSheetView];
     } else {
-        //error
+        // error
     }
 }
 
@@ -187,53 +185,52 @@
               sheetView:(VideoChatSheetView *)VideoChatSheetView {
     NSString *seatID = [NSString stringWithFormat:@"%ld", (long)VideoChatSheetView.seatModel.index];
     [VideoChatRTSManager managerSeat:VideoChatSheetView.loginUserModel.roomID
-                                     seatID:seatID
-                                       type:type
-                                      block:^(RTSACKModel * _Nonnull model) {
-        if (!model.result) {
-            [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"operation_failed_message")];
-        } else {
-            [VideoChatSheetView dismiss];
-        }
-    }];
+                              seatID:seatID
+                                type:type
+                               block:^(RTSACKModel *_Nonnull model) {
+                                   if (!model.result) {
+                                       [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"operation_failed_message")];
+                                   } else {
+                                       [VideoChatSheetView dismiss];
+                                   }
+                               }];
 }
 
 - (void)loadDataApply:(VideoChatSheetView *)videoChatSheetView {
     NSString *seatID = [NSString stringWithFormat:@"%ld", (long)videoChatSheetView.seatModel.index];
     videoChatSheetView.userInteractionEnabled = NO;
     [VideoChatRTSManager applyInteract:videoChatSheetView.loginUserModel.roomID
-                                       seatID:seatID
-                                        block:^(BOOL isNeedApply,
-                                                RTSACKModel * _Nonnull model) {
-        videoChatSheetView.userInteractionEnabled = YES;
-        if (!model.result) {
-            if (model.code == 550 || model.code == 551) {
-                [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"host_busy")];
-            } else {
-                [[ToastComponent shareToastComponent] showWithMessage:model.message];
-            }
-        } else {
-            if (isNeedApply) {
-                videoChatSheetView.loginUserModel.status = VideoChatUserStatusApply;
-                [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"application_sent_host")];
-            }
-            [videoChatSheetView dismiss];
-        }
-    }];
+                                seatID:seatID
+                                 block:^(BOOL isNeedApply,
+                                         RTSACKModel *_Nonnull model) {
+                                     videoChatSheetView.userInteractionEnabled = YES;
+                                     if (!model.result) {
+                                         if (model.code == 550 || model.code == 551) {
+                                             [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"host_busy")];
+                                         } else {
+                                             [[ToastComponent shareToastComponent] showWithMessage:model.message];
+                                         }
+                                     } else {
+                                         if (isNeedApply) {
+                                             videoChatSheetView.loginUserModel.status = VideoChatUserStatusApply;
+                                             [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"application_sent_host")];
+                                         }
+                                         [videoChatSheetView dismiss];
+                                     }
+                                 }];
 }
-
 
 - (void)loadDataLeave:(VideoChatSheetView *)VideoChatSheetView {
     NSString *seatID = [NSString stringWithFormat:@"%ld", (long)VideoChatSheetView.seatModel.index];
     [VideoChatRTSManager finishInteract:VideoChatSheetView.loginUserModel.roomID
-                                        seatID:seatID
-                                         block:^(RTSACKModel * _Nonnull model) {
-        if (!model.result) {
-            [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"operation_failed_message")];
-        } else {
-            [VideoChatSheetView dismiss];
-        }
-    }];
+                                 seatID:seatID
+                                  block:^(RTSACKModel *_Nonnull model) {
+                                      if (!model.result) {
+                                          [[ToastComponent shareToastComponent] showWithMessage:LocalizedString(@"operation_failed_message")];
+                                      } else {
+                                          [VideoChatSheetView dismiss];
+                                      }
+                                  }];
 }
 
 - (void)showAlertWithLockSeat:(VideoChatSheetView *)VideoChatSheetView {
@@ -241,7 +238,7 @@
     alertModel.title = LocalizedString(@"ok");
     AlertActionModel *cancelModel = [[AlertActionModel alloc] init];
     cancelModel.title = LocalizedString(@"cancel");
-    [[AlertActionManager shareAlertActionManager] showWithMessage:LocalizedString(@"sure_lock_seat") actions:@[ cancelModel, alertModel ]];
+    [[AlertActionManager shareAlertActionManager] showWithMessage:LocalizedString(@"sure_lock_seat") actions:@[cancelModel, alertModel]];
     __weak __typeof(self) wself = self;
     alertModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
         if ([action.title isEqualToString:LocalizedString(@"ok")]) {
@@ -249,7 +246,5 @@
         }
     };
 }
-
-
 
 @end

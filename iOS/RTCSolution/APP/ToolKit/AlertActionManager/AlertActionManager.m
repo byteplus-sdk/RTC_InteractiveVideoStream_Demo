@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "AlertActionManager.h"
 #import "DeviceInforTool.h"
@@ -11,7 +11,7 @@
 
 @property (nonatomic, weak) UIAlertController *alert;
 @property (nonatomic, strong) NSTimer *timer;
- 
+
 @end
 
 @implementation AlertActionManager

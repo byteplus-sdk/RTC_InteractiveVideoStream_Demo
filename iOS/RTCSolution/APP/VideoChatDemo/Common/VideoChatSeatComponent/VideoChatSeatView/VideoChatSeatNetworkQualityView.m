@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSeatNetworkQualityView.h"
 
@@ -16,7 +16,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        
         [self addSubview:self.iconImageView];
         [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(15, 15));
@@ -30,7 +29,7 @@
             make.centerY.equalTo(self);
             make.right.equalTo(self);
         }];
-        
+
         [self updateNetworkQualityStstus:VideoChatNetworkQualityStatusGood];
     }
     return self;
@@ -47,7 +46,7 @@
             self.messageLabel.text = LocalizedString(@"net_stuck_stopped");
             self.iconImageView.image = [UIImage imageNamed:@"videochat_net_bad" bundleName:HomeBundleName];
             break;
-            
+
         default:
             break;
     }

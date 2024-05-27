@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSettingSingleSelectView.h"
 
@@ -46,16 +46,16 @@
             [self addSubview:button];
 
             [button mas_makeConstraints:^(MASConstraintMaker *make) {
-              if (i == 0) {
-                  make.left.mas_equalTo(80);
-              } else {
-                  make.left.equalTo(lastButton.mas_right).offset(8);
-              }
-              lastButton = button;
+                if (i == 0) {
+                    make.left.mas_equalTo(80);
+                } else {
+                    make.left.equalTo(lastButton.mas_right).offset(8);
+                }
+                lastButton = button;
 
-              make.centerY.equalTo(self.leftLabel);
-              make.width.equalTo(self.mas_width).multipliedBy(0.25).offset(-30);
-              make.height.mas_equalTo(30);
+                make.centerY.equalTo(self.leftLabel);
+                make.width.equalTo(self.mas_width).multipliedBy(0.25).offset(-30);
+                make.height.mas_equalTo(30);
             }];
 
             if (i == 0) {

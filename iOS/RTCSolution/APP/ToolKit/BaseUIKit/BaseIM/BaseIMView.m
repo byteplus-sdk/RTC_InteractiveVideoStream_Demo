@@ -1,12 +1,12 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "BaseIMView.h"
 #import "Masonry.h"
 
-@interface BaseIMView ()<UITableViewDelegate, UITableViewDataSource>
+@interface BaseIMView () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *roomTableView;
 
@@ -14,11 +14,9 @@
 
 @implementation BaseIMView
 
-
 - (instancetype)init {
     self = [super init];
     if (self) {
-        
         [self addSubview:self.roomTableView];
         [self.roomTableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
@@ -31,13 +29,12 @@
 
 - (void)setDataLists:(NSArray *)dataLists {
     _dataLists = dataLists;
-    
+
     [self.roomTableView reloadData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self scrollToBottom:YES tableView:self.roomTableView];
     });
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     BaseIMCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BaseIMCellID" forIndexPath:indexPath];
@@ -62,22 +59,21 @@
     NSUInteger sectionCount = [tableView numberOfSections];
     NSUInteger rowCount = 0;
     while (sectionCount != 0) {
-        rowCount = [tableView numberOfRowsInSection:sectionCount-1];
-        if(rowCount != 0)
+        rowCount = [tableView numberOfRowsInSection:sectionCount - 1];
+        if (rowCount != 0)
             break;
         sectionCount--;
     }
-    
+
     if (sectionCount && rowCount) {
-        NSUInteger ii[2] = {sectionCount-1, rowCount-1};
-        NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
+        NSUInteger ii[2] = {sectionCount - 1, rowCount - 1};
+        NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
         [tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom
-                            animated:animated];
+                                 animated:animated];
     }
 }
 
 #pragma mark - Getter
-
 
 - (UITableView *)roomTableView {
     if (!_roomTableView) {
@@ -94,6 +90,5 @@
     }
     return _roomTableView;
 }
-
 
 @end

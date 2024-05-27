@@ -1,11 +1,11 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "MenuLoginHome.h"
-#import "NetworkingManager.h"
 #import "MenuLoginViewController.h"
+#import "NetworkingManager.h"
 
 @implementation MenuLoginHome
 
@@ -14,7 +14,7 @@
 + (void)showLoginViewControllerAnimated:(BOOL)isAnimation {
     // 开启网络监听
     [[NetworkReachabilityManager sharedManager] startMonitoring];
-    
+
     if (IsEmptyStr([LocalUserComponent userModel].loginToken)) {
         [MenuLoginHome showLoginVC:isAnimation];
     }

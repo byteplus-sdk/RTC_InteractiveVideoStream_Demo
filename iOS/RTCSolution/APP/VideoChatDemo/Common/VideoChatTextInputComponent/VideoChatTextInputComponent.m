@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatTextInputComponent.h"
 #import "VideoChatTextInputView.h"
@@ -57,7 +57,7 @@
 
 - (void)tapAction:(UITapGestureRecognizer *)tap {
     __weak __typeof(self) wself = self;
-    [_textInputView dismiss:^(NSString * _Nonnull text) {
+    [_textInputView dismiss:^(NSString *_Nonnull text) {
         wself.textMessage = text;
     }];
 }
@@ -70,7 +70,7 @@
     [_superView layoutIfNeeded];
     [_textInputView show];
     __weak __typeof(self) wself = self;
-    _textInputView.clickSenderBlock = ^(NSString * _Nonnull text) {
+    _textInputView.clickSenderBlock = ^(NSString *_Nonnull text) {
         wself.textMessage = @"";
         [wself loadDataWithSendeMessage:text];
         if (wself.clickSenderBlock) {
@@ -93,7 +93,7 @@
     [contentView addGestureRecognizer:tap];
     contentView.hidden = YES;
     _contentView = contentView;
-    
+
     VideoChatTextInputView *textInputView = [[VideoChatTextInputView alloc] initWithMessage:self.textMessage];
     [contentView addSubview:textInputView];
     [textInputView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -106,9 +106,8 @@
 
 - (void)loadDataWithSendeMessage:(NSString *)message {
     [VideoChatRTSManager sendMessage:self.roomModel.roomID
-                                    message:message
-                                      block:^(RTSACKModel * _Nonnull model) {
-    }];
+                             message:message
+                               block:^(RTSACKModel *_Nonnull model){}];
 }
 
 - (void)dealloc {

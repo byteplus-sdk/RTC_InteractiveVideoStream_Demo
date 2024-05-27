@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "BaseCollectionLayout.h"
 
@@ -11,13 +11,13 @@
     return 0;
 }
 
-- (UIEdgeInsets)sectionInset{
+- (UIEdgeInsets)sectionInset {
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
-- (NSArray*)layoutAttributesForElementsInRect:(CGRect)rect { 
-    NSMutableArray* attributes = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
-    
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+    NSMutableArray *attributes = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
+
     return attributes;
 }
 

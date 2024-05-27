@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <UIKit/UIKit.h>
 
@@ -39,7 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)receivedFinishLive:(NSInteger)type
                     roomID:(NSString *)roomID;
-
 
 /**
  * @brief Received the status change message of the seat

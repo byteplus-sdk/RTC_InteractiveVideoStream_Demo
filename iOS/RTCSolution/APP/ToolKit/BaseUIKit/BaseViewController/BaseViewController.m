@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "BaseViewController.h"
 #import "Masonry.h"
@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
-    
+
     [self.view addSubview:self.bgView];
     [self.view addSubview:self.navView];
     [self.navView addSubview:self.navTitleLabel];
@@ -34,23 +34,23 @@
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];
-    
+
     [self.navView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.top.right.equalTo(self.view);
         make.height.mas_equalTo([DeviceInforTool getStatusBarHight] + 44);
     }];
-    
+
     [self.navTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.navView);
-        make.centerY.equalTo(self.navView).offset([DeviceInforTool getStatusBarHight]/2);
+        make.centerY.equalTo(self.navView).offset([DeviceInforTool getStatusBarHight] / 2);
     }];
-    
+
     [self.leftButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.width.mas_equalTo(16);
         make.left.mas_equalTo(16);
         make.centerY.equalTo(self.navTitleLabel);
     }];
-    
+
     [self.rightButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-16);
         make.centerY.equalTo(self.navTitleLabel);
@@ -64,7 +64,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
@@ -75,7 +75,6 @@
 #pragma mark - Publish Action
 
 - (void)rightButtonAction:(BaseButton *)sender {
-    
 }
 
 - (void)setNavTitle:(NSString *)navTitle {
@@ -85,7 +84,7 @@
 
 - (void)setNavRightTitle:(NSString *)navRightTitle {
     _navRightTitle = navRightTitle;
-    
+
     if (navRightTitle && navRightTitle.length > 0) {
         self.navRightImage = [UIImage new];
     }
@@ -94,7 +93,7 @@
 
 - (void)setNavRightImage:(UIImage *)navRightImage {
     _navRightImage = navRightImage;
-    
+
     if (navRightImage) {
         self.navRightTitle = @"";
     }
@@ -104,7 +103,7 @@
 
 - (void)setNavLeftImage:(UIImage *)navLeftImage {
     _navLeftImage = navLeftImage;
-    
+
     [self.leftButton setImage:navLeftImage
                      forState:UIControlStateNormal];
 }
@@ -137,7 +136,8 @@
 
 - (BaseButton *)rightButton {
     if (!_rightButton) {
-        _rightButton = [[BaseButton alloc] init];;
+        _rightButton = [[BaseButton alloc] init];
+        ;
         [_rightButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _rightButton.titleLabel.font = [UIFont systemFontOfSize:15];
         [_rightButton addTarget:self action:@selector(rightButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -168,6 +168,5 @@
     }
     return _bgView;
 }
-
 
 @end

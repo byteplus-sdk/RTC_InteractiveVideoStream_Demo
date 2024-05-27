@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <Foundation/Foundation.h>
 
@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, AuthorizationType) {
  * @param type Microphone/camera
  * @param block Callback
  */
-+ (void)authorizationStatusWithType:(AuthorizationType)type block:(void(^)(BOOL isAuthorize))block;
++ (void)authorizationStatusWithType:(AuthorizationType)type block:(void (^)(BOOL isAuthorize))block;
 
 /*
  * Determine whether the current device is authorized type, if not authorized, jump to system settings

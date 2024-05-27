@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "ScenesItemButton.h"
 #import "Masonry.h"
@@ -23,19 +23,18 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        
         self.layer.cornerRadius = 20;
         self.layer.masksToBounds = YES;
         self.backgroundColor = [UIColor clearColor];
-        
+
         [self addTarget:self action:@selector(touchUp:) forControlEvents:UIControlEventTouchUpInside];
         [self addTarget:self action:@selector(touchUp:) forControlEvents:UIControlEventTouchUpOutside];
         [self addTarget:self action:@selector(touchDown:) forControlEvents:UIControlEventTouchDown];
         [self addTarget:self action:@selector(touchUp:) forControlEvents:UIControlEventTouchCancel];
-        
+
         [self addSubview:self.bgView];
         [self addSubview:self.bgSelectView];
-        
+
         [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
@@ -46,18 +45,18 @@
         [self addSubview:self.bgImageView];
         [self addSubview:self.iconImageView];
         [self addSubview:self.label];
-                
+
         [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(90, 90));
             make.centerY.equalTo(self);
             make.centerX.equalTo(self).multipliedBy(0.5);
         }];
-        
+
         [self.bgImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(300 / 2, 236 / 2));
             make.center.equalTo(self.iconImageView);
         }];
-       
+
         [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self).offset(-5);
             make.left.equalTo(self.mas_right).multipliedBy(0.5);
@@ -67,9 +66,9 @@
     return self;
 }
 
-- (void)layoutSubviews{
+- (void)layoutSubviews {
     [super layoutSubviews];
-    
+
     if (_hasAddItemLayer == NO) {
         [self addItemLayer];
         _hasAddItemLayer = YES;
@@ -78,9 +77,9 @@
 
 #pragma mark - setter
 
-- (void)setModel:(SceneButtonModel *)model{
+- (void)setModel:(SceneButtonModel *)model {
     _model = model;
-    
+
     self.iconImageView.image = [UIImage imageNamed:model.iconName];
     self.bgImageView.image = [UIImage imageNamed:model.bgName];
     self.label.text = model.title;
@@ -136,13 +135,13 @@
         _iconImageView = [[UIImageView alloc] init];
         _iconImageView.contentMode = UIViewContentModeScaleAspectFit;
     }
-    return _iconImageView;;
+    return _iconImageView;
+    ;
 }
 
 - (UIImageView *)bgImageView {
     if (_bgImageView == nil) {
         _bgImageView = [[UIImageView alloc] init];
-        
     }
     return _bgImageView;
 }

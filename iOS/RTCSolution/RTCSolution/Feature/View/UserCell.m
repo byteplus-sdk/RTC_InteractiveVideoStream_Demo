@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "UserCell.h"
 #import "LocalizatorBundle.h"
@@ -18,7 +18,6 @@
 @end
 
 @implementation UserCell
-
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -38,7 +37,7 @@
     } else {
         self.desTitleLabel.text = model.desTitle;
     }
-    
+
     CGFloat desRight = 0;
     if (model.isMore) {
         desRight = -40;
@@ -61,21 +60,21 @@
         make.left.equalTo(self.contentView).offset(16);
         make.centerY.equalTo(self.contentView);
     }];
-    
+
     [self.contentView addSubview:self.desTitleLabel];
     [self.desTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-16);
         make.centerY.equalTo(self.titleLabel);
         make.width.mas_lessThanOrEqualTo(150);
     }];
-    
+
     [self.contentView addSubview:self.moreImageView];
     [self.moreImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(16, 16));
         make.right.mas_equalTo(-16);
         make.centerY.equalTo(self.titleLabel);
     }];
-    
+
     [self.contentView addSubview:self.lineView];
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(16.f);
@@ -86,8 +85,6 @@
 }
 
 #pragma mark - Private Action
-
-
 
 #pragma mark - Getter
 

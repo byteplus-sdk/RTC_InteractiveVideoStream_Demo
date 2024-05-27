@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import <Foundation/Foundation.h>
 
@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 免密登录
 + (void)passwordFreeLogin:(NSString *)userName
-                    block:(void (^ __nullable)(BOOL result, NSString * _Nullable errorStr))block;
+                    block:(void (^__nullable)(BOOL result, NSString *_Nullable errorStr))block;
 
 @end
 

@@ -1,10 +1,10 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <UIKit/UIKit.h>
 #import "VideoChatRoomUserListtCell.h"
+#import <UIKit/UIKit.h>
 @class VideoChatRoomAudienceListsView;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
                                  model:(VideoChatUserModel *)model;
 
 @end
-
 
 @interface VideoChatRoomAudienceListsView : UIView
 

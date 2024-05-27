@@ -1,14 +1,13 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatStaticView.h"
 #import "VideoChatPeopleNumView.h"
 #import "VideoChatStaticHostAvatarView.h"
 
 @interface VideoChatStaticView ()
-
 
 @property (nonatomic, strong) VideoChatStaticHostAvatarView *hostAvatarView;
 @property (nonatomic, strong) VideoChatPeopleNumView *peopleNumView;
@@ -33,7 +32,7 @@
             make.right.equalTo(self.closeButton.mas_left).offset(-16);
             make.top.equalTo(superView).offset([DeviceInforTool getStatusBarHight] + 16);
         }];
-        
+
         [superView addSubview:self.hostAvatarView];
         [self.hostAvatarView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.height.mas_equalTo(36);
@@ -48,10 +47,9 @@
 
 - (void)setRoomModel:(VideoChatRoomModel *)roomModel {
     _roomModel = roomModel;
-    
+
     self.hostAvatarView.roomModel = roomModel;
     [self.peopleNumView updateTitleLabel:roomModel.audienceCount];
-    
 }
 
 - (void)updatePeopleNum:(NSInteger)count {

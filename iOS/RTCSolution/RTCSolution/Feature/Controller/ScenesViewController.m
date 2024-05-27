@@ -1,13 +1,13 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "ScenesViewController.h"
 #import "FeedbackManagerProtocol.h"
-#import "ScenesItemButton.h"
 #import "LocalizatorBundle.h"
 #import "Masonry.h"
+#import "ScenesItemButton.h"
 #import "ToolKit.h"
 
 /// 音视频通话场景通话状态 0：空闲 1：视频通话 2：语音通话
@@ -27,14 +27,14 @@ int VideoCallOnTheCallType;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self addBgGradientLayer];
-    
+
     [self.view addSubview:self.iconImageView];
     [self.iconImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view);
         make.top.mas_equalTo(45 + [DeviceInforTool getStatusBarHight]);
         make.height.mas_equalTo(30);
     }];
-    
+
     // ScrollView
     [self.view addSubview:self.scrollView];
     [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -43,36 +43,36 @@ int VideoCallOnTheCallType;
         make.top.mas_equalTo(125 + [DeviceInforTool getStatusBarHight]);
         make.bottom.mas_equalTo(-100);
     }];
-    
+
     UIView *contenView = [[UIView alloc] init];
     [self.scrollView addSubview:contenView];
     [contenView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.scrollView);
     }];
-    
+
     // Add buttons
     for (int i = 0; i < self.dataArray.count; i++) {
         ScenesItemButton *button = [[ScenesItemButton alloc] init];
         [contenView addSubview:button];
-        
+
         SceneButtonModel *model = self.dataArray[i];
         button.model = model;
-        
+
         [button addTarget:self action:@selector(sceneButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        
+
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.left.equalTo(contenView);
-            make.top.mas_equalTo(i*(120 + 20));
+            make.top.mas_equalTo(i * (120 + 20));
             make.height.mas_equalTo(120);
         }];
     }
-    
+
     CGFloat scrollviewHeight = self.dataArray.count * (120 + 20);
     [contenView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(scrollviewHeight);
         make.width.equalTo(self.scrollView).offset(0);
     }];
-    
+
     [self feedbackManager];
 }
 
@@ -85,19 +85,19 @@ int VideoCallOnTheCallType;
 - (void)sceneButtonAction:(ScenesItemButton *)button {
     // Open the corresponding scene home page
     button.enabled = NO;
-    
+
     if (VideoCallOnTheCallType > 0 && ![button.model.scenesName isEqualToString:@"videoone"]) {
         // 音视频通话在通话中
         AlertActionModel *alertCancelModel = [[AlertActionModel alloc] init];
         alertCancelModel.title = LocalizedStringFromBundle(@"cancel", @"");
         __weak typeof(self) weakSelf = self;
-        alertCancelModel.alertModelClickBlock = ^(UIAlertAction * _Nonnull action) {
+        alertCancelModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
             button.enabled = YES;
         };
-        
+
         AlertActionModel *alertModel = [[AlertActionModel alloc] init];
         alertModel.title = LocalizedStringFromBundle(@"ok", @"");
-        alertModel.alertModelClickBlock = ^(UIAlertAction * _Nonnull action) {
+        alertModel.alertModelClickBlock = ^(UIAlertAction *_Nonnull action) {
             [[NSNotificationCenter defaultCenter] postNotificationName:NotificationCloseVideoCallNarrow object:nil userInfo:nil];
             [weakSelf pushDemoViewController:button];
         };
@@ -161,7 +161,7 @@ int VideoCallOnTheCallType;
 - (NSMutableArray *)dataArray {
     if (_dataArray == nil) {
         _dataArray = [NSMutableArray array];
-        
+
         NSObject *videoCallDemo = [[NSClassFromString(@"VideoCallDemo") alloc] init];
         if (videoCallDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -171,7 +171,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"videoone";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *chorusDemo = [[NSClassFromString(@"ChorusDemo") alloc] init];
         if (chorusDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -181,7 +181,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"owc";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *liveShareDemo = [[NSClassFromString(@"LiveShareDemo") alloc] init];
         if (liveShareDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -191,7 +191,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"twv";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *feedShareDemo = [[NSClassFromString(@"FeedShareDemo") alloc] init];
         if (feedShareDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -211,7 +211,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"videocall";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *gameRoomDemo = [[NSClassFromString(@"GameRoomDemo") alloc] init];
         if (gameRoomDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -231,7 +231,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"videochat";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *ktvDemo = [[NSClassFromString(@"KTVDemo") alloc] init];
         if (ktvDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -241,7 +241,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"ktv";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *liveDemo = [[NSClassFromString(@"LiveDemo") alloc] init];
         if (liveDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -252,7 +252,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"live";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *voiceChatDemo = [[NSClassFromString(@"VoiceChatDemo") alloc] init];
         if (voiceChatDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -262,7 +262,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"svc";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *voiceDemo = [[NSClassFromString(@"VoiceDemo") alloc] init];
         if (voiceDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -273,7 +273,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"cs";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *meetingDemo = [[NSClassFromString(@"MeetingDemo") alloc] init];
         if (meetingDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -284,7 +284,7 @@ int VideoCallOnTheCallType;
             model.scenesName = @"meeting";
             [_dataArray addObject:model];
         }
-        
+
         NSObject *eduDemo = [[NSClassFromString(@"EduDemo") alloc] init];
         if (eduDemo) {
             SceneButtonModel *model = [[SceneButtonModel alloc] init];
@@ -295,7 +295,6 @@ int VideoCallOnTheCallType;
             model.scenesName = @"edu";
             [_dataArray addObject:model];
         }
-        
     }
     return _dataArray;
 }

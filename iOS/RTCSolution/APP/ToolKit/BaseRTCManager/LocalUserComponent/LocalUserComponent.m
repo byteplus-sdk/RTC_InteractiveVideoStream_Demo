@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "LocalUserComponent.h"
 
@@ -14,7 +14,8 @@
     BaseUserModel *user;
     if (@available(iOS 11.0, *)) {
         user = [NSKeyedUnarchiver unarchivedObjectOfClass:[BaseUserModel class]
-                                                                fromData:data error:nil];
+                                                 fromData:data
+                                                    error:nil];
     }
     if (user == nil || ![user isKindOfClass:[BaseUserModel class]]) {
         user = [[BaseUserModel alloc] init];
@@ -25,8 +26,9 @@
 + (void)updateLocalUserModel:(BaseUserModel *)userModel {
     if (userModel && [userModel isKindOfClass:[BaseUserModel class]]) {
         if (@available(iOS 11.0, *)) {
-            NSData *data =  [NSKeyedArchiver archivedDataWithRootObject:userModel
-                                                  requiringSecureCoding:NO error:nil];
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userModel
+                                                 requiringSecureCoding:NO
+                                                                 error:nil];
             [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"KUserinfoDic"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }

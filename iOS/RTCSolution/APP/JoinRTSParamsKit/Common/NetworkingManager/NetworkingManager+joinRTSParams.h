@@ -1,14 +1,13 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "NetworkingManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NetworkingManager (joinRTSParams)
-
 
 #pragma mark - SetAppInfo
 
@@ -17,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param dic Dic data
  */
 + (void)setAppInfoWithAppId:(NSDictionary *)dic
-                      block:(void (^ __nullable)(NetworkingResponse *response))block;
+                      block:(void (^__nullable)(NetworkingResponse *response))block;
 
 @end
 

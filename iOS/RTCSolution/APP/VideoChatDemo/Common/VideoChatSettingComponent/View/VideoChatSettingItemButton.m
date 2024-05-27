@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatSettingItemButton.h"
 
@@ -23,22 +23,22 @@
 
         [self addSubview:self.bgView];
         [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.top.mas_equalTo(0);
-          make.centerX.equalTo(self);
-          make.width.height.mas_equalTo(44);
+            make.top.mas_equalTo(0);
+            make.centerX.equalTo(self);
+            make.width.height.mas_equalTo(44);
         }];
 
         [self.bgView addSubview:self.iconView];
         [self.iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.center.equalTo(self.bgView);
+            make.center.equalTo(self.bgView);
         }];
 
         [self addSubview:self.label];
         [self.label mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.centerX.equalTo(self);
-          make.top.equalTo(self.bgView.mas_bottom).offset(8);
+            make.centerX.equalTo(self);
+            make.top.equalTo(self.bgView.mas_bottom).offset(8);
         }];
-        
+
         [self addTarget:self action:@selector(touchDown) forControlEvents:UIControlEventTouchDown];
         [self addTarget:self action:@selector(touchDown) forControlEvents:UIControlEventTouchUpInside];
         [self addTarget:self action:@selector(touchUp) forControlEvents:UIControlEventTouchUpInside];

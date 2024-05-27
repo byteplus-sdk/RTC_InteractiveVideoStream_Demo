@@ -1,10 +1,10 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
-#import <Foundation/Foundation.h>
 #import "VideoChatUserModel.h"
+#import <Foundation/Foundation.h>
 
 @interface VideoChatSeatModel : NSObject
 

@@ -1,7 +1,7 @@
-// 
+//
 // Copyright (c) 2023 BytePlus Pte. Ltd.
 // SPDX-License-Identifier: MIT
-// 
+//
 
 #import "VideoChatPKUserListTableViewCell.h"
 #import "VideoChatAvatarComponent.h"
@@ -32,7 +32,7 @@
         make.left.mas_equalTo(16);
         make.bottom.equalTo(self.contentView);
     }];
-    
+
     [self.contentView addSubview:self.rightButton];
     [self.rightButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.mas_equalTo(88);
@@ -40,7 +40,7 @@
         make.right.mas_equalTo(-16);
         make.centerY.equalTo(self.avatarView);
     }];
-    
+
     [self.contentView addSubview:self.nameLabel];
     [self.nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.avatarView.mas_right).mas_offset(9);
@@ -53,7 +53,7 @@
     _model = model;
     self.nameLabel.text = model.name;
     self.avatarView.text = model.name;
-    
+
     if (model.status == VideoChatUserStatusActive) {
         [self.rightButton setTitle:LocalizedString(@"in_pk") forState:UIControlStateNormal];
         self.rightButton.backgroundColor = [UIColor colorFromRGBHexString:@"#94C2FF"];
@@ -74,7 +74,6 @@
         self.rightButton.hidden = YES;
     }
 }
-
 
 - (void)rightButtonAction:(BaseButton *)sender {
     if ([self.delegate respondsToSelector:@selector(videoChatPKUserListTableViewCell:didClickUserModel:)]) {
@@ -113,6 +112,5 @@
     }
     return _nameLabel;
 }
-
 
 @end
