@@ -4,7 +4,7 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 29
 
-    RTC_SDK = 'com.byteplus:BytePlusRTC:3.56.1.508100'
+    RTC_SDK = 'com.byteplus:BytePlusRTC:3.58.1.15100'
 
     GlideVersion = '4.12.0'
     GsonVersion = '2.8.5'
@@ -33,8 +33,8 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://artifact.bytedance.com/repository/Volcengine/' }
         maven { url 'https://artifact.byteplus.com/repository/public/' }
+        maven { url 'https://artifact.bytedance.com/repository/Volcengine/' }
 
         google()
         mavenCentral()

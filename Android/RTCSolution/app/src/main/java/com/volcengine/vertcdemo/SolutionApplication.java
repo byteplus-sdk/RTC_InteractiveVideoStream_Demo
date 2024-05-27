@@ -17,12 +17,8 @@ public class SolutionApplication extends Application {
     public void onCreate() {
         super.onCreate();
         AppUtil.initApp(this);
-        initIMService();
         ActivityDataManager.getInstance().init(this);
         new CrashHandler(this);
         AppNetworkStatusUtil.registerNetworkCallback(this);
-    }
-
-    public void initIMService() {
     }
 }

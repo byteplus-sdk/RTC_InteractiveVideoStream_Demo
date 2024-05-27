@@ -24,14 +24,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import com.volcengine.vertcdemo.common.AppExecutors;
 import com.volcengine.vertcdemo.common.IAction;
 import com.volcengine.vertcdemo.common.SolutionBaseActivity;
 import com.volcengine.vertcdemo.common.SolutionToast;
-import com.volcengine.vertcdemo.core.SolutionDataManager;
 import com.volcengine.vertcdemo.protocol.ILogin;
 import com.volcengine.vertcdemo.protocol.ProtocolUtil;
-import com.volcengine.vertcdemo.utils.AppUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -48,13 +45,8 @@ public class SceneEntryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ILogin loginService = ILoginImpl.getLoginService();
         if (!loginService.isLogin()) {
-            loginService.showLoginView(getContext(), this::initIMService);
-        } else {
-            initIMService();
+            loginService.showLoginView(getContext(), ()->{});
         }
-    }
-
-    public void initIMService() {
     }
 
     @Nullable
@@ -166,13 +158,7 @@ public class SceneEntryFragment extends Fragment {
     private boolean invokePrepareSolutionParams(String targetActivity, String sceneNameAbbr, IAction doneAction) {
         try {
             Class clz = Class.forName(targetActivity);
-            if (clz == null) {
-                return false;
-            }
             Method method = clz.getMethod("prepareSolutionParams", Activity.class, IAction.class);
-            if (method == null) {
-                return false;
-            }
             method.invoke(null, getActivity(), doneAction);
             return true;
         } catch (ClassNotFoundException e) {

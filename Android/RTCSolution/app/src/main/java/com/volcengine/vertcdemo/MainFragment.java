@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.volcengine.vertcdemo.common.AppExecutors;
 import com.volcengine.vertcdemo.core.eventbus.SolutionDemoEventManager;
 import com.volcengine.vertcdemo.core.eventbus.AppTokenExpiredEvent;
 
@@ -118,8 +117,5 @@ public class MainFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTokenExpiredEvent(AppTokenExpiredEvent event) {
         switchMainLayout(true);
-        AppExecutors.mainHandler().postDelayed(
-                () -> ((SceneEntryFragment) mFragmentScenes).initIMService(),
-                500);
     }
 }

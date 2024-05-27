@@ -77,5 +77,4 @@ dependencies {
     implementation project(':component:ToolKit')
 
     implementation project(":solutions:videochat")
-
 }
